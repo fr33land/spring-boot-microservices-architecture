@@ -1,0 +1,13 @@
+---
+spring:
+    application:
+        name: zuul
+        
+#debug: true
+#trace: true
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        cloud:
+#          netflix: trace

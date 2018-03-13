@@ -1,0 +1,20 @@
+---
+server:
+    port: 8089
+    context-path: /uaa
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+      
+spring:  
+    application:
+        name: auth-server
+        
+security:
+#  basic:
+#    enabled: false
+    user:
+        name: root
+        password: password
