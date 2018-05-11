@@ -29,9 +29,10 @@ public class OauthAuthServerConfigurer implements AuthorizationServerConfigurer 
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
                 .inMemory()
-                .withClient("zuul-server")
-                .secret("zuul-server")
+                .withClient("webapp-server")
+                .secret("webapp-server")
                 .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
+                .autoApprove(true)
                 .scopes("read");
     }
 

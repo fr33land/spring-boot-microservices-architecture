@@ -13,8 +13,5 @@ spring:
         name: auth-server
         
 security:
-#  basic:
-#    enabled: false
-    user:
-        name: root
-        password: password
+    basic:    
+        enabled: true
