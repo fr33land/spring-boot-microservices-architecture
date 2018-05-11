@@ -16,7 +16,7 @@ public class UserDataService {
     private OAuth2RestTemplate template;
 
     public UserDataDto findUser(Long uid) {
-        String ats = this.template.getForObject("http://localhost:8080/users/find/{uid}", String.class, uid);
+        String ats = this.template.getForObject("http://localhost:8081/users/find/{uid}", String.class, uid);
         return null;
     }
 }
