@@ -3,10 +3,10 @@ server:
     port: 8089
     context-path: /uaa
     
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8761/eureka/
+#eureka:
+#    client:
+#        serviceUrl:
+#            defaultZone: http://127.0.0.1:8761/eureka/
       
 spring:  
     application:
@@ -14,4 +14,4 @@ spring:
         
 security:
     basic:    
-        enabled: true
+        enabled: false
