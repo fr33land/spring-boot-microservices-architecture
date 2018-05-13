@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lt.freeland.users.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,8 +11,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
  * @author freeland
  */
 @Configuration
-
-public class AppConfig {
+public class ServiceConfig {
 
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
