@@ -8,9 +8,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  *
@@ -33,22 +34,29 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
      
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.resourceId(RESOURCE_ID);
+        resources
+                .tokenServices(tokenService())
+                .resourceId(RESOURCE_ID);
     }
-
-    @Primary
-    @Bean
-    public RemoteTokenServices tokenService() {
-        RemoteTokenServices tokenService = new RemoteTokenServices();
-        tokenService.setCheckTokenEndpointUrl("http://localhost:8089/uaa/oauth/check_token");
-        tokenService.setClientId("webapp-server");
-        tokenService.setClientSecret("webapp-server");
-        return tokenService;
-    }
-
+ 
     @Bean
     public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
+        return new JwtTokenStore(accessTokenConverter());
+    }
+ 
+    @Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("123");
+        return converter;
+    }
+ 
+    @Bean
+    @Primary
+    public DefaultTokenServices tokenService() {
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(tokenStore());
+        return defaultTokenServices;
     }
 
 }
