@@ -1,5 +1,13 @@
 package lt.freeland.users.config;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,6 +31,9 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String RESOURCE_ID = "user-service";
     
+    @Value("${keystore.publicKey}")
+    private String publicKeyFile;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
@@ -31,26 +42,35 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/users/**").access("hasRole('ADMIN')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
-     
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
         resources
                 .tokenServices(tokenService())
                 .resourceId(RESOURCE_ID);
     }
- 
+
     @Bean
     public TokenStore tokenStore() {
         return new JwtTokenStore(accessTokenConverter());
     }
- 
+
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
+        Path path;
+        try {
+            path = Paths.get(getClass().getClassLoader().getResource(publicKeyFile).toURI());
+            byte[] fileBytes = Files.readAllBytes(path);
+            String publicKey = new String(fileBytes);
+            converter.setVerifierKey(publicKey);
+        } catch (URISyntaxException | IOException ex) {
+            Logger.getLogger(OAuthResourceServerConfig.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return converter;
     }
- 
+
     @Bean
     @Primary
     public DefaultTokenServices tokenService() {

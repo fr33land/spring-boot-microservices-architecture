@@ -21,6 +21,9 @@ eureka:
         serviceUrl:
             defaultZone: http://127.0.0.1:8761/eureka/
             
+keystore:
+    publicKey: jwtkey.pub
+            
 logging:
     level:
         org.springframework.web: DEBUG
