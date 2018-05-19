@@ -26,6 +26,11 @@ security:
     basic:    
         enabled: false
         
+keystore:
+    jks: jwtkey
+    keyname: jwtkey
+    password: aaaaaa
+        
 #logging:
 #    level:
 #        org.springframework.web: DEBUG
