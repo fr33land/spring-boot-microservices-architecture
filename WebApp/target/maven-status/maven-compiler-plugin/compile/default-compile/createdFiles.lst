@@ -1,8 +1,0 @@
-lt\freeland\webApp\WebAppApplication.class
-lt\freeland\webApp\configuration\WebAppConfig.class
-lt\freeland\webApp\controllers\UserProfileController.class
-lt\freeland\webApp\configuration\WebConfig.class
-lt\freeland\webApp\beans\UserDataDto.class
-lt\freeland\webApp\beans\CountriesDto.class
-lt\freeland\webApp\services\UserDataService.class
-lt\freeland\webApp\configuration\SecurityConfig.class
