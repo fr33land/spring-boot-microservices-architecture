@@ -100,7 +100,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <resources>
+<!--        <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
@@ -108,7 +108,7 @@
                     <exclude>*.jks</exclude>
                 </excludes>
             </resource>
-        </resources>
+        </resources>-->
     </build>
 
 

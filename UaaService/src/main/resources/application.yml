@@ -27,7 +27,7 @@ security:
         enabled: false
         
 keystore:
-    jks: jwtkey
+    jks: jwtkey.jks
     keyname: jwtkey
     password: aaaaaa
         

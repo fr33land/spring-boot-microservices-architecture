@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: lt.freeland.webApp.WebAppApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.449 sec - in lt.freeland.webApp.WebAppApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.769 s - in lt.freeland.webApp.WebAppApplicationTests

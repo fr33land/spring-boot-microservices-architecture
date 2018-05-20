@@ -6,7 +6,7 @@ spring:
     application:
         name: users-service
     datasource:
-        url: jdbc:postgresql://localhost:5432/freeland
+        jdbcUrl: jdbc:postgresql://localhost:5432/freeland
         username: freeland
         password: freeland
         driverClassName: org.postgresql.Driver
