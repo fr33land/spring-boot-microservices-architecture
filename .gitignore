@@ -3,3 +3,4 @@ uaa/nbactions.xml
 webApp/nbactions.xml
 webApp/nbactions.xml
 WebApp/target/classes/application.yml
+ConfigServer/nbactions.xml

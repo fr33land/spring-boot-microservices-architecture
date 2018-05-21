@@ -31,7 +31,7 @@ keystore:
     keyname: jwtkey
     password: aaaaaa
         
-#logging:
-#    level:
-#        org.springframework.web: DEBUG
-#        org.springframework.security: DEBUG
+logging:
+    level:
+        org.springframework.web: DEBUG
+        org.springframework.security: DEBUG

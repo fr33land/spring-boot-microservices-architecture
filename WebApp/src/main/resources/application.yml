@@ -23,8 +23,6 @@ security:
             userAuthorizationUri: http://localhost:8089/uaa/oauth/authorize
         resource:
             userInfoUri: http://localhost:8089/uaa/user
-#            jwt:
-#                keyValue: 123
       
 eureka:
     client:
