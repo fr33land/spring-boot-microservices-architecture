@@ -1,8 +1,8 @@
 ---
 server:
     port: 8089
-    servlet:
-        context-path: /uaa
+#    servlet:
+    context-path: /uaa
     
 spring:
     application:
