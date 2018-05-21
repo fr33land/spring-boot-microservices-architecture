@@ -1,7 +1,8 @@
 ---
 server:
     port: 8081
-    context-path: /ui
+    servlet:
+        context-path: /ui
     session:
         cookie:
             name: UISESSION
