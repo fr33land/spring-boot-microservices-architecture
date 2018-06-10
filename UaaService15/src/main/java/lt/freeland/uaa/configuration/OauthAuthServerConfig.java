@@ -58,7 +58,7 @@ public class OauthAuthServerConfig implements AuthorizationServerConfigurer {
         clients
                 .inMemory()
                 .withClient("webapp-server")
-                .secret("$2a$10$AGW6fb2OzzOpcHjmrcqbTelBkuU4c8WmNyLO6Zg7Ncp61gxDiyApe")
+                .secret("webapp-server")
                 .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
                 .autoApprove(true)
                 .scopes("read");

@@ -18,7 +18,7 @@ public class UserProfileController {
     @GetMapping(value = "/userProfile")
     public String userProfile() {
         userDataService.findUser(2L);
-        return "userProfile";
+        return "profile";
     }
     
 }

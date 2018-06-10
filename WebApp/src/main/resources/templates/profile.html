@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="base">
+    <head>
+        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Base</title>
+    </head>
+    <body>
+        <div class="content">
+            <div layout:fragment="content">
+                Welcome, <span th:text="${#authentication.name}">Name</span>
+                <br/>
+                Your authorities are <span th:text="${#authentication.authorities}">authorities</span>        
+            </div>
+        </div>
+    </body>
+</html>
