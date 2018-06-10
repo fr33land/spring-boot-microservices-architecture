@@ -18,29 +18,18 @@
                     <h3>Bootstrap Sidebar</h3>
                 </div>
 
-                <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Home 1</a></li>
-                            <li><a href="#">Home 2</a></li>
-                            <li><a href="#">Home 3</a></li>
-                        </ul>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Active</a>
                     </li>
-                    <li>
-                        <a href="#">About</a>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Page 1</a></li>
-                            <li><a href="#">Page 2</a></li>
-                            <li><a href="#">Page 3</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
                     </li>
-                    <li>
-                        <a href="#">Portfolio</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
                     </li>
-                    <li>
-                        <a href="#">Contact</a>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
                     </li>
                 </ul>
             </nav>
@@ -48,7 +37,6 @@
             <!-- Page Content Holder -->
             <div id="content">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                    <a class="navbar-brand" href="#">Navbar</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
