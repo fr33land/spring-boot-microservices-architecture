@@ -23,9 +23,9 @@ import javax.persistence.TemporalType;
  * @author freeland
  */
 @Entity
-@Table(name = "users_data")
+@Table(name = "users_profiles")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class UserData implements Serializable {
+public class UserProfile implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -56,10 +56,10 @@ public class UserData implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Countries nationality;
 
-    public UserData() {
+    public UserProfile() {
     }
 
-    public UserData(Long userId) {
+    public UserProfile(Long userId) {
         this.userId = userId;
     }
 
@@ -137,10 +137,10 @@ public class UserData implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UserData)) {
+        if (!(object instanceof UserProfile)) {
             return false;
         }
-        UserData other = (UserData) object;
+        UserProfile other = (UserProfile) object;
         if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
             return false;
         }

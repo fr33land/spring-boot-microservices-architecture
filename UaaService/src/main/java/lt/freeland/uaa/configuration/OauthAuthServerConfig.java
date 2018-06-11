@@ -13,10 +13,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+import lt.freeland.uaa.beans.UserDataTokenEnhancer;
 
 /**
  *
@@ -58,7 +60,7 @@ public class OauthAuthServerConfig implements AuthorizationServerConfigurer {
         clients
                 .inMemory()
                 .withClient("webapp-server")
-                .secret("$2a$10$AGW6fb2OzzOpcHjmrcqbTelBkuU4c8WmNyLO6Zg7Ncp61gxDiyApe")
+                .secret("webapp-server")
                 .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
                 .autoApprove(true)
                 .scopes("read");
@@ -83,6 +85,12 @@ public class OauthAuthServerConfig implements AuthorizationServerConfigurer {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
+        defaultTokenServices.setTokenEnhancer(tokenEnhancer());
         return defaultTokenServices;
+    }
+
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return new UserDataTokenEnhancer();
     }
 }

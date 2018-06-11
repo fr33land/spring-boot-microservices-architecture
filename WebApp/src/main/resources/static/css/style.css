@@ -23,6 +23,7 @@ a, a:hover, a:focus {
     border: none;
     border-radius: 0;
     margin-bottom: 20px;
+    color: #ffffff;
 }
 
 .navbar-btn {
@@ -99,7 +100,6 @@ a[aria-expanded="true"]::before {
     content: '\e260';
 }
 
-
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
@@ -111,10 +111,6 @@ a.article, a.article:hover {
     color: #fff !important;
 }
 
-
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
 #content {
     width: calc(100% - 250px);
     min-height: 100vh;
@@ -131,9 +127,9 @@ a.article, a.article:hover {
     padding: 0 15px;
 }
 
-/* ---------------------------------------------------
+ ---------------------------------------------------
     MEDIAQUERIES
------------------------------------------------------ */
+----------------------------------------------------- 
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;

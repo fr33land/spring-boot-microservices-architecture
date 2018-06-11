@@ -5,15 +5,15 @@
  */
 package lt.freeland.users.repository;
 
-import lt.freeland.users.beans.UserData;
+import lt.freeland.users.beans.UserProfile;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author freeland
  */
-public interface UserDataRepository extends CrudRepository<UserData, Long> {
+public interface UserDataRepository extends CrudRepository<UserProfile, Long> {
     
-    UserData findByUserId(Long uid);
+    UserProfile findByUserId(Long uid);
     
 }

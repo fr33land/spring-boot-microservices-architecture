@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package lt.freeland.users.beans;
+package lt.freeland.uaa.beans;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -16,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -24,7 +19,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "countries")
-@JsonIgnoreProperties({"usersProfiles"})
 public class Countries implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,10 +28,11 @@ public class Countries implements Serializable {
     @Column(name = "id")
     private Integer id;
     
-    @Size(min = 1, max = 64)
+    @NotNull
     @Column(name = "name")
     private String name;
-
+    
+    @NotNull
     @Size(min = 1, max = 3)
     @Column(name = "iso_code")
     private String isoCode;
@@ -46,8 +41,8 @@ public class Countries implements Serializable {
     @Column(name = "phone_code")
     private String phoneCode;
     
-    @OneToMany(mappedBy = "nationality", fetch = FetchType.LAZY)
-    private List<UserProfile> usersProfiles;
+    @OneToMany(mappedBy = "nationality", fetch = FetchType.EAGER)
+    private List<UserProfile> userProfile;
 
     public Countries() {
     }
@@ -94,12 +89,12 @@ public class Countries implements Serializable {
         this.phoneCode = phoneCode;
     }
 
-    public List<UserProfile> getUsersProfiles() {
-        return usersProfiles;
+    public List<UserProfile> getUserProfile() {
+        return userProfile;
     }
 
-    public void setUsersProfiles(List<UserProfile> usersProfiles) {
-        this.usersProfiles = usersProfiles;
+    public void setUserProfile(List<UserProfile> userProfile) {
+        this.userProfile = userProfile;
     }
 
     @Override
@@ -111,6 +106,7 @@ public class Countries implements Serializable {
 
     @Override
     public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Countries)) {
             return false;
         }
@@ -123,7 +119,7 @@ public class Countries implements Serializable {
 
     @Override
     public String toString() {
-        return "lt.freeland.users.beans.Countries[ id=" + id + " ]";
+        return "lt.freeland.uaa.beans.Countries[ id=" + id + " ]";
     }
     
 }

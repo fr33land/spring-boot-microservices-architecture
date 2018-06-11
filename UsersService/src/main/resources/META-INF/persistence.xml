@@ -3,6 +3,6 @@
   <persistence-unit name="PG" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>lt.freeland.users.beans.Countries</class>
-    <class>lt.freeland.users.beans.UserData</class>
+    <class>lt.freeland.users.beans.UserProfile</class>
   </persistence-unit>
 </persistence>

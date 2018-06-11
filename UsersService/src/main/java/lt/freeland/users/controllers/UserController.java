@@ -1,6 +1,6 @@
 package lt.freeland.users.controllers;
 
-import lt.freeland.users.beans.UserData;
+import lt.freeland.users.beans.UserProfile;
 import lt.freeland.users.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class UserController {
     UserDataRepository userDataRepository;
     
     @GetMapping("/find/{uid}")
-    public ResponseEntity<UserData> findUser(@PathVariable("uid") Long uid) {        
+    public ResponseEntity<UserProfile> findUser(@PathVariable("uid") Long uid) {        
         return new ResponseEntity<>(userDataRepository.findByUserId(uid), HttpStatus.OK);
     }
     
