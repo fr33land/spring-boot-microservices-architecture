@@ -1,5 +1,6 @@
 package lt.freeland.uaa.configuration;
 
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import lt.freeland.uaa.beans.UserDataTokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 
 /**
  *
@@ -30,13 +32,13 @@ public class OauthAuthServerConfig implements AuthorizationServerConfigurer {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    
+
     @Value("${keystore.jks}")
     private String keystoreFile;
-    
+
     @Value("${keystore.keyname}")
     private String keystoreKeyName;
-    
+
     @Value("${keystore.password}")
     private String keystorePassword;
 
@@ -49,9 +51,13 @@ public class OauthAuthServerConfig implements AuthorizationServerConfigurer {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints
-                .tokenStore(tokenStore())
-                .accessTokenConverter(accessTokenConverter())
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(
+                Arrays.asList(tokenEnhancer(), accessTokenConverter())
+        );
+
+        endpoints.tokenStore(tokenStore())
+                .tokenEnhancer(tokenEnhancerChain)
                 .authenticationManager(authenticationManager);
     }
 
@@ -85,7 +91,7 @@ public class OauthAuthServerConfig implements AuthorizationServerConfigurer {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
-        defaultTokenServices.setTokenEnhancer(tokenEnhancer());
+        //defaultTokenServices.setTokenEnhancer(tokenEnhancer());
         return defaultTokenServices;
     }
 
