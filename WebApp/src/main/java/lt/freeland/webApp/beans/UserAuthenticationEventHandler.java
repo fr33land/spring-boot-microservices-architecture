@@ -4,6 +4,7 @@ import lt.freeland.webApp.services.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.filter.OAuth2AuthenticationFailureEvent;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ public class UserAuthenticationEventHandler {
     
     @EventListener
     public void handleAuthenticationSuccess(AuthenticationSuccessEvent event) {
-        UserDataDto user = userDataService.findUserByUserName("freeland");
+        UserDataDto user = userDataService.findUserByUserName(event.getAuthentication().getName());
         System.out.println("event: " + event);
     }
     
