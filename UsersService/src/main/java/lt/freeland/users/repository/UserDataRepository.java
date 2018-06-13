@@ -15,5 +15,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserDataRepository extends CrudRepository<UserProfile, Long> {
     
     UserProfile findByUserId(Long uid);
+    UserProfile findByUser_username(String username);
     
 }

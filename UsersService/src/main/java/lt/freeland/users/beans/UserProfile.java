@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -55,6 +56,10 @@ public class UserProfile implements Serializable {
     @JoinColumn(name = "nationality", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Countries nationality;
+    
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public UserProfile() {
     }
@@ -125,6 +130,14 @@ public class UserProfile implements Serializable {
 
     public void setNationality(Countries nationality) {
         this.nationality = nationality;
+    }
+    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

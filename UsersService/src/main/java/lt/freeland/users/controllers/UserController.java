@@ -23,8 +23,13 @@ public class UserController {
     UserDataRepository userDataRepository;
     
     @GetMapping("/find/{uid}")
-    public ResponseEntity<UserProfile> findUser(@PathVariable("uid") Long uid) {        
+    public ResponseEntity<UserProfile> findUserById(@PathVariable("uid") Long uid) {        
         return new ResponseEntity<>(userDataRepository.findByUserId(uid), HttpStatus.OK);
+    }
+    
+    @GetMapping("/find/username/{username}")
+    public ResponseEntity<UserProfile> findUserByUserName(@PathVariable("username") String username) {        
+        return new ResponseEntity<>(userDataRepository.findByUser_username(username), HttpStatus.OK);
     }
     
 }
