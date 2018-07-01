@@ -15,6 +15,7 @@ public class UserDataDto implements Serializable {
     private Long userId;    
     private String firstName;
     private String lastName;
+    private String fullName;
     private Date birthday;
     private String city;
     private String address;
@@ -50,6 +51,14 @@ public class UserDataDto implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Date getBirthday() {
@@ -114,7 +123,7 @@ public class UserDataDto implements Serializable {
 
     @Override
     public String toString() {
-        return "lt.freeland.users.beans.UsersData[ userId=" + userId + " ]";
+        return "UserDataDto{" + "userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", birthday=" + birthday + ", city=" + city + ", address=" + address + ", phone=" + phone + ", nationality=" + nationality + '}';
     }
     
 }

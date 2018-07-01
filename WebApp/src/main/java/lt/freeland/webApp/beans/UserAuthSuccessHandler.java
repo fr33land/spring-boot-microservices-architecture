@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import lt.freeland.webApp.services.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,17 +16,18 @@ import org.springframework.stereotype.Component;
  * @author freeland
  */
 @Component
-public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
+public class UserAuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler  {
     
     @Autowired
     UserDataService userDataService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);        
         if (session != null) {
-            session.setAttribute("loggedUser", userDataService.findUserById(2L));
-        }
+            session.setAttribute("loggedUser", userDataService.findUserByUserName(authentication.getName()));
+        }        
+        super.onAuthenticationSuccess(request, response, authentication);
     }
 
 }

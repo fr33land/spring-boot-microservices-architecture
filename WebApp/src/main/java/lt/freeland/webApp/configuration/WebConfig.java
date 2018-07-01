@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author freeland
  */
 @Configuration
-public class WebConfig implements WebMvcConfigurer  {
+public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public RequestContextListener requestContextListener() {
@@ -35,7 +35,7 @@ public class WebConfig implements WebMvcConfigurer  {
     public void addViewControllers(final ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:/index");
         registry.addViewController("/index");
-        registry.addViewController("/profile").setViewName("profile");
+        registry.addViewController("/userProfile").setViewName("profile");
     }
 
     @Override
