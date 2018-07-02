@@ -51,7 +51,7 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
-#sidebar.active {
+#sidebar.active, #content.active {
     margin-left: -250px;
 }
 
@@ -127,9 +127,10 @@ a.article, a.article:hover {
     padding: 0 15px;
 }
 
- ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ 
+.navbar-right {
+    float: right !important;
+}
+
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;

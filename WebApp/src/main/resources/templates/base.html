@@ -7,8 +7,9 @@
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/sandstone/bootstrap.min.css" />
+        <!--        <link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.min.css" />-->
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/css/font-awesome.min.css"></link>
+        <link rel="stylesheet" type="text/css" href="webjars/font-awesome/css/font-awesome.min.css"></link>
     </head>
     <body>
         <div class="wrapper">
@@ -36,14 +37,15 @@
 
             <!-- Page Content Holder -->
             <div id="content">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <nav class="navbar navbar-dark bg-primary">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div id="navbar-right-float">                        
+                    <div class="navbar-right">                        
                         <div th:text="${session.loggedUser.fullName}" ></div>
                     </div>
+
                 </nav>
 
                 <div id="page-content-wrapper">
@@ -54,8 +56,16 @@
                 </div>
             </div>
         </div>
-        <script src="/webjars/jquery/jquery.min.js"></script>
-        <!--        <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>-->
+        <script src="webjars/jquery/jquery.min.js"></script>
+        <script src="webjars/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+             $(document).ready(function () {
+                 $('.navbar-toggler').on('click', function () {
+                     $('#sidebar').toggleClass('active');
+                     $('#content').toggleClass('active');
+                 });
+             });
+         </script>
         <th:block layout:fragment="scripts">
         </th:block>
     </body>
