@@ -3,6 +3,7 @@ package lt.freeland.webApp.configuration;
 import javax.servlet.Filter;
 import lt.freeland.webApp.beans.UserAuthSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
@@ -35,6 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     UserAuthSuccessHandler userAuthSuccessHandler;
+    
+    @Value("${security.oauth2.resource.userLogoutUri}")
+    String userLogoutUri;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -46,9 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+                .logout().logoutSuccessUrl(userLogoutUri).permitAll();
+        
+        http
                 .authorizeRequests()
                 .antMatchers("/", "/login**", "/js/**", "/css/**").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated();        
 
         http.
                 addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);

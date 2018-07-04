@@ -29,6 +29,7 @@ security:
 #            use-current-uri: false
         resource:
             userInfoUri: http://localhost:8089/uaa/user
+            userLogoutUri: http://localhost:8089/uaa/logout
       
 eureka:
     client:
