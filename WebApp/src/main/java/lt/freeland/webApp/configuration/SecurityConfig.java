@@ -3,6 +3,7 @@ package lt.freeland.webApp.configuration;
 import javax.servlet.Filter;
 import lt.freeland.webApp.beans.UserAuthSuccessHandler;
 import lt.freeland.webApp.beans.SsoLogoutHandler;
+import lt.freeland.webApp.beans.UserLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -20,6 +21,7 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -43,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     SsoLogoutHandler ssoLogoutHandler;
+    
+    @Autowired
+    UserLogoutSuccessHandler userLogoutSuccessHandler;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -64,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .logout()
                 .logoutSuccessUrl(logoutUrl)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
                 .addLogoutHandler(ssoLogoutHandler)
                 .permitAll();
         
@@ -102,4 +107,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setOrder(-100);
         return registration;
     }
+    
 }

@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author freeland
  */
 
+@Component
 public class UserLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler { 
  
     @Override

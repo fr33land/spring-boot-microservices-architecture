@@ -35,7 +35,7 @@ public class UaaController {
 
     @ResponseBody
     @PostMapping(value = "/invalidateToken")
-    public Map<String, String> revokeAccessToken(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "access_token") String accessToken, Authentication authentication) {
+    public Map<String, String> invalidateToken(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "access_token") String accessToken, Authentication authentication) {
         System.out.println("Invalidating access token :- " + accessToken);
         OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(accessToken);
         if (oAuth2AccessToken != null) {
@@ -47,8 +47,8 @@ public class UaaController {
     }
 
     @GetMapping("/ssoLogout")
-    public void exit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void ssoLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         new SecurityContextLogoutHandler().logout(request, null, null);
-        response.sendRedirect(request.getHeader("referer"));
+        response.sendRedirect(request.getHeader("referer") + "/login?logout");
     }
 }
