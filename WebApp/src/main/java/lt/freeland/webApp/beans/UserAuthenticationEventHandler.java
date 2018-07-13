@@ -19,7 +19,6 @@ public class UserAuthenticationEventHandler {
     
     @EventListener
     public void handleAuthenticationSuccess(AuthenticationSuccessEvent event) {
-        UserDataDto user = userDataService.findUserByUserName(event.getAuthentication().getName());
         System.out.println("event: " + event);
     }
     

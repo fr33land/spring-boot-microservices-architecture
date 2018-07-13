@@ -19,6 +19,5 @@ public class UserProfileController {
     public String userProfile() {
         userDataService.findUserById(2L);
         return "profile";
-    }
-    
+    }    
 }

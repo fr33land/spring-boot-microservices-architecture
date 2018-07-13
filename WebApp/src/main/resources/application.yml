@@ -5,9 +5,6 @@ server:
         context-path: /ui
     # servlet: for spring boot2
     # context-path: /ui
-    session:
-        cookie:
-            name: UISESSION
 
 spring:
     application:
@@ -29,7 +26,8 @@ security:
 #            use-current-uri: false
         resource:
             userInfoUri: http://localhost:8089/uaa/user
-            userLogoutUri: http://localhost:8089/uaa/logout
+            ssoLogoutUri: http://localhost:8089/uaa/ssoLogout
+            tokenInvalidateUri: http://localhost:8089/uaa/invalidateToken
       
 eureka:
     client:

@@ -2,9 +2,9 @@ package lt.freeland.webApp.configuration;
 
 import javax.servlet.Filter;
 import lt.freeland.webApp.beans.UserAuthSuccessHandler;
+import lt.freeland.webApp.beans.SsoLogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  *
@@ -31,14 +32,17 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${security.oauth2.resource.ssoLogoutUri}")
+    String logoutUrl;    
+    
     @Autowired
     OAuth2ClientContext oauth2ClientContext;
-    
+
     @Autowired
     UserAuthSuccessHandler userAuthSuccessHandler;
-    
-    @Value("${security.oauth2.resource.userLogoutUri}")
-    String userLogoutUri;
+
+    @Autowired
+    SsoLogoutHandler ssoLogoutHandler;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -49,14 +53,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http
-                .logout().logoutSuccessUrl(userLogoutUri).permitAll();
         
         http
                 .authorizeRequests()
                 .antMatchers("/", "/login**", "/js/**", "/css/**").permitAll()
-                .anyRequest().authenticated();        
+                .anyRequest().authenticated();
 
+        http
+                .formLogin().loginPage("/login")
+            .and()
+                .logout()
+                .logoutSuccessUrl(logoutUrl)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .addLogoutHandler(ssoLogoutHandler)
+                .permitAll();
+        
         http.
                 addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
     }
