@@ -23,7 +23,6 @@ import org.springframework.security.oauth2.client.token.grant.code.Authorization
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  *
@@ -69,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .logout()
                 .logoutSuccessUrl(logoutUrl)
-                .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
+                .logoutSuccessHandler(userLogoutSuccessHandler)
                 .addLogoutHandler(ssoLogoutHandler)
                 .permitAll();
         
