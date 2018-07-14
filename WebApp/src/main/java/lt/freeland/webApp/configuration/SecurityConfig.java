@@ -21,7 +21,6 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
@@ -67,8 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login")
             .and()
                 .logout()
-                .logoutSuccessUrl(logoutUrl)
-                .logoutSuccessHandler(userLogoutSuccessHandler)
+                .logoutSuccessUrl(logoutUrl + "?redirect_uri=ui")
                 .addLogoutHandler(ssoLogoutHandler)
                 .permitAll();
         
