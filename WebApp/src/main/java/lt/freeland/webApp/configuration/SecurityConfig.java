@@ -22,6 +22,8 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 /**
  *
@@ -33,8 +35,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${security.oauth2.resource.ssoLogoutUri}")
-    String logoutUrl;    
-    
+    String logoutUrl;
+
     @Autowired
     OAuth2ClientContext oauth2ClientContext;
 
@@ -43,20 +45,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     SsoLogoutHandler ssoLogoutHandler;
-    
+
     @Autowired
     UserLogoutSuccessHandler userLogoutSuccessHandler;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
+                .httpFirewall(allowUrlEncodedSlashHttpFirewall())
                 .ignoring()
                 .antMatchers("/resources/**");
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        
+
         http
                 .authorizeRequests()
                 .antMatchers("/", "/login**", "/js/**", "/css/**").permitAll()
@@ -64,12 +67,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .formLogin().loginPage("/login")
-            .and()
+                .and()
                 .logout()
-                .logoutSuccessUrl(logoutUrl + "?redirect_uri=ui")
+                .logoutSuccessUrl(logoutUrl + "?redirect_uri=ui/login?logout")
                 .addLogoutHandler(ssoLogoutHandler)
                 .permitAll();
-        
+
         http.
                 addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
     }
@@ -104,5 +107,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setOrder(-100);
         return registration;
     }
-    
+
+    @Bean
+    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowUrlEncodedSlash(true);
+        return firewall;
+    }
+
 }

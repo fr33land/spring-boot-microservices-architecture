@@ -49,6 +49,6 @@ public class UaaController {
     @GetMapping("/ssoLogout")
     public void ssoLogout(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "redirect_uri", required = false) String redirectUri) throws IOException {
         new SecurityContextLogoutHandler().logout(request, null, null);
-        response.sendRedirect(request.getHeader("referer") + (redirectUri != null ? "/" + redirectUri : ""));
+        response.sendRedirect(request.getHeader("referer") + (redirectUri != null ? redirectUri : ""));
     }
 }
