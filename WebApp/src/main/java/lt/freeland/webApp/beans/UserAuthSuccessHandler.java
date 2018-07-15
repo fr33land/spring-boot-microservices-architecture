@@ -20,13 +20,14 @@ public class UserAuthSuccessHandler extends SavedRequestAwareAuthenticationSucce
     
     @Autowired
     UserDataService userDataService;
-
+    
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         HttpSession session = request.getSession(false);        
         if (session != null) {
             session.setAttribute("loggedUser", userDataService.findUserByUserName(authentication.getName()));
         }        
+        
         super.onAuthenticationSuccess(request, response, authentication);
     }
 

@@ -22,14 +22,11 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 /**
  *
  * @author freeland
  */
-//@EnableOAuth2Sso
 @EnableOAuth2Client
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -52,7 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
-                .httpFirewall(allowUrlEncodedSlashHttpFirewall())
                 .ignoring()
                 .antMatchers("/resources/**");
     }
@@ -84,6 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UserInfoTokenServices tokenServices = new UserInfoTokenServices(uaaServerResource().getUserInfoUri(), uaaClientProperties().getClientId());
         tokenServices.setRestTemplate(restTemplate);
         oauthFilter.setTokenServices(tokenServices);
+        userAuthSuccessHandler.setDefaultTargetUrl("/userProfile");
         oauthFilter.setAuthenticationSuccessHandler(userAuthSuccessHandler);
         return oauthFilter;
     }
@@ -107,12 +104,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setOrder(-100);
         return registration;
     }
-
-    @Bean
-    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-        StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowUrlEncodedSlash(true);
-        return firewall;
-    }
-
 }
