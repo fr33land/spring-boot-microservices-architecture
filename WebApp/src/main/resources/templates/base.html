@@ -7,9 +7,8 @@
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/sandstone/bootstrap.min.css" />
-        <!--        <link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.min.css" />-->
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="webjars/font-awesome/css/font-awesome.min.css"></link>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"></link>
     </head>
     <body>
         <div class="wrapper">
@@ -19,18 +18,27 @@
                     <h3>Bootstrap Sidebar</h3>
                 </div>
 
-                <ul class="nav flex-column">
+                <ul class="nav flex-column list-unstyled components">
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="#" data-toggle="collapse" data-target="#adminSubmenu" aria-expanded="false">
+                            <i class="fa fa-cog fa-fw" aria-hidden="true"></i>&nbsp;Administration
+                        </a>
+                        <ul id="adminSubmenu" class="collapse list-unstyled">
+                            <li class="nav-item">
+                                <a th:href="@{/admin/users}" class="nav-link active">Users</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Roles</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Permissions</a>
+                            </li> 
+                        </ul>
+                    </li>                    
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Active</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link disabled" href="#">
+                            <i class="fa fa-file" aria-hidden="true"></i>&nbsp; Disabled
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -48,31 +56,34 @@
                                 <span th:text="${session.loggedUser.fullName}"></span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" onclick="document.getElementById('logoutform').submit();">Logout</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fa fa-sliders" aria-hidden="true"></i>&nbsp; Settings
+                                </a>
+                                <a class="dropdown-item" href="#" onclick="document.getElementById('logoutform').submit();">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Logout
+                                </a>                                
                             </div>
                         </div>
                     </nav>
                 </form>
 
                 <div id="page-content-wrapper">
-                    <h2>Collapsible Sidebar Using Bootstrap 3</h2>
+                    <h2>Title</h2>
                     <div class="content">
                         <div layout:fragment="content"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <script src="webjars/jquery/jquery.min.js"></script>
-        <script src="webjars/bootstrap/js/bootstrap.min.js"></script>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('.navbar-toggler').on('click', function () {
-                    $('#sidebar').toggleClass('active');
-                    $('#content').toggleClass('active');
-                });
-            });
+                                    $(document).ready(function () {
+                                        $('.navbar-toggler').on('click', function () {
+                                            $('#sidebar').toggleClass('active');
+                                            $('#content').toggleClass('active');
+                                        });
+                                    });
         </script>
         <th:block layout:fragment="scripts">
         </th:block>

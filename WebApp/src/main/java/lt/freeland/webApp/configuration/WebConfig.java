@@ -36,6 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("forward:/index");
         registry.addViewController("/index");
         registry.addViewController("/userProfile").setViewName("profile");
+        registry.addViewController("/admin/users").setViewName("/admin/users");
     }
 
     @Override

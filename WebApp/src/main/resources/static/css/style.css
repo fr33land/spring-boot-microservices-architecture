@@ -80,7 +80,7 @@ a, a:hover, a:focus {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #284a6c;
+    background: #829aaf;
 }
 
 
@@ -89,21 +89,20 @@ a[data-toggle="collapse"] {
 }
 
 a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
-    content: '\e259';
+    content: '\f107';
     display: block;
     position: absolute;
     right: 20px;
-    font-family: 'Glyphicons Halflings';
-    font-size: 0.6em;
+    font-family: 'FontAwesome';
 }
 a[aria-expanded="true"]::before {
-    content: '\e260';
+    content: '\f106';
 }
 
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #92a7b9;
 }
 
 a.article, a.article:hover {
