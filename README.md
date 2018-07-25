@@ -11,10 +11,10 @@ It is one of the most important components of microservice ecosystem. Eureka ser
 This microservice component is used to store and serve system configurations in cloud enviroment and serve them to the client throught the network. ConfigServer can take configuration data from filesystem or from versioning repositories (Git, SVN). At this moment ConfigServer doesn't play any role. It's just an empty mircoservice.
 
 ## UaaService - OAuth 2.0 authorization server
-The other critical component of cloud enviroment. A purpose of this service is to server login window for web client app, authorize users and issue tokens. UaaServices uses DAO authentication provider for retrieving and checking user data. Issued tokens are stored as JWT tokens and encrypted with assymetric private key from JKS storage.     
+The other critical component of cloud enviroment. A purpose of this service is to server login window for web client app, authorize users and issue tokens. UaaServices uses DAO authentication provider for retrieving and checking user data. Issued tokens are stored as JWT tokens and encrypted with assymetric keys from JKS storage.     
 
 ## UsersService - OAuth 2.0 resource service
-A resource service which stores information about user. The access to the service endpoints is secured with OAuth 2.0 JWT tokens which are decoded with public key related to the UaaService private key from JKS storage.
+A resource service which stores information about user. The access to the service endpoints is secured with OAuth 2.0 JWT tokens which are decoded using JwtAccessTokenConverter with public key provided by UaaService from JKS storage.
 
 ## WebApp - web application OAuth 2.0 client
 A simple client web app that uses UaaService as authentication provider and consumes secured UsersService endpoint. WebApp has a simple GUI based on Thymeleaf, JQuery and Bootstrap.
