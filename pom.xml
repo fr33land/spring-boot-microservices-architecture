@@ -25,8 +25,6 @@
          <java.version>1.8</java.version>
          <maven.compiler.source>1.8</maven.compiler.source>
          <maven.compiler.target>1.8</maven.compiler.target>
-         <maven.test.skip>true</maven.test.skip>
-         <maven.test.failure.ignore>true</maven.test.failure.ignore>
     </properties>
 
     <dependencies>
