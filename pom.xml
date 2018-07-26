@@ -16,8 +16,8 @@
         <module>WebApp</module>
     </modules>
 
-    <name>MicroservicesDashboardProject</name>
-    <description>Microservices dashboard project</description>
+    <name>MicroservicesProject</name>
+    <description>Microservices project</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
