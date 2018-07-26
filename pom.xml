@@ -9,9 +9,11 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <modules>
-        <module>module1</module>
-        <module>module2</module>
-        <module>module3</module>
+        <module>ConfigServer</module>
+        <module>EurekaServer</module>
+        <module>UaaService</module>
+        <module>UsersService</module>
+        <module>WebApp</module>
     </modules>
 
     <name>MicroservicesDashboardProject</name>
