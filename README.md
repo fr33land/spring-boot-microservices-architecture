@@ -24,3 +24,4 @@ A resource service which stores information about user. The access to the servic
 A simple client web app that uses UaaService as authentication provider and consumes secured UsersService endpoint. WebApp has a simple GUI based on Thymeleaf, JQuery and Bootstrap.
 
 ## Building and runing
+The project is builded using maven command `mvn clean install`. In a root project directory parent pom file exists. Using this parent pom.xml file during maven build will compile all the project modules in one run. 
