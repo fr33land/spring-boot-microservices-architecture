@@ -15,7 +15,7 @@ public class UserProfileController {
     @Autowired
     UserDataService userDataService;
 
-    @GetMapping(value = "/userProfile")
+    @GetMapping(value = "/profile")
     public String userProfile() {
         userDataService.findUserById(2L);
         return "profile";

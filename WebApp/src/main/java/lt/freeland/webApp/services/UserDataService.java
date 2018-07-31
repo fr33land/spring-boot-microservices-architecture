@@ -1,5 +1,7 @@
 package lt.freeland.webApp.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import lt.freeland.webApp.beans.UserDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -23,5 +25,10 @@ public class UserDataService {
     public UserDataDto findUserByUserName(String username) {
         UserDataDto user = this.template.getForObject("http://localhost:8082/users/find/username/{username}", UserDataDto.class, username);
         return user;
+    }
+    
+    public List<UserDataDto> findAll() {
+        List<UserDataDto> users = this.template.getForObject("http://localhost:8082/users/find/all", ArrayList.class);
+        return users;
     }
 }

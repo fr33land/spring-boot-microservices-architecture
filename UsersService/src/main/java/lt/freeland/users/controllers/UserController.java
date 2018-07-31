@@ -1,5 +1,6 @@
 package lt.freeland.users.controllers;
 
+import java.util.List;
 import lt.freeland.users.beans.UserProfile;
 import lt.freeland.users.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class UserController {
     @GetMapping("/find/username/{username}")
     public ResponseEntity<UserProfile> findUserByUserName(@PathVariable("username") String username) {        
         return new ResponseEntity<>(userDataRepository.findByUser_username(username), HttpStatus.OK);
+    }
+    
+    @GetMapping("/find/all")
+    public ResponseEntity<List<UserProfile>> findAll() {        
+        return new ResponseEntity<>(userDataRepository.findAll(), HttpStatus.OK);
     }
     
 }

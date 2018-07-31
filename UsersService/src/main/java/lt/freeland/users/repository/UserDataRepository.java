@@ -6,13 +6,13 @@
 package lt.freeland.users.repository;
 
 import lt.freeland.users.beans.UserProfile;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author freeland
  */
-public interface UserDataRepository extends CrudRepository<UserProfile, Long> {
+public interface UserDataRepository extends JpaRepository<UserProfile, Long> {
     
     UserProfile findByUserId(Long uid);
     UserProfile findByUser_username(String username);

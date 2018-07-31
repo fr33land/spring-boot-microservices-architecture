@@ -9,8 +9,30 @@
     <body>
         <div class="content">
             <div layout:fragment="content">
-                users....       
+                <table id="users_table" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Birthday</th>
+                            <th>City</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
-        </div>
+        </div>  
+        <th:block layout:fragment="script">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#users_table').DataTable({
+                        "processing": true,
+                        "serverSide": true,
+                        "ajax": 'http://localhost:8081/ui/admin/users/all'
+                    });
+                });
+            </script>
+        </th:block>
     </body>
 </html>
