@@ -27,8 +27,8 @@ public class UserDataService {
         return user;
     }
     
-    public List<UserDataDto> findAll() {
-        List<UserDataDto> users = this.template.getForObject("http://localhost:8082/users/find/all", ArrayList.class);
+    public UserDataDto[] findAll() {
+        UserDataDto[] users = this.template.getForObject("http://localhost:8082/users/find/all", UserDataDto[].class);
         return users;
     }
 }

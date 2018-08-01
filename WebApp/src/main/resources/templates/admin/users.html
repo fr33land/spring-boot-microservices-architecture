@@ -18,6 +18,7 @@
                             <th>Birthday</th>
                             <th>City</th>
                             <th>Address</th>
+                            <th>Phone</th>
                         </tr>
                     </thead>
                 </table>
@@ -26,10 +27,20 @@
         <th:block layout:fragment="script">
             <script type="text/javascript">
                 $(document).ready(function () {
-                    $('#users_table').DataTable({
+                    var dataTable = $('#users_table').DataTable({
                         "processing": true,
                         "serverSide": true,
-                        "ajax": 'http://localhost:8081/ui/admin/users/all'
+                        "ajax": 'http://localhost:8081/ui/admin/users/all',
+                        "columns": [
+                            {"data": "userId"},
+                            {"data": "firstName"},
+                            {"data": "lastName"},
+                            {"data": "birthday"},
+                            {"data": "city"},
+                            {"data": "address"},
+                            {"data": "phone"}
+                        ],
+                        "order": []
                     });
                 });
             </script>

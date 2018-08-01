@@ -30,11 +30,11 @@ public class UsersController {
     @GetMapping(value = "/all", params = {"draw"})
     @ResponseBody
     public DataTables usersAll(@RequestParam("draw") Integer draw) {
-        List<UserDataDto> users = userDataService.findAll();
+        UserDataDto[] users = userDataService.findAll();
         DataTables dt = new DataTables();
-        UserDataDto[] myArray = users.toArray(new UserDataDto[users.size()]);
-        dt.setData(myArray);
-        dt.setRecordsTotal(users.size());
+        dt.setData(users);
+        dt.setRecordsTotal(users.length);
+        dt.setRecordsFiltered(users.length);
         dt.setDraw(draw);
         return dt;
     }
