@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import lt.freeland.webApp.beans.DataTables;
+import lt.freeland.datatables.data.DataTablesData;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -29,9 +29,9 @@ public class UsersController {
 
     @GetMapping(value = "/all", params = {"draw"})
     @ResponseBody
-    public DataTables usersAll(@RequestParam("draw") Integer draw) {
+    public DataTablesData usersAll(@RequestParam("draw") Integer draw) {
         UserDataDto[] users = userDataService.findAll();
-        DataTables dt = new DataTables();
+        DataTablesData dt = new DataTablesData();
         dt.setData(users);
         dt.setRecordsTotal(users.length);
         dt.setRecordsFiltered(users.length);
