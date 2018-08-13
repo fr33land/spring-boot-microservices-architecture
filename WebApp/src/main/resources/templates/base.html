@@ -6,6 +6,8 @@
         <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Base</title>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
         <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/sandstone/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables/css/dataTables.bootstrap4.min.css}"></link>
@@ -86,6 +88,12 @@
                     $('#sidebar').toggleClass('active');
                     $('#content').toggleClass('active');
                 });
+            });
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content")
+                }
             });
         </script>
         <th:block layout:fragment="script"></th:block>

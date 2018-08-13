@@ -38,4 +38,8 @@ public class UserController {
         return new ResponseEntity<>(userDataRepository.findAll(), HttpStatus.OK);
     }
     
+    @GetMapping("/find/filtered")
+    public ResponseEntity<List<UserProfile>> searchUsers() {        
+        return new ResponseEntity<>(userDataRepository.findAll(), HttpStatus.OK);
+    }
 }

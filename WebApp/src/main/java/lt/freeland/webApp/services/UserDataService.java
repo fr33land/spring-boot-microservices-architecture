@@ -1,7 +1,6 @@
 package lt.freeland.webApp.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import lt.freeland.datatables.filter.Filter;
 import lt.freeland.webApp.beans.UserDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -29,6 +28,11 @@ public class UserDataService {
     
     public UserDataDto[] findAll() {
         UserDataDto[] users = this.template.getForObject("http://localhost:8082/users/find/all", UserDataDto[].class);
+        return users;
+    }
+    
+    public UserDataDto[] searchUsers(Filter filter) {
+        UserDataDto[] users = this.template.getForObject("http://localhost:8082/users/find/filtered", UserDataDto[].class, filter);
         return users;
     }
 }

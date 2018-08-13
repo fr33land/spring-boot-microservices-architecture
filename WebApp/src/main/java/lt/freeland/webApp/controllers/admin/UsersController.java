@@ -1,15 +1,17 @@
 package lt.freeland.webApp.controllers.admin;
 
 import java.util.List;
+import lt.freeland.datatables.data.Data;
+import lt.freeland.datatables.filter.Filter;
 import lt.freeland.webApp.beans.UserDataDto;
 import lt.freeland.webApp.services.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import lt.freeland.datatables.data.DataTablesData;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -27,15 +29,15 @@ public class UsersController {
         return "admin/users";
     }
 
-    @GetMapping(value = "/all", params = {"draw"})
     @ResponseBody
-    public DataTablesData usersAll(@RequestParam("draw") Integer draw) {
-        UserDataDto[] users = userDataService.findAll();
-        DataTablesData dt = new DataTablesData();
+    @PostMapping(value = "/all")
+    public Data usersAll(@RequestBody Filter filter) {
+        UserDataDto[] users = userDataService.searchUsers(filter);
+        Data dt = new Data();
         dt.setData(users);
         dt.setRecordsTotal(users.length);
         dt.setRecordsFiltered(users.length);
-        dt.setDraw(draw);
+        dt.setDraw(filter.getDraw());
         return dt;
     }
 }

@@ -28,19 +28,26 @@
             <script type="text/javascript">
                 $(document).ready(function () {
                     var dataTable = $('#users_table').DataTable({
-                        "processing": true,
-                        "serverSide": true,
-                        "ajax": 'http://localhost:8081/ui/admin/users/all',
-                        "columns": [
-                            {"data": "userId"},
-                            {"data": "firstName"},
-                            {"data": "lastName"},
-                            {"data": "birthday"},
-                            {"data": "city"},
-                            {"data": "address"},
-                            {"data": "phone"}
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: "http://localhost:8081/ui/admin/users/all",
+                            contentType: "application/json",
+                            type: "POST",
+                            data: function (d) {
+                                return JSON.stringify(d);
+                            }
+                        },
+                        columns: [
+                            {data: "userId"},
+                            {data: "firstName"},
+                            {data: "lastName"},
+                            {data: "birthday"},
+                            {data: "city"},
+                            {data: "address"},
+                            {data: "phone"}
                         ],
-                        "order": []
+                        order: []
                     });
                 });
             </script>
