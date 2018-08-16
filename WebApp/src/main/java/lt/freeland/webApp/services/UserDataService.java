@@ -1,8 +1,9 @@
 package lt.freeland.webApp.services;
 
-import lt.freeland.datatables.filter.Filter;
 import lt.freeland.webApp.beans.UserDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,8 @@ public class UserDataService {
         return users;
     }
     
-    public UserDataDto[] searchUsers(Filter filter) {
-        UserDataDto[] users = this.template.getForObject("http://localhost:8082/users/find/filtered", UserDataDto[].class, filter);
+    public DataTablesOutput searchUsers(DataTablesInput filter) {
+        DataTablesOutput users = this.template.postForObject("http://localhost:8082/users/find/filtered", filter, DataTablesOutput.class);
         return users;
     }
 }
