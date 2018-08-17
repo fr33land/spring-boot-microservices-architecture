@@ -33,7 +33,7 @@ public class UserDataService {
     }
     
     public DataTablesOutput searchUsers(DataTablesInput filter) {
-        DataTablesOutput users = this.template.postForObject("http://localhost:8082/users/find/filtered", filter, DataTablesOutput.class);
+        DataTablesOutput users = this.template.postForObject("http://localhost:8082/users/find/users", filter, DataTablesOutput.class);
         return users;
     }
 }
