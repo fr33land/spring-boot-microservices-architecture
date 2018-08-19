@@ -1,6 +1,5 @@
 package lt.freeland.webApp.controllers.admin;
 
-import java.util.List;
 import javax.validation.Valid;
 import lt.freeland.webApp.beans.UserDataDto;
 import lt.freeland.webApp.services.UserDataService;
