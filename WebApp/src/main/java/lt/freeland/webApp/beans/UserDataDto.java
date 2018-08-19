@@ -1,5 +1,6 @@
 package lt.freeland.webApp.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,6 +9,7 @@ import java.util.Date;
  * @author freeland
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDataDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

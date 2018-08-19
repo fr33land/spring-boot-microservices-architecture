@@ -39,9 +39,9 @@ public class UserController {
         return new ResponseEntity<>(userDataRepository.findByUser_username(username), HttpStatus.OK);
     }
 
-    @ResponseBody
     @RequestMapping(value = "/find/users", method = RequestMethod.POST)
     public DataTablesOutput<UserProfile> getUsers(@Valid @RequestBody DataTablesInput input) {
-        return userDataRepository.findAll(input);
+        DataTablesOutput<UserProfile> data = userDataRepository.findAll(input);
+        return data;
     }
 }

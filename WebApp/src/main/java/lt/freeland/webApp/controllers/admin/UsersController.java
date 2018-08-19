@@ -32,8 +32,8 @@ public class UsersController {
 
     @ResponseBody
     @PostMapping(value = "/find")
-    public DataTablesOutput usersAll(@Valid @RequestBody DataTablesInput filter) {
-        DataTablesOutput users = userDataService.searchUsers(filter);
+    public DataTablesOutput<UserDataDto> usersAll(@Valid @RequestBody DataTablesInput filter) {
+        DataTablesOutput<UserDataDto> users = userDataService.searchUsers(filter);
         return users;
     }
 }
