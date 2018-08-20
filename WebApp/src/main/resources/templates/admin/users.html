@@ -42,7 +42,11 @@
                             {data: "userId"},
                             {data: "firstName"},
                             {data: "lastName"},
-                            {data: "birthday"},
+                            {data: "birthday",
+                                render: function (d) {
+                                    return moment(d).format("YYYY-MM-DD");
+                                }
+                            },
                             {data: "city"},
                             {data: "address"},
                             {data: "phone"}
