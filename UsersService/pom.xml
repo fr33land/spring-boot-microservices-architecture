@@ -90,6 +90,9 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <finalName>
+            ${project.artifactId}
+        </finalName>
     </build>
     
     <repositories>

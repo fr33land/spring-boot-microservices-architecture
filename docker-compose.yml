@@ -1,0 +1,29 @@
+version: '3'
+services: 
+    postgres-db:
+        image: postgres:latest
+        expose:
+            - 5432
+        ports:
+            - 5432:5432
+        networks: 
+            - microservices-network
+    eureka-server:
+        build: ./EurekaServer
+        expose: 
+            - 8761
+        ports:
+            - 8761:8761
+        networks: 
+            - microservices-network
+    web-app:
+        build: ./WebApp
+        environment:
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+        depends_on:
+            - eureka-server
+        networks: 
+            - microservices-network
+networks:
+    microservices-network:
+        driver: bridge
