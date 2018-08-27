@@ -12,11 +12,8 @@ spring:
         username: freeland
         password: freeland
         driverClassName: org.postgresql.Driver
-        jpa:
-            database: POSTGRESQL
-            show-sql: true
-            hibernate:
-                ddl-auto: create-drop
+    jpa:
+        show-sql: true
                 
 eureka:
     client:
