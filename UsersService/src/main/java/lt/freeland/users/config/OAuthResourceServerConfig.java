@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -62,11 +63,11 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         Path path;
         try {
-            path = Paths.get(getClass().getClassLoader().getResource(publicKeyFile).toURI());
+            path = Paths.get(new ClassPathResource(publicKeyFile).getURI());
             byte[] fileBytes = Files.readAllBytes(path);
             String publicKey = new String(fileBytes);
             converter.setVerifierKey(publicKey);
-        } catch (URISyntaxException | IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(OAuthResourceServerConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
 

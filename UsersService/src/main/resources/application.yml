@@ -10,16 +10,13 @@ spring:
         username: freeland
         password: freeland
         driverClassName: org.postgresql.Driver
-        jpa:
-            database: POSTGRESQL
-            show-sql: true
-            hibernate:
-                ddl-auto: create-drop
+    jpa:
+        show-sql: false
                                 
 eureka:
     client:
         serviceUrl:
-            defaultZone: http://127.0.0.1:8761/eureka/
+            defaultZone: http://localhost:8761/eureka/
             
 keystore:
     publicKey: jwtkey.pub

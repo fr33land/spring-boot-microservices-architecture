@@ -8,10 +8,10 @@ server:
 
 spring:
     application:
-        name: webapp-ui
+        name: webapp-service
     thymeleaf:
         cache: false   
-        
+
 security:
     basic:
         enabled: false

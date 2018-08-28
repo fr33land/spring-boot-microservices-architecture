@@ -16,12 +16,46 @@ services:
             - 8761:8761
         networks: 
             - microservices-network
-    web-app:
+    uaa-service:
+        build: ./UaaService
+        environment:
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+            SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/freeland
+        expose: 
+            - 8089
+        ports:
+            - 8089:8089
+        depends_on:
+            - postgres-db
+            - eureka-server
+        networks: 
+            - microservices-network
+    users-service:
+        build: ./UsersService
+        environment:
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+            SPRING_DATASOURCE_JDBCURL: jdbc:postgresql://postgres-db:5432/freeland
+        expose: 
+            - 8082
+        ports:
+            - 8082:8082
+        depends_on:
+            - postgres-db
+            - eureka-server
+        networks: 
+            - microservices-network
+    webapp-service:
         build: ./WebApp
         environment:
             EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+        expose: 
+            - 8081
+        ports:
+            - 8081:8081
         depends_on:
             - eureka-server
+            - uaa-service
+            - users-service
         networks: 
             - microservices-network
 networks:
