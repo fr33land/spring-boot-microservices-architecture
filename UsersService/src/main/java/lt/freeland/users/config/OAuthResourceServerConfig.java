@@ -1,6 +1,7 @@
 package lt.freeland.users.config;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -61,11 +62,11 @@ public class OAuthResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        Path path;
         try {
-            path = Paths.get(new ClassPathResource(publicKeyFile).getURI());
-            byte[] fileBytes = Files.readAllBytes(path);
-            String publicKey = new String(fileBytes);
+            InputStream is = new ClassPathResource(publicKeyFile).getInputStream();
+            byte[] jwtKey = new byte[is.available()];
+            is.read(jwtKey);
+            String publicKey = new String(jwtKey);
             converter.setVerifierKey(publicKey);
         } catch (IOException ex) {
             Logger.getLogger(OAuthResourceServerConfig.class.getName()).log(Level.SEVERE, null, ex);

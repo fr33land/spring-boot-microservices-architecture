@@ -35,6 +35,11 @@ services:
         environment:
             EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
             SPRING_DATASOURCE_JDBCURL: jdbc:postgresql://postgres-db:5432/freeland
+            SECURITY_OAUTH_CLIENT_ACCESSTOKENURI: http://uaa-service:8089/uaa/oauth/token
+            SECURITY_OAUTH_CLIENT_USERAUTHORIZATIONURI: http://uaa-service:8089/uaa/oauth/authorize
+            SECURITY_OAUTH_RESOURCE_USERINFOURI: http://uaa-service:8089/uaa/user
+            SECURITY_OAUTH_RESOURCE_SSOLOGOUTURI: http://uaa-service:8089/uaa/ssoLogout
+            SECURITY_OAUTH_RESOURCE_TOKENINVALIDATEURI: http://uaa-service:8089/uaa/invalidateToken
         expose: 
             - 8082
         ports:
@@ -42,6 +47,7 @@ services:
         depends_on:
             - postgres-db
             - eureka-server
+            - uaa-service
         networks: 
             - microservices-network
     webapp-service:
