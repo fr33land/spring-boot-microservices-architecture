@@ -1,5 +1,6 @@
 package lt.freeland.webApp.services;
 
+import com.netflix.discovery.EurekaClient;
 import lt.freeland.webApp.beans.UserDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -21,25 +22,28 @@ public class UserDataService {
     @Autowired
     private OAuth2RestTemplate template;
 
+    @Autowired
+    private EurekaClient eurekaClient;
+
     public UserDataDto findUserById(Long uid) {
-        UserDataDto user = this.template.getForObject("http://localhost:8082/users/find/{uid}", UserDataDto.class, uid);
+        UserDataDto user = this.template.getForObject("http://users-service/users/find/{uid}", UserDataDto.class, uid);
         return user;
     }
-    
+
     public UserDataDto findUserByUserName(String username) {
-        UserDataDto user = this.template.getForObject("http://localhost:8082/users/find/username/{username}", UserDataDto.class, username);
+        UserDataDto user = this.template.getForObject("http://users-service/users/find/username/{username}", UserDataDto.class, username);
         return user;
     }
-    
+
     public UserDataDto[] findAll() {
-        UserDataDto[] users = this.template.getForObject("http://localhost:8082/users/find/all", UserDataDto[].class);
+        UserDataDto[] users = this.template.getForObject("http://users-service/users/find/all", UserDataDto[].class);
         return users;
     }
-    
+
     public DataTablesOutput<UserDataDto> searchUsers(DataTablesInput filter) {
         HttpEntity<DataTablesInput> request = new HttpEntity(filter);
-        ResponseEntity<DataTablesOutput<UserDataDto>> response = this.template.exchange("http://localhost:8082/users/find/users", HttpMethod.POST, request, new ParameterizedTypeReference<DataTablesOutput<UserDataDto>>(){});
-        DataTablesOutput<UserDataDto> users = response.getBody(); 
+        ResponseEntity<DataTablesOutput<UserDataDto>> response = this.template.exchange("http://users-service/users/find/users", HttpMethod.POST, request, new ParameterizedTypeReference<DataTablesOutput<UserDataDto>>() {});
+        DataTablesOutput<UserDataDto> users = response.getBody();
         return users;
     }
 }
