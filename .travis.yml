@@ -5,7 +5,8 @@ services:
 - docker
 
 before_install:
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  provider: script
+  script: bash travis_docker_login
 
 script: 
 - mvn clean install -Dmaven.test.skip=true
