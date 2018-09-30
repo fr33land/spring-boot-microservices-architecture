@@ -5,7 +5,7 @@ services:
 - docker
 
 before_install:
-- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
 script: 
 - mvn clean install -Dmaven.test.skip=true
