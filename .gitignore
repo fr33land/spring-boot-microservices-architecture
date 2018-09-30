@@ -4,3 +4,6 @@ webApp/nbactions.xml
 webApp/nbactions.xml
 WebApp/target/classes/application.yml
 ConfigServer/nbactions.xml
+EurekaServer/nbactions.xml
+UaaService/nbactions.xml
+UsersService/nbactions.xml
