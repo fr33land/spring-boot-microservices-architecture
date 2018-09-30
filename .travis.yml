@@ -5,8 +5,7 @@ services:
 - docker
 
 before_install:
-  provider: script
-  script: bash travis_docker_login
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
 
 script: 
 - mvn clean install -Dmaven.test.skip=true
