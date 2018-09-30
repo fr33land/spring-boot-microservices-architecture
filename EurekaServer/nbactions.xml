@@ -22,7 +22,7 @@
             <goals>
                 <goal>clean</goal>
                 <goal>install</goal>
-                <goal>dockerfile:build</goal>
+                
             </goals>
         </action>
     </actions>
