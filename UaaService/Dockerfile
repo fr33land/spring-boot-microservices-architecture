@@ -1,4 +1,6 @@
 FROM openjdk:8-jdk-alpine
+ENV TZ=Europe/Vilnius
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 VOLUME /tmp
 EXPOSE 8089
 ARG JAR_FILE=target/UaaService.jar
