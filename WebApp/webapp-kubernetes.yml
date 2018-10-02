@@ -1,0 +1,45 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: webapp-service
+spec:
+  selector:
+    app: webapp
+  ports:
+  - protocol: TCP
+    port: 8081
+    nodePort: 30081
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  namespace: default
+  labels:
+    app: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp
+          image: fr33land/spring-boot-microservices-architecture:webapp
+          ports:
+           - containerPort: 8081
+          volumeMounts:
+          - name: tz-config
+            mountPath: /etc/localtime
+      volumes:
+       - name: tz-config
+         hostPath:
+           path: /usr/share/zoneinfo/Europe/Vilnius
+      imagePullSecrets:
+       - name: docregkey
+      
