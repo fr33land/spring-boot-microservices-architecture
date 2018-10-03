@@ -106,7 +106,7 @@
                 <version>1.1.1</version>
                 <configuration>
                     <imageName>${docker.image.prefix}:uaaservice</imageName>
-                    <dockerDirectory>.</dockerDirectory>
+                    <dockerDirectory>${project.basedir}</dockerDirectory>
                 </configuration>
                 <executions>
                     <execution>
