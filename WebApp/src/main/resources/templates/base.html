@@ -85,6 +85,7 @@
         <script th:src="@{/webjars/datatables/js/dataTables.bootstrap4.min.js}"></script>
         <script type="text/javascript">
             $(document).ready(function () {
+                setNavigation();
                 $('.navbar-toggler').on('click', function () {
                     $('#sidebar').toggleClass('active');
                     $('#content').toggleClass('active');
@@ -96,6 +97,19 @@
                     'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content")
                 }
             });
+
+            function setNavigation() {
+                var path = window.location.pathname;
+                path = path.replace(/\/$/, "");
+                path = decodeURIComponent(path);
+                
+                var parentLi = $('a.nav-link[href^="' + path + '"]').parent('li');
+                parentLi.addClass('active');
+                
+                var parentUl = parentLi.closest('ul');
+                parentUl.addClass("show");
+                $('[data-target="#' + parentUl.attr('id') + '"]').attr("aria-expanded", true);
+            }
         </script>
         <th:block layout:fragment="script"></th:block>
     </body>
