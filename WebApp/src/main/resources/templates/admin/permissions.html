@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="base">
+    <head>
+        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Users administration</title>
+    </head>
+    <body>
+        <div class="content">
+            <div layout:fragment="content">
+                <table id="users_table" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Birthday</th>
+                            <th>City</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>  
+        <th:block layout:fragment="script">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var dataTable = $('#users_table').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: "http://localhost:8081/ui/admin/users/find",
+                            contentType: "application/json",
+                            type: "POST",
+                            data: function (d) {
+                                return JSON.stringify(d);
+                            }
+                        },
+                        columns: [
+                            {data: "userId"},
+                            {data: "firstName"},
+                            {data: "lastName"},
+                            {data: "birthday",
+                                render: function (d) {
+                                    return moment(d).format("YYYY-MM-DD");
+                                }
+                            },
+                            {data: "city"},
+                            {data: "address"},
+                            {data: "phone"}
+                        ]
+                    });
+                });
+            </script>
+        </th:block>
+    </body>
+</html>

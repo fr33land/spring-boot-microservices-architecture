@@ -1,4 +1,4 @@
-package lt.freeland.webApp.beans;
+package lt.freeland.webApp.domain;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author freeland
  */
-public class CountriesDto implements Serializable {
+public class CountriesData implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -16,14 +16,14 @@ public class CountriesDto implements Serializable {
     private String isoCode;
     private String phoneCode;
 
-    public CountriesDto() {
+    public CountriesData() {
     }
 
-    public CountriesDto(Integer id) {
+    public CountriesData(Integer id) {
         this.id = id;
     }
 
-    public CountriesDto(Integer id, String name, String isoCode) {
+    public CountriesData(Integer id, String name, String isoCode) {
         this.id = id;
         this.name = name;
         this.isoCode = isoCode;
@@ -70,10 +70,10 @@ public class CountriesDto implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof CountriesDto)) {
+        if (!(object instanceof CountriesData)) {
             return false;
         }
-        CountriesDto other = (CountriesDto) object;
+        CountriesData other = (CountriesData) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

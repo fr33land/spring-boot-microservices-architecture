@@ -1,33 +1,70 @@
-package lt.freeland.webApp.beans;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lt.freeland.users.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author freeland
  */
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDataDto implements Serializable {
+@Entity
+@Table(name = "users_profiles")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class UserProfile implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Long userId;    
+    
+    @Id
+    @Column(name = "user_id")
+    private Long userId;
+    
+    @Column(name = "first_name")
     private String firstName;
-    private String lastName;
-    private String fullName;
-    private Date birthday;
-    private String city;
-    private String address;
-    private String phone;
-    private CountriesDto nationality;
 
-    public UserDataDto() {
+    @Column(name = "last_name")
+    private String lastName;
+    
+    @Column(name = "birthday")
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "phone")
+    private String phone;
+    
+    @JoinColumn(name = "nationality", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Countries nationality;
+    
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public UserProfile() {
     }
 
-    public UserDataDto(Long userId) {
+    public UserProfile(Long userId) {
         this.userId = userId;
     }
 
@@ -53,14 +90,6 @@ public class UserDataDto implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-    
-    public String getFullName() {
-        return this.firstName + " " + this.lastName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public Date getBirthday() {
@@ -95,12 +124,20 @@ public class UserDataDto implements Serializable {
         this.phone = phone;
     }
 
-    public CountriesDto getNationality() {
+    public Countries getNationality() {
         return nationality;
     }
 
-    public void setNationality(CountriesDto nationality) {
+    public void setNationality(Countries nationality) {
         this.nationality = nationality;
+    }
+    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -113,10 +150,10 @@ public class UserDataDto implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UserDataDto)) {
+        if (!(object instanceof UserProfile)) {
             return false;
         }
-        UserDataDto other = (UserDataDto) object;
+        UserProfile other = (UserProfile) object;
         if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
             return false;
         }
@@ -125,7 +162,7 @@ public class UserDataDto implements Serializable {
 
     @Override
     public String toString() {
-        return "UserDataDto{" + "userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", birthday=" + birthday + ", city=" + city + ", address=" + address + ", phone=" + phone + ", nationality=" + nationality + '}';
+        return "lt.freeland.users.beans.UsersData[ userId=" + userId + " ]";
     }
     
 }

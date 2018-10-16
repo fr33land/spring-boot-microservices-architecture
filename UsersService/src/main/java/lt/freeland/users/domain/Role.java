@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lt.freeland.users.beans;
+package lt.freeland.users.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
@@ -25,10 +25,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "roles")
 @JsonIgnoreProperties({"users"})
-public class Role implements Serializable{
-    
+public class Role implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,7 +37,10 @@ public class Role implements Serializable{
     @NotNull
     @Column(name = "name")
     private String name;
-    
+
+    @Column(name = "description")
+    private String description;
+
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Collection<User> users;
 
@@ -56,7 +59,7 @@ public class Role implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public Collection<User> getUsers() {
         return users;
     }
@@ -64,5 +67,13 @@ public class Role implements Serializable{
     public void setUsers(Collection<User> users) {
         this.users = users;
     }
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

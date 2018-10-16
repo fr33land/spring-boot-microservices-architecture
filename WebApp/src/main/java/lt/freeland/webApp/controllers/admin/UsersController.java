@@ -1,7 +1,7 @@
 package lt.freeland.webApp.controllers.admin;
 
 import javax.validation.Valid;
-import lt.freeland.webApp.beans.UserDataDto;
+import lt.freeland.webApp.domain.UserData;
 import lt.freeland.webApp.services.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -21,8 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/admin/users")
 public class UsersController {
 
+    private final UserDataService userDataService;
+
     @Autowired
-    UserDataService userDataService;
+    public UsersController(UserDataService userDataService) {
+        this.userDataService = userDataService;
+    }
 
     @GetMapping(value = "/")
     public String usersList() {
@@ -31,8 +35,8 @@ public class UsersController {
 
     @ResponseBody
     @PostMapping(value = "/find")
-    public DataTablesOutput<UserDataDto> usersAll(@Valid @RequestBody DataTablesInput filter) {
-        DataTablesOutput<UserDataDto> users = userDataService.searchUsers(filter);
+    public DataTablesOutput<UserData> usersAll(@Valid @RequestBody DataTablesInput filter) {
+        DataTablesOutput<UserData> users = userDataService.searchUsers(filter);
         return users;
     }
 }

@@ -3,7 +3,9 @@ package lt.freeland.users.controllers;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
+import lt.freeland.users.domain.Role;
 import lt.freeland.users.domain.UserProfile;
+import lt.freeland.users.repository.RolesRepository;
 import lt.freeland.users.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -23,37 +25,29 @@ import org.springframework.web.bind.annotation.RestController;
  * @author freeland
  */
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/roles")
+public class RolesController {
 
     //protected Logger logger = Logger.getLogger(UserController.class.getName());
-    private final UserDataRepository userDataRepository;
+    private final RolesRepository rolesRepository;
 
     @Autowired
-    public UserController(UserDataRepository userDataRepository) {
-        this.userDataRepository = userDataRepository;
+    public RolesController(RolesRepository rolesRepository) {
+        this.rolesRepository = rolesRepository;
     }
 
-    @GetMapping("/find/{uid}")
-    public ResponseEntity<UserProfile> findUserById(@PathVariable("uid") Long uid) {
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Role> findRoleById(@PathVariable("id") Long id) {
         return Optional
-                .ofNullable(userDataRepository.findByUserId(uid))
-                .map(user -> ResponseEntity.ok(user))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/find/username/{username}")
-    public ResponseEntity<UserProfile> findUserByUserName(@PathVariable("username") String username) {
-        return Optional
-                .ofNullable(userDataRepository.findByUser_username(username))
-                .map(user -> ResponseEntity.ok(user))
+                .ofNullable(rolesRepository.findById(id).get())
+                .map(user -> ResponseEntity.ok().body(user))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/find/users", method = RequestMethod.POST)
-    public DataTablesOutput<UserProfile> getUsers(@Valid @RequestBody DataTablesInput input) {
-        DataTablesOutput<UserProfile> data = userDataRepository.findAll(input);
+    @RequestMapping(value = "/find/roles", method = RequestMethod.POST)
+    public DataTablesOutput<Role> getRoles(@Valid @RequestBody DataTablesInput input) {
+        DataTablesOutput<Role> data = rolesRepository.findAll(input);
         return data;
     }
 }

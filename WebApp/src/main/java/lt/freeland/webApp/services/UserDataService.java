@@ -1,7 +1,7 @@
 package lt.freeland.webApp.services;
 
 import com.netflix.discovery.EurekaClient;
-import lt.freeland.webApp.beans.UserDataDto;
+import lt.freeland.webApp.domain.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -19,31 +19,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDataService {
 
-    @Autowired
-    private OAuth2RestTemplate template;
+    private final OAuth2RestTemplate template;
 
     @Autowired
-    private EurekaClient eurekaClient;
+    public UserDataService(OAuth2RestTemplate template) {
+        this.template = template;
+    }
 
-    public UserDataDto findUserById(Long uid) {
-        UserDataDto user = this.template.getForObject("http://users-service/users/find/{uid}", UserDataDto.class, uid);
+    public UserData findUserById(Long uid) {
+        UserData user = this.template.getForObject("http://users-service/users/find/{uid}", UserData.class, uid);
         return user;
     }
 
-    public UserDataDto findUserByUserName(String username) {
-        UserDataDto user = this.template.getForObject("http://users-service/users/find/username/{username}", UserDataDto.class, username);
+    public UserData findUserByUserName(String username) {
+        UserData user = this.template.getForObject("http://users-service/users/find/username/{username}", UserData.class, username);
         return user;
     }
 
-    public UserDataDto[] findAll() {
-        UserDataDto[] users = this.template.getForObject("http://users-service/users/find/all", UserDataDto[].class);
+    public UserData[] findAll() {
+        UserData[] users = this.template.getForObject("http://users-service/users/find/all", UserData[].class);
         return users;
     }
 
-    public DataTablesOutput<UserDataDto> searchUsers(DataTablesInput filter) {
+    public DataTablesOutput<UserData> searchUsers(DataTablesInput filter) {
         HttpEntity<DataTablesInput> request = new HttpEntity(filter);
-        ResponseEntity<DataTablesOutput<UserDataDto>> response = this.template.exchange("http://users-service/users/find/users", HttpMethod.POST, request, new ParameterizedTypeReference<DataTablesOutput<UserDataDto>>() {});
-        DataTablesOutput<UserDataDto> users = response.getBody();
+        ResponseEntity<DataTablesOutput<UserData>> response = this.template.exchange("http://users-service/users/find/users", HttpMethod.POST, request, new ParameterizedTypeReference<DataTablesOutput<UserData>>() {});
+        DataTablesOutput<UserData> users = response.getBody();
         return users;
     }
 }
