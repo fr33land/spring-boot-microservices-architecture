@@ -1,0 +1,5 @@
+---
+security:
+    oauth2:
+        resource:
+            service-id: localhost:8089

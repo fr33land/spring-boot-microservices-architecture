@@ -8,3 +8,6 @@ EurekaServer/nbactions.xml
 UaaService/nbactions.xml
 UsersService/nbactions.xml
 EurekaServer/nbactions.xml
+WebApp/src/main/resources/application-freeland.yml
+WebApp/src/main/java/lt/freeland/webApp/controllers/OauthController.java
+WebApp/src/main/resources/application-freeland.yml

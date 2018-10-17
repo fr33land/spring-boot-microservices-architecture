@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**");
+                .antMatchers("/resources/**", "/ui/oauthCallback");
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login**", "/js/**", "/css/**").permitAll()
+                .antMatchers("/", "/login**", "/js/**", "/css/**", "/ui/oauthCallback").permitAll()
                 .anyRequest().authenticated();
 
         http

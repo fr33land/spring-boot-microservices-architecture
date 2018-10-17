@@ -1,6 +1,5 @@
 ---
 server:
-    address: 0.0.0.0
     port: 8081
     servlet:
         context-path: /ui
@@ -12,6 +11,8 @@ spring:
         name: webapp-service
     thymeleaf:
         cache: false   
+    profiles:
+        active: freeland
 
 security:
     basic:
@@ -20,15 +21,16 @@ security:
         client:
             clientId: webapp-server
             clientSecret: webapp-server
-            accessTokenUri: http://localhost:8089/uaa/oauth/token
-            userAuthorizationUri: http://localhost:8089/uaa/oauth/authorize
+            accessTokenUri: http://${security.oauth2.resource.service-id}/uaa/oauth/token
+            userAuthorizationUri: http://${security.oauth2.resource.service-id}/uaa/oauth/authorize
 #            pre-established-redirect-uri: http://localhost:8081/ui/userProfile
 #            registered-redirect-uri: http://localhost:8081/ui/userProfile
 #            use-current-uri: false
         resource:
-            userInfoUri: http://localhost:8089/uaa/user
-            ssoLogoutUri: http://localhost:8089/uaa/ssoLogout
-            tokenInvalidateUri: http://localhost:8089/uaa/invalidateToken
+            service-id: freeland.sytes.net:8089
+            userInfoUri: http://${security.oauth2.resource.service-id}/uaa/user
+            ssoLogoutUri: http://${security.oauth2.resource.service-id}/uaa/ssoLogout
+            tokenInvalidateUri: http://${security.oauth2.resource.service-id}/uaa/invalidateToken
       
 eureka:
     client:
