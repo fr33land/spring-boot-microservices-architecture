@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableEurekaClient
 @SpringBootApplication
 @EnableJpaRepositories(value = "lt.freeland.users.repository", repositoryFactoryBeanClass = DataTablesRepositoryFactoryBean.class)
-@EntityScan("lt.freeland.users.domain")  
+@EntityScan("lt.freeland.common.domain")  
 public class UsersApplication {
 
     public static void main(String[] args) {

@@ -3,6 +3,8 @@ package lt.freeland.uaa.beans;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import lt.freeland.common.domain.User;
+import lt.freeland.common.domain.UserProfile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

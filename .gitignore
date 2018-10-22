@@ -11,3 +11,7 @@ EurekaServer/nbactions.xml
 WebApp/src/main/resources/application-freeland.yml
 WebApp/src/main/java/lt/freeland/webApp/controllers/OauthController.java
 WebApp/src/main/resources/application-freeland.yml
+CommonLibs/.mvn/wrapper/maven-wrapper.jar
+CommonLibs/.mvn/wrapper/maven-wrapper.properties
+CommonLibs/mvnw
+CommonLibs/mvnw.cmd

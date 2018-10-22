@@ -1,6 +1,6 @@
 package lt.freeland.webApp.beans;
 
-import lt.freeland.webApp.services.UserDataService;
+import lt.freeland.webApp.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;

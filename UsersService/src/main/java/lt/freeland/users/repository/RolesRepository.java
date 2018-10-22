@@ -1,6 +1,6 @@
 package lt.freeland.users.repository;
 
-import lt.freeland.users.domain.Role;
+import lt.freeland.common.domain.Role;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 
 /**

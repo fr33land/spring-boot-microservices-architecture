@@ -21,15 +21,15 @@ security:
         client:
             clientId: webapp-server
             clientSecret: webapp-server
-            accessTokenUri: http://${security.oauth2.resource.service-id}/uaa/oauth/token
-            userAuthorizationUri: http://${security.oauth2.resource.service-id}/uaa/oauth/authorize
+            accessTokenUri: ${security.oauth2.resource.server-address}/uaa/oauth/token
+            userAuthorizationUri: ${security.oauth2.resource.server-address}/uaa/oauth/authorize
 #            pre-established-redirect-uri: http://localhost:8081/ui/userProfile
 #            registered-redirect-uri: http://localhost:8081/ui/userProfile
 #            use-current-uri: false
         resource:
-            service-id: freeland.sytes.net:8089
-            userInfoUri: http://${security.oauth2.resource.service-id}/uaa/user
-            ssoLogoutUri: http://${security.oauth2.resource.service-id}/uaa/ssoLogout
+            service-id: uaa-service
+            userInfoUri: ${security.oauth2.resource.server-address}/uaa/user
+            ssoLogoutUri: ${security.oauth2.resource.server-address}/uaa/ssoLogout
             tokenInvalidateUri: http://${security.oauth2.resource.service-id}/uaa/invalidateToken
       
 eureka:

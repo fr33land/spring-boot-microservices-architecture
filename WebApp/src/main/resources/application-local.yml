@@ -2,4 +2,4 @@
 security:
     oauth2:
         resource:
-            service-id: localhost:8089
+            server-address: http://localhost:8089
