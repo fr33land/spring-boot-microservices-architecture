@@ -49,7 +49,7 @@ public class UserProfile implements Serializable {
     private String phone;
     
     @JoinColumn(name = "nationality", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Countries nationality;
     
     @OneToOne(fetch = FetchType.EAGER)

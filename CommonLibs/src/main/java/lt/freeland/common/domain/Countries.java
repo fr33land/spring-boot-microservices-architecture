@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -29,10 +30,12 @@ public class Countries implements Serializable {
     @Column(name = "id")
     private Integer id;
     
+    @NotNull
     @Size(min = 1, max = 64)
     @Column(name = "name")
     private String name;
 
+    @NotNull
     @Size(min = 1, max = 3)
     @Column(name = "iso_code")
     private String isoCode;
