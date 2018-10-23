@@ -1,4 +1,4 @@
-package lt.freeland.repository;
+package lt.freeland.uaa.repository;
 
 import lt.freeland.common.domain.User;
 import org.springframework.data.repository.CrudRepository;

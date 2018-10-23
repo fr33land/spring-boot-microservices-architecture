@@ -3,7 +3,7 @@ package lt.freeland.uaa.service;
 import java.util.HashSet;
 import java.util.Set;
 import lt.freeland.common.domain.User;
-import lt.freeland.repository.UserRepository;
+import lt.freeland.uaa.repository.UserRepository;
 import lt.freeland.uaa.beans.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
