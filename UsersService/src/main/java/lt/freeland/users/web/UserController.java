@@ -3,6 +3,8 @@ package lt.freeland.users.web;
 import java.util.Optional;
 import javax.validation.Valid;
 import lt.freeland.common.domain.UserProfile;
+import lt.freeland.common.exceptions.EntityNotFoundException;
+import lt.freeland.common.exceptions.EntityListEmptyException;
 import lt.freeland.users.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -37,7 +39,7 @@ public class UserController {
         return Optional
                 .ofNullable(userDataRepository.findByUserId(uid))
                 .map(user -> ResponseEntity.ok(user))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new EntityNotFoundException(UserProfile.class, "uid", uid));
     }
 
     @GetMapping("/find/username/{username}")
@@ -45,13 +47,15 @@ public class UserController {
         return Optional
                 .ofNullable(userDataRepository.findByUser_username(username))
                 .map(user -> ResponseEntity.ok(user))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new EntityNotFoundException(UserProfile.class, "username", username));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/find/users", method = RequestMethod.POST)
-    public DataTablesOutput<UserProfile> getUsers(@Valid @RequestBody DataTablesInput input) {
-        DataTablesOutput<UserProfile> data = userDataRepository.findAll(input);
-        return data;
+    public ResponseEntity<DataTablesOutput<UserProfile>> getUsers(@Valid @RequestBody DataTablesInput input) {
+        return Optional
+                .ofNullable(userDataRepository.findAll(input))
+                .map(data -> ResponseEntity.ok(data))
+                .orElseThrow(() -> new EntityListEmptyException(UserProfile.class));
     }
 }

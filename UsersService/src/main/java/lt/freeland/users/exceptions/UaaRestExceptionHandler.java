@@ -1,6 +1,6 @@
 package lt.freeland.users.exceptions;
 
-import lt.freeland.common.exceptions.RestExceptionHandler;
+import lt.freeland.common.exceptions.GlobalExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author freeland
  */
 @RestControllerAdvice
-public class UaaRestExceptionHandler extends RestExceptionHandler {
+public class UaaRestExceptionHandler extends GlobalExceptionHandler {
     
 }

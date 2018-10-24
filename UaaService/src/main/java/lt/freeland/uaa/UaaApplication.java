@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringBootApplication
 @EnableEurekaClient
 @EnableResourceServer
-@EnableJpaRepositories("lt.freeland.repository")
+@EnableJpaRepositories("lt.freeland.uaa.repository")
 @EntityScan("lt.freeland.common.domain")
 public class UaaApplication {
 
