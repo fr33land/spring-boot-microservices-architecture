@@ -9,25 +9,81 @@
     <body>
         <div class="content">
             <div layout:fragment="content">
-                <table id="users_table" class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Birthday</th>
-                            <th>City</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                        </tr>
-                    </thead>
-                </table>
+                <ul class="nav nav-tabs" id="userSecTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#roles" role="tab" aria-controls="roles" aria-selected="false">Roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#permissions" role="tab" aria-controls="permissions" aria-selected="false">Permissions</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="userSecTabsContent">
+                    <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+                        </br>
+                        <table id="users_table" class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>First name</th>
+                                    <th>Last name</th>
+                                    <th>Birthday</th>
+                                    <th>City</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="roles" role="tabpanel" aria-labelledby="roles-tab">
+                        </br>
+                        <table id="roles_table" class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Role name</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
+                        </br>
+                        <table id="permissions_table" class="table table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Permission name</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>  
         <th:block layout:fragment="script">
             <script type="text/javascript">
                 $(document).ready(function () {
-                    var dataTable = $('#users_table').DataTable({
+
+                    showUsersTable();
+
+                    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                        var target = $(e.target).attr("href")
+                        if (target === "#users" && !$.fn.dataTable.isDataTable('#users_table')) {
+                            showUsersTable();
+                        } else if (target === "#roles" && !$.fn.dataTable.isDataTable('#roles_table')) {
+                            showRolesTable();
+                        } else if (target === "#permissions" && !$.fn.dataTable.isDataTable('#permissions_table')) {
+
+                        }
+                    });
+                });
+
+                function showUsersTable() {
+                    $('#users_table').DataTable({
                         processing: true,
                         serverSide: true,
                         ajax: {
@@ -52,7 +108,58 @@
                             {data: "phone"}
                         ]
                     });
-                });
+                }
+
+                function showRolesTable() {
+                    $('#roles_table').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: "/ui/admin/roles/find",
+                            contentType: "application/json",
+                            type: "POST",
+                            data: function (d) {
+                                return JSON.stringify(d);
+                            }
+                        },
+                        columns: [
+                            {data: "id"},
+                            {data: "name"},
+                            {data: "description"}
+                        ]
+                    });
+                }
+
+                function showPermissionsTable() {
+                    $('#permissions_table').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: "/ui/admin/permissions/find",
+                            contentType: "application/json",
+                            type: "POST",
+                            data: function (d) {
+                                return JSON.stringify(d);
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                alert(textStatus);
+                            }
+                        },
+                        columns: [
+                            {data: "userId"},
+                            {data: "firstName"},
+                            {data: "lastName"},
+                            {data: "birthday",
+                                render: function (d) {
+                                    return moment(d).format("YYYY-MM-DD");
+                                }
+                            },
+                            {data: "city"},
+                            {data: "address"},
+                            {data: "phone"}
+                        ]
+                    });
+                }
             </script>
         </th:block>
     </body>

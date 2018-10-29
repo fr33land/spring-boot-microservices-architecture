@@ -28,11 +28,6 @@ public class RolesController {
         this.roleDataService = roleDataService;
     }
 
-    @GetMapping(value = "/")
-    public String usersList() {
-        return "admin/roles";
-    }
-
     @ResponseBody
     @PostMapping(value = "/find")
     public DataTablesOutput<Role> usersAll(@Valid @RequestBody DataTablesInput filter) {

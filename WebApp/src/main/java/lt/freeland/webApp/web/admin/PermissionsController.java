@@ -24,11 +24,6 @@ public class PermissionsController {
     @Autowired
     UserDataService userDataService;
 
-    @GetMapping(value = "/")
-    public String usersList() {
-        return "admin/permissions";
-    }
-
     @ResponseBody
     @PostMapping(value = "/find")
     public DataTablesOutput<UserData> usersAll(@Valid @RequestBody DataTablesInput filter) {
