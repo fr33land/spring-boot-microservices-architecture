@@ -12,7 +12,7 @@ spring:
     thymeleaf:
         cache: false   
     profiles:
-        active: freeland
+        active: local
 
 security:
     basic:

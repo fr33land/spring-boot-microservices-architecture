@@ -15,3 +15,8 @@ CommonLibs/.mvn/wrapper/maven-wrapper.jar
 CommonLibs/.mvn/wrapper/maven-wrapper.properties
 CommonLibs/mvnw
 CommonLibs/mvnw.cmd
+WebApp/nb-configuration.xml
+WebApp/nbactions-freeland.xml
+WebApp/nbactions-local.xml
+WebApp/nb-configuration.xml
+WebApp/node_modules/*

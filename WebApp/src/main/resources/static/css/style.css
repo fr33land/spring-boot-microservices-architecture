@@ -130,6 +130,14 @@ a.article, a.article:hover {
     float: right !important;
 }
 
+.nav-tabs .nav-link {
+    cursor: pointer;
+}
+
+.table > tbody> tr {
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;

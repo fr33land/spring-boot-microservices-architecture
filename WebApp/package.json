@@ -1,0 +1,38 @@
+{
+  "name": "spring-boot-microservices-architecture-reactjs",
+  "version": "0.2.0",
+  "description": "Spring Boot microservices architecture based dashboard",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fr33land/spring-boot-microservices-architecture.git"
+  },
+  "keywords": [
+    "rest",
+    "microservices",
+    "spring",
+    "data",
+    "react"
+  ],
+  "author": "fr33land",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/fr33land/spring-boot-microservices-architecture/issues"
+  },
+  "homepage": "https://github.com/fr33land/spring-boot-microservices-architecture",
+  "dependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "reactstrap": "^6.0.1"
+  },
+  "scripts": {
+    "watch": "webpack --watch -d"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
