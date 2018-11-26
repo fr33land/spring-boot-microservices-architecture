@@ -1,13 +1,11 @@
-import React, { Component }
-from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col }
-from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 
-class UsersSecurity extends React.Component {
+class UserSecurity extends React.Component {
     constructor(props) {
-    super(props);
+        super(props);
             this.toggle = this.toggle.bind(this);
             this.state = { activeTab: 'users' };
     }
@@ -185,7 +183,7 @@ class UsersSecurity extends React.Component {
                 </TabContent>
             </div>
         );
-      }
+    }
 }
 
-ReactDOM.render(<UsersSecurity />, document.getElementById('users-content'));
+export default UserSecurity

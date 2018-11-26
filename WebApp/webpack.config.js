@@ -3,7 +3,7 @@ module.exports = {
     entry:
             {
                 app: './src/main/js/App.js',
-                usersecurity: './src/main/js/admin/UsersSecurity.js',
+                usersecurity: './src/main/js/admin/usersecurity/UserSecurityRouter.js',
             },
     devtool: 'sourcemaps',
     cache: true,
