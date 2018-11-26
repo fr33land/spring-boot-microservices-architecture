@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Link, Redirect } from 'react-router-dom'
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 
@@ -12,8 +13,7 @@ class UserSecurity extends React.Component {
 
     toggle(tab) {
         if (this.state.activeTab !== tab) {
-            this.setState({activeTab: tab});
-            
+            this.setState({activeTab: tab});            
             if (tab === 'users' && !$.fn.dataTable.isDataTable('#users_table')) {
                 this.showUsersTable();
             } else if (tab === 'roles' && !$.fn.dataTable.isDataTable('#roles_table')) {
@@ -29,6 +29,8 @@ class UserSecurity extends React.Component {
     }
     
     showUsersTable(){
+        var _ = this;
+        
         $('#users_table').DataTable({
             processing: true,
             serverSide: true,
@@ -39,6 +41,11 @@ class UserSecurity extends React.Component {
                 data: function (d) {
                     return JSON.stringify(d);
                 }
+            },
+            initComplete: function () {
+                $( document ).on("click", "#users_table > tbody > tr[role='row']", function(){
+                    _.showEditForm("/user/edit", $(this).children('td:first-child').text());
+                });
             },
             columns: [
                 {data: "userId"},
@@ -54,9 +61,13 @@ class UserSecurity extends React.Component {
                 {data: "phone"}
             ]
         });
+        
+        
     }
     
     showRolesTable(){
+        var _ = this;
+        
         $('#roles_table').DataTable({
             processing: true,
             serverSide: true,
@@ -68,6 +79,11 @@ class UserSecurity extends React.Component {
                     return JSON.stringify(d);
                 }
             },
+            initComplete: function () {
+                $( document ).on("click", "#roles_table > tbody > tr[role='row']", function(){
+                    _.showEditForm("/role/edit", $(this).children('td:first-child').text());
+                });
+            },            
             columns: [
                 {data: "id"},
                 {data: "name"},
@@ -75,8 +91,10 @@ class UserSecurity extends React.Component {
             ]
         });
     }
-    
+
     showPermissionsTable() {
+        var _ = this;    
+    
         $('#permissions_table').DataTable({
             processing: true,
             serverSide: true,
@@ -91,6 +109,11 @@ class UserSecurity extends React.Component {
                     alert(textStatus);
                 }
             },
+            initComplete: function () {
+                $( document ).on("click", "#permissions_table > tbody > tr[role='row']", function(){
+                    _.showEditForm("/permission/edit", $(this).children('td:first-child').text());
+                });
+            },
             columns: [
                 {data: "userId"},
                 {data: "firstName"},
@@ -105,6 +128,10 @@ class UserSecurity extends React.Component {
                 {data: "phone"}
             ]
         });
+    }
+    
+    showEditForm(url, id){
+        this.props.history.replace("/ui/admin/users" + url + "/" + id);
     }
 
     render() {

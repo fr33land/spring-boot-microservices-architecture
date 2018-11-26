@@ -37444,9 +37444,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/dist/reactstrap.es.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/dist/reactstrap.es.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37464,6 +37465,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 
 
 
@@ -37511,6 +37513,8 @@ function (_React$Component) {
   }, {
     key: "showUsersTable",
     value: function showUsersTable() {
+      var _ = this;
+
       $('#users_table').DataTable({
         processing: true,
         serverSide: true,
@@ -37521,6 +37525,11 @@ function (_React$Component) {
           data: function data(d) {
             return JSON.stringify(d);
           }
+        },
+        initComplete: function initComplete() {
+          $(document).on("click", "#users_table > tbody > tr[role='row']", function () {
+            _.showEditForm("/user/edit", $(this).children('td:first-child').text());
+          });
         },
         columns: [{
           data: "userId"
@@ -37545,6 +37554,8 @@ function (_React$Component) {
   }, {
     key: "showRolesTable",
     value: function showRolesTable() {
+      var _ = this;
+
       $('#roles_table').DataTable({
         processing: true,
         serverSide: true,
@@ -37555,6 +37566,11 @@ function (_React$Component) {
           data: function data(d) {
             return JSON.stringify(d);
           }
+        },
+        initComplete: function initComplete() {
+          $(document).on("click", "#roles_table > tbody > tr[role='row']", function () {
+            _.showEditForm("/role/edit", $(this).children('td:first-child').text());
+          });
         },
         columns: [{
           data: "id"
@@ -37568,6 +37584,8 @@ function (_React$Component) {
   }, {
     key: "showPermissionsTable",
     value: function showPermissionsTable() {
+      var _ = this;
+
       $('#permissions_table').DataTable({
         processing: true,
         serverSide: true,
@@ -37581,6 +37599,11 @@ function (_React$Component) {
           error: function error(xhr, textStatus, errorThrown) {
             alert(textStatus);
           }
+        },
+        initComplete: function initComplete() {
+          $(document).on("click", "#permissions_table > tbody > tr[role='row']", function () {
+            _.showEditForm("/permission/edit", $(this).children('td:first-child').text());
+          });
         },
         columns: [{
           data: "userId"
@@ -37603,38 +37626,43 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "showEditForm",
+    value: function showEditForm(url, id) {
+      this.props.history.replace("/ui/admin/users" + url + "/" + id);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Nav"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Nav"], {
         tabs: true
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["NavItem"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
-        className: classnames__WEBPACK_IMPORTED_MODULE_3___default()({
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["NavItem"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
+        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()({
           active: this.state.activeTab === 'users'
         }),
         onClick: function onClick() {
           _this2.toggle('users');
         }
-      }, "Users")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["NavItem"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
-        className: classnames__WEBPACK_IMPORTED_MODULE_3___default()({
+      }, "Users")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["NavItem"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
+        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()({
           active: this.state.activeTab === 'roles'
         }),
         onClick: function onClick() {
           _this2.toggle('roles');
         }
-      }, "Roles")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["NavItem"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
-        className: classnames__WEBPACK_IMPORTED_MODULE_3___default()({
+      }, "Roles")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["NavItem"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
+        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()({
           active: this.state.activeTab === 'permissions'
         }),
         onClick: function onClick() {
           _this2.toggle('permissions');
         }
-      }, "Permissions"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["TabContent"], {
+      }, "Permissions"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["TabContent"], {
         activeTab: this.state.activeTab
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["TabPane"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["TabPane"], {
         tabId: "users"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Col"], {
         sm: "12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         id: "users_table",
@@ -37642,9 +37670,9 @@ function (_React$Component) {
         style: {
           width: '100%'
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "First name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Last name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Birthday"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "City"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Address"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Phone"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["TabPane"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "First name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Last name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Birthday"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "City"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Address"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Phone"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["TabPane"], {
         tabId: "roles"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Col"], {
         sm: "12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         id: "roles_table",
@@ -37652,9 +37680,9 @@ function (_React$Component) {
         style: {
           width: '100%'
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Role name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["TabPane"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Id"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Role name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Description"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["TabPane"], {
         tabId: "permissions"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Row"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Col"], {
         sm: "12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         id: "permissions_table",
@@ -37673,10 +37701,10 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./src/main/js/admin/usersecurity/UserSecurityEdit.js":
-/*!************************************************************!*\
-  !*** ./src/main/js/admin/usersecurity/UserSecurityEdit.js ***!
-  \************************************************************/
+/***/ "./src/main/js/admin/usersecurity/UserSecurityPermissionsEdit.js":
+/*!***********************************************************************!*\
+  !*** ./src/main/js/admin/usersecurity/UserSecurityPermissionsEdit.js ***!
+  \***********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37707,28 +37735,87 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var UserSecurityEdit =
+var UserSecurityPermissionsEdit =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(UserSecurityEdit, _React$Component);
+  _inherits(UserSecurityPermissionsEdit, _React$Component);
 
-  function UserSecurityEdit() {
-    _classCallCheck(this, UserSecurityEdit);
+  function UserSecurityPermissionsEdit() {
+    _classCallCheck(this, UserSecurityPermissionsEdit);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(UserSecurityEdit).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(UserSecurityPermissionsEdit).apply(this, arguments));
   }
 
-  _createClass(UserSecurityEdit, [{
+  _createClass(UserSecurityPermissionsEdit, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "ffgfgfggfhfg");
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "permissions");
     }
   }]);
 
-  return UserSecurityEdit;
+  return UserSecurityPermissionsEdit;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (UserSecurityEdit);
+/* harmony default export */ __webpack_exports__["default"] = (UserSecurityPermissionsEdit);
+
+/***/ }),
+
+/***/ "./src/main/js/admin/usersecurity/UserSecurityRolesEdit.js":
+/*!*****************************************************************!*\
+  !*** ./src/main/js/admin/usersecurity/UserSecurityRolesEdit.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var UserSecurityRolesEdit =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(UserSecurityRolesEdit, _React$Component);
+
+  function UserSecurityRolesEdit() {
+    _classCallCheck(this, UserSecurityRolesEdit);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(UserSecurityRolesEdit).apply(this, arguments));
+  }
+
+  _createClass(UserSecurityRolesEdit, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "roles");
+    }
+  }]);
+
+  return UserSecurityRolesEdit;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (UserSecurityRolesEdit);
 
 /***/ }),
 
@@ -37747,7 +37834,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var _UserSecurity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UserSecurity */ "./src/main/js/admin/usersecurity/UserSecurity.js");
-/* harmony import */ var _UserSecurityEdit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UserSecurityEdit */ "./src/main/js/admin/usersecurity/UserSecurityEdit.js");
+/* harmony import */ var _UserSecurityUsersEdit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UserSecurityUsersEdit */ "./src/main/js/admin/usersecurity/UserSecurityUsersEdit.js");
+/* harmony import */ var _UserSecurityRolesEdit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UserSecurityRolesEdit */ "./src/main/js/admin/usersecurity/UserSecurityRolesEdit.js");
+/* harmony import */ var _UserSecurityPermissionsEdit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./UserSecurityPermissionsEdit */ "./src/main/js/admin/usersecurity/UserSecurityPermissionsEdit.js");
+
+
 
 
 
@@ -37758,10 +37849,75 @@ var UserSecurityRouter = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElem
   path: "/ui/admin/users",
   component: _UserSecurity__WEBPACK_IMPORTED_MODULE_3__["default"]
 }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-  path: "/ui/admin/users/edit/:id",
-  component: _UserSecurityEdit__WEBPACK_IMPORTED_MODULE_4__["default"]
+  path: "/ui/admin/users/user/edit/:id",
+  component: _UserSecurityUsersEdit__WEBPACK_IMPORTED_MODULE_4__["default"]
+}), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+  path: "/ui/admin/users/role/edit/:id",
+  component: _UserSecurityRolesEdit__WEBPACK_IMPORTED_MODULE_5__["default"]
+}), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+  path: "/ui/admin/users/permission/edit/:id",
+  component: _UserSecurityPermissionsEdit__WEBPACK_IMPORTED_MODULE_6__["default"]
 })));
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(UserSecurityRouter, document.getElementById('users-content'));
+
+/***/ }),
+
+/***/ "./src/main/js/admin/usersecurity/UserSecurityUsersEdit.js":
+/*!*****************************************************************!*\
+  !*** ./src/main/js/admin/usersecurity/UserSecurityUsersEdit.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var UserSecurityUsersEdit =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(UserSecurityUsersEdit, _React$Component);
+
+  function UserSecurityUsersEdit() {
+    _classCallCheck(this, UserSecurityUsersEdit);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(UserSecurityUsersEdit).apply(this, arguments));
+  }
+
+  _createClass(UserSecurityUsersEdit, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "users");
+    }
+  }]);
+
+  return UserSecurityUsersEdit;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (UserSecurityUsersEdit);
 
 /***/ })
 
