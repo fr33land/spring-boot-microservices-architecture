@@ -20,3 +20,4 @@ WebApp/nbactions-freeland.xml
 WebApp/nbactions-local.xml
 WebApp/nb-configuration.xml
 WebApp/node_modules/*
+WebApp/package-lock.json
