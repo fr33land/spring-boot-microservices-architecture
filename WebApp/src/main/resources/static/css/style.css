@@ -123,7 +123,7 @@ a.article, a.article:hover {
 }
 
 #page-content-wrapper{
-    padding: 0 15px;
+    padding: 0 25px;
 }
 
 .navbar-right {
@@ -136,6 +136,14 @@ a.article, a.article:hover {
 
 .table > tbody> tr {
     cursor: pointer;
+}
+
+.editForm {
+    width: 450px;
+}
+
+.react-datepicker-wrapper, .react-datepicker__input-container {
+    display: block !important;
 }
 
 @media (max-width: 768px) {

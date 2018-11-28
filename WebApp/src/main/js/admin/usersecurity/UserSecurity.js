@@ -7,8 +7,12 @@ import classnames from 'classnames';
 class UserSecurity extends React.Component {
     constructor(props) {
         super(props);
-            this.toggle = this.toggle.bind(this);
-            this.state = { activeTab: 'users' };
+        this.toggle = this.toggle.bind(this);
+        this.state = {  activeTab: 'users',
+                        userEdit: false,
+                        roleEdit: false,
+                        permissionEdit: false
+                    };
     }
 
     toggle(tab) {
@@ -44,7 +48,7 @@ class UserSecurity extends React.Component {
             },
             initComplete: function () {
                 $( document ).on("click", "#users_table > tbody > tr[role='row']", function(){
-                    _.showEditForm("/user/edit", $(this).children('td:first-child').text());
+                    _.setState({userEdit: true, id: $(this).children('td:first-child').text()})
                 });
             },
             columns: [
@@ -81,7 +85,7 @@ class UserSecurity extends React.Component {
             },
             initComplete: function () {
                 $( document ).on("click", "#roles_table > tbody > tr[role='row']", function(){
-                    _.showEditForm("/role/edit", $(this).children('td:first-child').text());
+                    _.setState({roleEdit: true, id: $(this).children('td:first-child').text()});
                 });
             },            
             columns: [
@@ -111,7 +115,7 @@ class UserSecurity extends React.Component {
             },
             initComplete: function () {
                 $( document ).on("click", "#permissions_table > tbody > tr[role='row']", function(){
-                    _.showEditForm("/permission/edit", $(this).children('td:first-child').text());
+                    _.setState({permissionEdit: true, id: $(this).children('td:first-child').text()});
                 });
             },
             columns: [
@@ -129,12 +133,21 @@ class UserSecurity extends React.Component {
             ]
         });
     }
-    
-    showEditForm(url, id){
-        this.props.history.replace("/ui/admin/users" + url + "/" + id);
-    }
 
     render() {
+        console.log(this.state);
+        if (this.state.userEdit === true) {
+          return <Redirect to={'/ui/admin/users/user/edit/' + this.state.id} />
+        }
+        
+        if (this.state.roleEdit === true) {
+          return <Redirect to={'/ui/admin/users/role/edit/' + this.state.id} />
+        }
+        
+        if (this.state.permissionEdit === true) {
+          return <Redirect to={'/ui/admin/users/permission/edit/' + this.state.id} />
+        }
+        
         return (
             <div>
                 <Nav tabs>
