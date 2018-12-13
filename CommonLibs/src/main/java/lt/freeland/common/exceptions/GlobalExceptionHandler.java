@@ -1,7 +1,12 @@
 package lt.freeland.common.exceptions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +16,9 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -22,6 +30,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * @author freeland
  */
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -93,6 +103,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String error = ex.getMessage();
 
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler({HttpServerErrorException.class, HttpClientErrorException.class})
+    public ResponseEntity<Object> handleHttpStatusCodeException(HttpStatusCodeException e, HttpServletResponse response) throws IOException {
+        ApiError apiError = objectMapper.readValue(e.getResponseBodyAsString(), ApiError.class);
         return buildResponseEntity(apiError);
     }
 

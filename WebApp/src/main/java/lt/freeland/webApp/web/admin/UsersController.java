@@ -6,8 +6,10 @@ import lt.freeland.webApp.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,5 +40,11 @@ public class UsersController {
     public DataTablesOutput<UserData> usersAll(@Valid @RequestBody DataTablesInput filter) {
         DataTablesOutput<UserData> users = userDataService.searchUsers(filter);
         return users;
+    }
+    
+    @ResponseBody
+    @GetMapping(value = "/find/{id}")
+    public ResponseEntity<UserData> findUserById(@PathVariable("id") Long id){                
+        return ResponseEntity.ok(userDataService.findUserById(id));
     }
 }

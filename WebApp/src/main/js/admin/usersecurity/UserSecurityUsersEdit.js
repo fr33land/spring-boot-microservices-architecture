@@ -5,16 +5,38 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-class UserSecurityUsersEdit extends React.Component {
+export default class UserSecurityUsersEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            startDate: new Date()
+            user: {},
+            startDate: new Date(), 
+            error: null,
+            isLoaded: false,
         };
         
         this.handleChange = this.handleChange.bind(this);
     }
     
+    componentDidMount() {
+        fetch(`/ui/admin/users/find/${this.props.match.params.id}`)
+            .then(response => response.json())
+            .then(
+                (result) => {
+                this.setState({
+                    isLoaded: true,
+                    user: result
+                });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+    }
+  
     handleChange(date) {
         this.setState({ startDate: date });
     }
@@ -67,5 +89,3 @@ class UserSecurityUsersEdit extends React.Component {
         );
   }
 }
-
-export default UserSecurityUsersEdit

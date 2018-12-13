@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author freeland
  */
 @RestControllerAdvice
-public class UaaRestExceptionHandler extends GlobalExceptionHandler {
+public class UsersRestExceptionHandler extends GlobalExceptionHandler {
     
 }

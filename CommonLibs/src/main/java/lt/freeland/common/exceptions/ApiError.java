@@ -1,6 +1,10 @@
 package lt.freeland.common.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +17,13 @@ import org.springframework.http.HttpStatus;
 public class ApiError {
 
     private HttpStatus status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime timestamp;
+    
     private String message;
+    
     private List<String> errors;
 
     private ApiError() {
@@ -39,14 +47,14 @@ public class ApiError {
         this.message = message;
         this.errors = Arrays.asList(error);
     }
-    
+
     public ApiError(HttpStatus status, String message, List<String> errors) {
         this();
         this.status = status;
         this.message = message;
         this.errors = errors;
     }
-    
+
     public HttpStatus getStatus() {
         return status;
     }
@@ -61,6 +69,6 @@ public class ApiError {
 
     public List<String> getErrors() {
         return errors;
-    }  
+    }
 
 }
