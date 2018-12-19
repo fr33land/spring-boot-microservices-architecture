@@ -2,14 +2,11 @@ package lt.freeland.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,7 +17,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "countries")
-@JsonIgnoreProperties({"usersProfiles"})
 public class Countries implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,9 +39,6 @@ public class Countries implements Serializable {
     @Size(max = 10)
     @Column(name = "phone_code")
     private String phoneCode;
-    
-    @OneToMany(mappedBy = "nationality", fetch = FetchType.LAZY)
-    private List<UserProfile> usersProfiles;
 
     public Countries() {
     }
@@ -90,14 +83,6 @@ public class Countries implements Serializable {
 
     public void setPhoneCode(String phoneCode) {
         this.phoneCode = phoneCode;
-    }
-
-    public List<UserProfile> getUsersProfiles() {
-        return usersProfiles;
-    }
-
-    public void setUsersProfiles(List<UserProfile> usersProfiles) {
-        this.usersProfiles = usersProfiles;
     }
 
     @Override

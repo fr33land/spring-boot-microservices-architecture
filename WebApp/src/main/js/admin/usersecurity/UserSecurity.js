@@ -135,7 +135,6 @@ class UserSecurity extends React.Component {
     }
 
     render() {
-        console.log(this.state);
         if (this.state.userEdit === true) {
           return <Redirect to={'/ui/admin/users/user/edit/' + this.state.id} />
         }

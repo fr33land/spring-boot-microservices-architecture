@@ -48,7 +48,7 @@ public class UserProfile implements Serializable {
     @Column(name = "phone")
     private String phone;
     
-    @JoinColumn(name = "nationality", referencedColumnName = "id")
+    @JoinColumn(name = "id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Countries nationality;
     

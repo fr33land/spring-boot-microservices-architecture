@@ -1,6 +1,9 @@
 package lt.freeland.webApp.web.admin;
 
+import java.util.List;
+import lt.freeland.webApp.service.UtilsService;
 import javax.validation.Valid;
+import lt.freeland.common.domain.Countries;
 import lt.freeland.common.dto.UserData;
 import lt.freeland.webApp.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +27,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UsersController {
 
     private final UserDataService userDataService;
+    private final UtilsService utilsService;
 
     @Autowired
-    public UsersController(UserDataService userDataService) {
+    public UsersController(UserDataService userDataService, UtilsService utilsService) {
         this.userDataService = userDataService;
+        this.utilsService = utilsService;
     }
 
     @GetMapping(value = "/")
@@ -46,5 +51,11 @@ public class UsersController {
     @GetMapping(value = "/find/{id}")
     public ResponseEntity<UserData> findUserById(@PathVariable("id") Long id){                
         return ResponseEntity.ok(userDataService.findUserById(id));
+    }
+    
+    @ResponseBody
+    @GetMapping(value = "/countries")
+    public ResponseEntity<List<Countries>> findAllCountries(){                
+        return ResponseEntity.ok(utilsService.getAllCountries());
     }
 }

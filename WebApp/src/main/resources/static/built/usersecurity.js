@@ -50527,8 +50527,6 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.state);
-
       if (this.state.userEdit === true) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
           to: '/ui/admin/users/user/edit/' + this.state.id
@@ -50830,8 +50828,15 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UserSecurityUsersEdit).call(this, props));
     _this.state = {
-      user: {},
-      startDate: new Date(),
+      user: {
+        userId: '',
+        firstName: '',
+        lastName: '',
+        birthday: new Date(),
+        city: '',
+        address: '',
+        phone: ''
+      },
       error: null,
       isLoaded: false
     };
@@ -50877,25 +50882,29 @@ function (_React$Component) {
         name: "userId",
         id: "userId",
         disabled: true,
-        size: "200"
+        size: "200",
+        value: this.state.user.userId
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
         for: "userName"
       }, "Username"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {
         type: "text",
         name: "userName",
-        id: "userName"
+        id: "userName",
+        value: this.state.user.id
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
         for: "firstName"
       }, "First name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {
         type: "text",
         name: "firstName",
-        id: "firstName"
+        id: "firstName",
+        value: this.state.user.firstName
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
         for: "lastName"
       }, "Last name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {
         type: "text",
         name: "lastName",
-        id: "lastName"
+        id: "lastName",
+        value: this.state.user.lastName
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
         for: "birthday"
       }, "Birthday"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -50903,7 +50912,7 @@ function (_React$Component) {
         id: "birthday",
         name: "birthday",
         dateFormat: "yyyy-MM-dd",
-        selected: this.state.startDate,
+        selected: this.state.user.birthday,
         onChange: this.handleChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
         for: "nationality"
@@ -50916,19 +50925,22 @@ function (_React$Component) {
       }, "City"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {
         type: "text",
         name: "city",
-        id: "city"
+        id: "city",
+        value: this.state.user.city
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
         for: "address"
       }, "Address"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {
         type: "text",
         name: "address",
-        id: "address"
+        id: "address",
+        value: this.state.user.address
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
         for: "phone"
       }, "Phone"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {
         type: "text",
         name: "phone",
-        id: "phone"
+        id: "phone",
+        value: this.state.user.phone
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["FormGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Label"], {
         for: "email"
       }, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Input"], {

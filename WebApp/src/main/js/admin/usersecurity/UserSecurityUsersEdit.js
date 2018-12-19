@@ -9,8 +9,15 @@ export default class UserSecurityUsersEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {},
-            startDate: new Date(), 
+            user: {
+                userId: '',
+                firstName: '',
+                lastName: '',
+                birthday: new Date(),
+                city: '',
+                address: '',
+                phone: ''
+            },
             error: null,
             isLoaded: false,
         };
@@ -46,23 +53,23 @@ export default class UserSecurityUsersEdit extends React.Component {
             <Form className="editForm">
                 <FormGroup>
                     <Label for="userId">Id</Label>
-                    <Input type="text" name="userId" id="userId" disabled size="200" />
+                    <Input type="text" name="userId" id="userId" disabled size="200" value={this.state.user.userId}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="userName">Username</Label>
-                    <Input type="text" name="userName" id="userName" />
+                    <Input type="text" name="userName" id="userName" value={this.state.user.id}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="firstName">First name</Label>
-                    <Input type="text" name="firstName" id="firstName"/>
+                    <Input type="text" name="firstName" id="firstName" value={this.state.user.firstName}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="lastName">Last name</Label>
-                    <Input type="text" name="lastName" id="lastName"/>
+                    <Input type="text" name="lastName" id="lastName" value={this.state.user.lastName}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="birthday">Birthday</Label>
-                    <DatePicker className="form-control edit-from-datepicker" id="birthday" name="birthday" dateFormat="yyyy-MM-dd" selected={this.state.startDate} onChange={this.handleChange}/>
+                    <DatePicker className="form-control edit-from-datepicker" id="birthday" name="birthday" dateFormat="yyyy-MM-dd" selected={this.state.user.birthday} onChange={this.handleChange}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="nationality">Nationality</Label>
@@ -70,15 +77,15 @@ export default class UserSecurityUsersEdit extends React.Component {
                 </FormGroup>
                 <FormGroup>
                     <Label for="city">City</Label>
-                    <Input type="text" name="city" id="city"/>
+                    <Input type="text" name="city" id="city" value={this.state.user.city}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="address">Address</Label>
-                    <Input type="text" name="address" id="address"/>
+                    <Input type="text" name="address" id="address" value={this.state.user.address}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="phone">Phone</Label>
-                    <Input type="text" name="phone" id="phone"/>
+                    <Input type="text" name="phone" id="phone" value={this.state.user.phone}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="email">Email</Label>
