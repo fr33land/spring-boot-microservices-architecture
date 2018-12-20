@@ -24,7 +24,7 @@ The other critical component of cloud enviroment. A purpose of this service is t
 A resource service which stores information about user. The access to the service endpoints is secured with OAuth 2.0 JWT tokens which are decoded using JwtAccessTokenConverter with public key provided by UaaService from JKS storage.
 
 ### WebApp - web application OAuth 2.0 client
-A simple client web app that uses UaaService as authentication provider and consumes secured UsersService endpoint. WebApp has a simple GUI based on Thymeleaf, JQuery and Bootstrap.
+A simple client web app that uses UaaService as authentication provider and consumes secured UsersService endpoint. WebApp has a simple GUI based on Thymeleaf, JQuery, React and Bootstrap.
 
 ## Building and runing
 The project is builded using maven command `mvn clean install`. In a root project directory parent pom file exists. Using this parent pom.xml file during maven build will compile all the project modules in one run. 
