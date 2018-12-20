@@ -8,7 +8,7 @@ There are plenty of projects related to microservices in github but many of them
 
 ## Microservices ecosystem
 
-### CommonLibs - library used to store common components
+### CommonLibs - shared library used to store common components
 This dependency is used accross all microservices. It holds commonly used objects between different components. This helps to prevent DRY (do-not-repeat-yourself) pratice accross code. Shared lib method is one of the commonly used pratices around microservices ecosystem
 
 ### EurekaServer - service registry and locator service
