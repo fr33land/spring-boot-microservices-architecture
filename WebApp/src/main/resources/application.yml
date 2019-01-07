@@ -9,6 +9,8 @@ server:
 spring:
     application:
         name: webapp-service
+    main:
+        allow-bean-definition-overriding: true
     datasource:
         jdbcUrl: jdbc:postgresql://localhost:5432/freeland
         username: freeland
