@@ -9,7 +9,6 @@ import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
  */
 public interface UserDataRepository extends DataTablesRepository<UserProfile, Long> {
     
-    UserProfile findByUserId(Long uid);
     UserProfile findByUser_username(String username);
     
 }

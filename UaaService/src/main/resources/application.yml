@@ -13,7 +13,7 @@ spring:
         password: freeland
         driverClassName: org.postgresql.Driver
     jpa:
-        show-sql: false
+        show-sql: true
                 
 eureka:
     client:

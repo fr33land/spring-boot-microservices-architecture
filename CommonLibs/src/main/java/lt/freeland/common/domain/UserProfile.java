@@ -50,11 +50,11 @@ public class UserProfile implements Serializable {
     @Column(name = "phone")
     private String phone;
     
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "nationality", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Countries nationality;
     
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;    
 }

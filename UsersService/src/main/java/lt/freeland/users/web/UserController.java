@@ -36,8 +36,7 @@ public class UserController {
 
     @GetMapping("/find/{uid}")
     public ResponseEntity<UserProfile> findUserById(@PathVariable("uid") Long uid) {
-        return Optional
-                .ofNullable(userDataRepository.findByUserId(uid))
+        return userDataRepository.findById(uid)
                 .map(user -> ResponseEntity.ok(user))
                 .orElseThrow(() -> new EntityNotFoundException(UserProfile.class, "uid", uid));
     }
