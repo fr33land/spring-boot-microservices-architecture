@@ -2,41 +2,14 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
 }
 
-p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: #999;
-}
-
-a, a:hover, a:focus {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s;
-}
 
 .navbar {
     border: none;
     border-radius: 0;
     margin-bottom: 20px;
     color: #ffffff;
-}
-
-.navbar-btn {
-    box-shadow: none;
-    outline: none !important;
-    border: none;
-}
-
-.line {
-    width: 100%;
-    height: 1px;
-    border-bottom: 1px dashed #ddd;
-    margin: 40px 0;
 }
 
 #sidebar {
@@ -46,8 +19,8 @@ a, a:hover, a:focus {
     left: 0;
     height: 100vh;
     z-index: 999;
-    background-color: #829aaf;
-    color: #fff;
+    background-color: rgb(250, 250, 250);
+    color: #212529;
     transition: all 0.3s;
 }
 
@@ -57,6 +30,7 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
+    text-align: center;
 }
 
 #sidebar ul.components {
@@ -64,7 +38,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul p {
-    color: #fff;
+    color: #212529;
     padding: 10px;
 }
 
@@ -73,16 +47,14 @@ a, a:hover, a:focus {
     font-size: 1.1em;
     display: block;
 }
-#sidebar ul li a:hover {
-    color: #284a6c;
-    background: #fff;
+#sidebar ul li a:hover, #sidebar ul li.active > a:hover  {
+    color: rgba(255,255,255,1);
+    background-color: rgba(154,194,40,1);
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
-    background: #829aaf;
+    color: #212529;
 }
-
 
 a[data-toggle="collapse"] {
     position: relative;
@@ -102,7 +74,6 @@ a[aria-expanded="true"]::before {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #92a7b9;
 }
 
 a.article, a.article:hover {
@@ -162,4 +133,33 @@ a.article, a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+.bg-primary {
+    background-color: #3E3F3A !important;
+}
+
+.popup_btn, .popup_btn:focus {
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 400;
+    font-size: 10pt;
+    text-transform: uppercase;
+    background-color: rgba(154,194,40,1);
+    border: 0px;
+}
+
+.dropdown-menu {
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 400;
+    font-size: 10pt;
+    background-color: rgba(154,194,40,1);
+    border: 0px;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: rgba(255,255,255,1);
+    text-decoration: none;
+    background-color: #f8f9fa;
 }
