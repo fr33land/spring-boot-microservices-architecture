@@ -14,6 +14,8 @@ spring:
         driverClassName: org.postgresql.Driver
     jpa:
         show-sql: true
+    thymeleaf:
+        cache: false  
                 
 eureka:
     client:

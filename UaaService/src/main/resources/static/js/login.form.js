@@ -18,6 +18,10 @@ $(document).ready(function () {
         errorElement: "span",
         errorClass: "is-invalid",
         rules: {
+            username: {
+                required: true,
+                minlength: 3
+            },
             email: {
                 required: true,
                 validemail: true,
@@ -34,6 +38,10 @@ $(document).ready(function () {
             }
         },
         messages: {
+            username: {
+                required: "Please enter username",
+                minlength: "Your username must be at least 3 characters long"
+            },
             email: {
                 required: "Please enter a valid email address",
                 minlength: "Your email must consist of at least 5 characters"

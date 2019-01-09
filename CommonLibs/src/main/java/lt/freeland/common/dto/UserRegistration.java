@@ -15,6 +15,10 @@ import lombok.Data;
 @MatchingValue(field = "password", matchingField = "passwordconfirm", message = "{password.not_match}")
 public class UserRegistration {
     
+    @NotEmpty(message = "{username.not_empty}")
+    @Size(min = 5, message = "{username.min_length}")
+    private String username;  
+    
     @Email(message = "{email.not_valid}")
     @NotEmpty(message = "{email.not_empty}")
     @Size(min = 5, message = "{email.min_length}")
@@ -26,8 +30,6 @@ public class UserRegistration {
     
     @NotEmpty(message = "{password.not_empty}")
     @Size(min = 6, message = "{password.min_length}")
-    private String passwordconfirm;
-    
-    private String name;            
+    private String passwordconfirm;          
     
 }

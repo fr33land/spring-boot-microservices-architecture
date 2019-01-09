@@ -23,7 +23,6 @@ public class LoginController {
     
     @GetMapping(value = "/login")
     public ModelAndView loginForm(WebRequest request, ModelMap mm) {
-        UserRegistration user = new UserRegistration();
-        return new ModelAndView("login", "user", user);
+        return new ModelAndView("login", "user", new UserRegistration());
     }
 }
