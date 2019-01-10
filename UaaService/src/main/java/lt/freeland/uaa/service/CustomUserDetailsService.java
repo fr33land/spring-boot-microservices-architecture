@@ -20,23 +20,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
- 
+
     @Autowired
     private UserRepository userRepository;
- 
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         user.getRoles().forEach((role) -> {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
         });
-        
+
         return new CustomUserDetails(user);
     }
 }
