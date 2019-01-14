@@ -16,6 +16,8 @@ spring:
         show-sql: true
     thymeleaf:
         cache: false  
+    profiles:
+        active: local
                 
 eureka:
     client:

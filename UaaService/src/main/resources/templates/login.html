@@ -5,22 +5,29 @@
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body>
         <div layout:fragment="content" th:remove="tag">
             <div class="container-login center-block">
+                <div id="logo">
+                    <img th:src="@{/images/lku_logo.png}" /> 
+                    <div id="site-name">Developer portal</div>
+                </div>
                 <div th:if="${param.error}">
                     <div class="alert alert-danger">
-                        Invalid username or password.
+                        <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" th:remove="tag"></span>
+                        <a th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] instanceof T(org.springframework.security.authentication.DisabledException)}" th:href="@{/resendActivation}" >resend activation link</a>
                     </div>
                 </div>
-                <div th:if="${param.logout}">
-                    <div class="alert alert-info">
-                        You have been logged out.
-                    </div>
+                <div th:if="${message}" style="text-align: justify">
+                    <div th:text="${message}" class="alert alert-info"></div>
                 </div>
-                <div th:if="${error}">
-                    <div class="alert alert-danger" th:text="${error}"></div>
+                <div th:if="${error}"  style="text-align: justify">
+                    <div class="alert alert-danger">
+                        <span th:text="${error}" th:remove="tag"></span>
+                        <a th:if="${resendActivation}" th:href="@{/resendActivation}" >Resend activation link</a>
+                    </div>
                 </div>
                 <ul class="nav nav-tabs nav-justified" id="auth-tabs" role="tablist">
                     <li class="nav-item">
@@ -73,6 +80,10 @@
                                 <label for="confirmpassword">Confirm password</label>
                                 <input type="password" id="passwordconfirm" name="passwordconfirm" class="form-control" th:classappend="${#fields.hasErrors('passwordconfirm')} ? is-invalid : valid" />
                                 <span id="passwordconfirm-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('passwordconfirm')}" th:text="${error}" ></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="g-recaptcha col-sm-5" th:attr="data-sitekey=${@captchaProperties.getSite()}"></div>
+                                <span id="captchaError" class="alert alert-danger col-sm-4" style="display:none"></span>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-6 pb-4 pt-2 center-block">
