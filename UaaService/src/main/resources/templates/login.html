@@ -11,8 +11,7 @@
         <div layout:fragment="content" th:remove="tag">
             <div class="container-login center-block">
                 <div id="logo">
-                    <img th:src="@{/images/lku_logo.png}" /> 
-                    <div id="site-name">Developer portal</div>
+
                 </div>
                 <div th:if="${param.error}">
                     <div class="alert alert-danger">
@@ -31,14 +30,14 @@
                 </div>
                 <ul class="nav nav-tabs nav-justified" id="auth-tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
+                        <a th:classappend="${regTab == true ? '' : 'active'}" class="nav-link" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                        <a th:classappend="${regTab == true ? 'active' : ''}" class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="auth-tabs">
-                    <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                    <div th:classappend="${regTab == true ? '' : 'show '} + ${regTab == true ? '' : 'active'}" class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
                         <form id="login-form" th:object="${user}" th:action="@{/login}" method="post">
                             <div class="form-group">
                                 <label for="username">Username</label>
@@ -57,8 +56,8 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                        <form id="register-form" th:object="${user}" th:action="@{/register}" method="post">
+                    <div th:classappend="${regTab == true ? 'show ' : ''} + ${regTab == true ? 'active' : ''}" class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                        <form id="register-form" th:object="${user}" th:action="@{/user/register}" method="post">
                             <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}"></div>
                             
                             <div class="form-group required">

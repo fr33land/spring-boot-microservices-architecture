@@ -1,6 +1,7 @@
 package lt.freeland.common.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,10 +21,14 @@ public class AccountActivation implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "user_id")
     private Long id;
 
     @NotNull
     @Column(name = "activation_token")
     private String activationToken;
+    
+    @NotNull
+    @Column(name = "expire_date")
+    private LocalDateTime expireDate;
 }

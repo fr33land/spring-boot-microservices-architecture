@@ -60,7 +60,7 @@ public class CustomUserDetails implements UserDetails {
         return this.user.getEnabled() == 1;
     }
 
-    public UserProfile getUserProfile(){
-        return this.user.getUserProfile();
-    }
+//    public UserProfile getUserProfile(){
+//        return this.user.getUserProfile();
+//    }
 }

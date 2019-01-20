@@ -2,17 +2,18 @@ package lt.freeland.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -32,7 +33,8 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="user_seq", sequenceName="users_id_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="user_seq")
     @Column(name = "id")
     private Long userId;
 
@@ -55,12 +57,20 @@ public class User implements Serializable {
     @NotEmpty
     @Column(name = "enabled")
     private short enabled;
+    
+    @NotEmpty
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+    
+    @NotEmpty
+    @Column(name = "edited_date")
+    private LocalDateTime editedDate;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
     
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
-    private UserProfile userProfile;
-
+//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+//    private UserProfile userProfile;
+    
 }

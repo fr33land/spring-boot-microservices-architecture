@@ -17,7 +17,7 @@ spring:
     thymeleaf:
         cache: false  
     profiles:
-        active: local
+        active: freeland
                 
 eureka:
     client:
