@@ -54,15 +54,12 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @NotEmpty
     @Column(name = "enabled")
     private short enabled;
     
-    @NotEmpty
     @Column(name = "created_date")
     private LocalDateTime createdDate;
     
-    @NotEmpty
     @Column(name = "edited_date")
     private LocalDateTime editedDate;
 
@@ -73,4 +70,7 @@ public class User implements Serializable {
 //    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
 //    private UserProfile userProfile;
     
+    public boolean isEnabled() {
+        return enabled == 1;
+    }    
 }

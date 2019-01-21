@@ -1,14 +1,18 @@
 package lt.freeland.uaa.controller;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import lt.freeland.common.domain.Role;
+import lombok.extern.slf4j.Slf4j;
+import lt.freeland.common.utils.Utils;
 import lt.freeland.common.domain.User;
-import lt.freeland.common.exceptions.ReCaptchaInvalidException;
-import lt.freeland.common.exceptions.ReCaptchaUnavailableException;
+import lt.freeland.uaa.exceptions.ReCaptchaInvalidException;
+import lt.freeland.uaa.exceptions.ReCaptchaUnavailableException;
 import lt.freeland.uaa.beans.UserRegistrationForm;
+import lt.freeland.uaa.exceptions.TokenExpiredException;
+import lt.freeland.uaa.exceptions.TokenNotFoundException;
+import lt.freeland.uaa.exceptions.UserActivatedException;
+import lt.freeland.uaa.exceptions.UserNotFoundException;
 import lt.freeland.uaa.service.CaptchaService;
 import lt.freeland.uaa.service.UserRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +20,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  *
  * @author freeland
  */
+@Slf4j
 @Controller
 public class RegistrationController {
 
@@ -66,17 +73,15 @@ public class RegistrationController {
         }
 
         User user = new User();
-        user.setEmail(ur.getEmail());
-        user.setUsername(ur.getUsername());
+        user.setEmail(ur.getEmail().toLowerCase());
+        user.setUsername(ur.getUsername().toLowerCase());
         user.setPassword(passwordEncoder.encode(ur.getPassword()));
         user.setEnabled((short) 0);
         user.setCreatedDate(LocalDateTime.now());
 
-        user = registrationService.registerUser(user);
+        user = registrationService.registerUser(user, Utils.getAppUrl(request));
 
         if (user.getUserId() != null) {
-            registrationService.generateAndSendActivation(user, getAppUrl(request));
-            
             ra.addFlashAttribute("message", messageSource.getMessage("user.registration_succeed", new Object[]{user.getEmail()}, null));
             return new ModelAndView("redirect:/login");
         } else {
@@ -87,7 +92,42 @@ public class RegistrationController {
         }
     }
 
-    private String getAppUrl(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + (request.getServerPort() != 80 ? ":" + request.getServerPort() : "");
+    @GetMapping("/user/activation/confirm/{token}")
+    public ModelAndView confirmAccount(HttpServletRequest request, @PathVariable(value = "token") String token, ModelMap mm) {
+        mm.addAttribute("user", new UserRegistrationForm());
+
+        try {
+            registrationService.checkConfirmationTokenIsvalid(token);
+            registrationService.confirmAccount(token);
+        } catch (TokenExpiredException | TokenNotFoundException | UserNotFoundException ex) {
+            mm.addAttribute("error", ex.getMessage());
+            
+            if (ex instanceof TokenExpiredException) {
+                mm.addAttribute("resendActivation", true);
+            }
+            
+            return new ModelAndView("login", mm);
+        }
+
+        return new ModelAndView("login", "message", messageSource.getMessage("user.confirmation_succeed", null, null));
+    }
+
+    @GetMapping("/user/activation")
+    public ModelAndView sendActivationLink(HttpServletRequest request, ModelMap mm) {
+        mm.addAttribute("user", new UserRegistrationForm());
+        return new ModelAndView("/user/registration/activation");
+    }
+
+    @PostMapping("/user/activation")
+    public ModelAndView proceedActivationLink(@ModelAttribute("user") UserRegistrationForm user, HttpServletRequest request, ModelMap mm, RedirectAttributes ra) {
+
+        try {
+            registrationService.generateAndSend(user, Utils.getAppUrl(request));
+            ra.addFlashAttribute("message", messageSource.getMessage("user.activation_link_succeed", new Object[]{user.getEmail()}, null));
+        } catch (UserActivatedException ex) {
+            ra.addFlashAttribute("error", ex.getMessage());
+        }
+
+        return new ModelAndView("redirect:/login");
     }
 }

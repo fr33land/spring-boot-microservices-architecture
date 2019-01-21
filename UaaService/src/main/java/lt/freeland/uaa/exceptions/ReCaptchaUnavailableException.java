@@ -1,4 +1,4 @@
-package lt.freeland.common.exceptions;
+package lt.freeland.uaa.exceptions;
 
 /**
  *

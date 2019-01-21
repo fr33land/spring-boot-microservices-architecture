@@ -36,5 +36,13 @@
         <docker.image.prefix>fr33land/spring-boot-microservices-architecture</docker.image.prefix>
         <spring-cloud.version>Greenwich.RC2</spring-cloud.version>
     </properties>
+    
+    <repositories>
+        <repository>
+            <id>spring-milestone-repo</id>
+            <url>http://repo.spring.io/milestone/</url>
+        </repository>
+    </repositories>
+
 
 </project>

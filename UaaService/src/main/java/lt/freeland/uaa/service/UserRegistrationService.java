@@ -1,6 +1,9 @@
 package lt.freeland.uaa.service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.UUID;
 import lt.freeland.common.domain.AccountActivation;
 import lt.freeland.common.domain.Role;
@@ -9,12 +12,16 @@ import lt.freeland.uaa.repository.AccountActivationRepository;
 import lt.freeland.uaa.repository.UserRepository;
 import lt.freeland.uaa.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+import lt.freeland.common.dto.Email;
+import lt.freeland.uaa.beans.UserRegistrationForm;
+import lt.freeland.uaa.exceptions.TokenExpiredException;
+import lt.freeland.uaa.exceptions.TokenNotFoundException;
+import lt.freeland.uaa.exceptions.UserNotFoundException;
+import lt.freeland.uaa.exceptions.UserActivatedException;
+import org.springframework.context.MessageSource;
 
 /**
  *
@@ -27,15 +34,18 @@ public class UserRegistrationService {
     private final RoleRepository roleRepository;
     private final AccountActivationRepository accountActivationRepository;
     private final EmailService emailService;
-    private final TemplateEngine templateEngine;
+    private final MessageSource messageSource;
+
+    @Value("${spring.application.email}")
+    private String senderEmail;
 
     @Autowired
-    public UserRegistrationService(UserRepository userRepository, RoleRepository roleRepository, AccountActivationRepository accountActivationRepository, EmailService emailService, TemplateEngine templateEngine) {
+    public UserRegistrationService(UserRepository userRepository, RoleRepository roleRepository, AccountActivationRepository accountActivationRepository, EmailService emailService, MessageSource messageSource) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.accountActivationRepository = accountActivationRepository;
         this.emailService = emailService;
-        this.templateEngine = templateEngine;
+        this.messageSource = messageSource;
     }
 
     public boolean checkIfUsernameExists(String username) {
@@ -43,14 +53,19 @@ public class UserRegistrationService {
     }
 
     public boolean checkIfEmailExists(String email) {
-        return userRepository.findByEmail(email).isPresent();
+        return userRepository.findByEmailIgnoreCase(email).isPresent();
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public User registerUser(User user) {
+    public User registerUser(User user, String registrationUrl) {
         Role role = roleRepository.findByName("ROLE_USER");
         user.setRoles(Arrays.asList(role));
-        return userRepository.save(user);
+        User newUser = userRepository.save(user);
+
+        if (newUser.getUserId() != null) {
+            generateAndSendActivation(user, registrationUrl);
+        }
+
+        return newUser;
     }
 
     public void generateAndSendActivation(User user, String appUrl) {
@@ -58,28 +73,63 @@ public class UserRegistrationService {
         String token = UUID.randomUUID().toString();
         accActivation.setActivationToken(token);
         accActivation.setId(user.getUserId());
+        accActivation.setExpireDate(LocalDateTime.now().plusHours(1));
 
         accountActivationRepository.save(accActivation);
 
-        String message = appUrl + "/confirm/" + token;
+        String message = appUrl + "/user/activation/confirm/" + token;
 
-        MimeMessagePreparator messagePreparator = mimeMessage -> {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("info@lku.lt");
-            messageHelper.setTo(user.getEmail());
-            messageHelper.setSubject("User registration confirmation");
-            String content = prepareAccountActivationEmail(message);
-            messageHelper.setText(content, true);
-        };
+        Email approveEmail = new Email();
+        approveEmail.setFrom(senderEmail);
+        approveEmail.setTo(user.getEmail());
+        approveEmail.setSubject("Portal registration confirmation");
+        approveEmail.setTemplate("/email/templates/confirmAccountEmail");
+        approveEmail.setMessage(message);
 
+        MimeMessagePreparator messagePreparator = emailService.prepareEmailMessage(approveEmail);
         emailService.sendEmail(messagePreparator);
 
     }
 
-    private String prepareAccountActivationEmail(String message) {
-        Context context = new Context();
-        context.setVariable("message", message);
-        return templateEngine.process("/email/accountActivationTemplate", context);
+    public boolean checkConfirmationTokenIsvalid(String token) throws TokenExpiredException, TokenNotFoundException {
+        AccountActivation accToken = accountActivationRepository
+                .findByActivationToken(token)
+                .orElseThrow(() -> new TokenNotFoundException(messageSource.getMessage("user.confirmation_not_found", null, null)));
+
+        if (accToken.getExpireDate().until(LocalDateTime.now(), ChronoUnit.HOURS) > 0) {
+            throw new TokenExpiredException(messageSource.getMessage("user.confirmation_expired", null, null));
+        }
+
+        return true;
     }
 
+    public void confirmAccount(String token) throws TokenNotFoundException, UserNotFoundException {
+        AccountActivation accToken = accountActivationRepository
+                .findByActivationToken(token)
+                .orElseThrow(() -> new TokenNotFoundException(messageSource.getMessage("user.confirmation_not_found", null, null)));
+
+        User user = userRepository.findById(accToken.getId())
+                .orElseThrow(() -> new UserNotFoundException(messageSource.getMessage("user.not_found_id", null, null)));
+        user.setEnabled((short) 1);
+        user.setEditedDate(LocalDateTime.now());
+
+        userRepository.save(user);
+    }
+
+    public void generateAndSend(UserRegistrationForm user, String registrationUrl) throws UserActivatedException {
+        Optional<User> uopt = userRepository.findByEmailIgnoreCase(user.getEmail());
+
+        if (uopt.isPresent()) {
+
+            if (uopt.get().isEnabled()) {
+                throw new UserActivatedException(messageSource.getMessage("user.already_activated", new Object[]{user.getEmail()}, null));
+            }
+
+            User newUser = new User();
+            newUser.setEmail(user.getEmail());
+            newUser.setUserId(uopt.get().getUserId());
+
+            generateAndSendActivation(newUser, registrationUrl);
+        }
+    }
 }

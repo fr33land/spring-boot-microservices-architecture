@@ -1,12 +1,13 @@
 ---
 server:
     port: 8089
-#    servlet:
-    context-path: /uaa
+    servlet:
+        context-path: /uaa
     
 spring:
     application:
         name: uaa-service
+        email: freeland.rokas@gmail.com
     datasource:
         url: jdbc:postgresql://localhost:5432/freeland
         username: freeland
