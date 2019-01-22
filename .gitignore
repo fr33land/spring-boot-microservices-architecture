@@ -23,3 +23,4 @@ WebApp/node_modules/*
 WebApp/package-lock.json
 UaaService/src/main/resources/application-freeland.yml
 UaaService/nbactions.xml
+UaaService/nbactions.xml
