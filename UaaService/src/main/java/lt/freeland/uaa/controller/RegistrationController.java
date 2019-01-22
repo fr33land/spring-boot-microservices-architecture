@@ -68,7 +68,7 @@ public class RegistrationController {
 
         if (registrationService.checkIfEmailExists(ur.getEmail())) {
             mm.addAttribute("regTab", true);
-            mm.addAttribute("error", messageSource.getMessage("email.exists", new Object[]{ur.getEmail()}, null));
+            mm.addAttribute("error", messageSource.getMessage("email.user_exists", new Object[]{ur.getEmail()}, null));
             return new ModelAndView("login", mm);
         }
 
@@ -101,11 +101,11 @@ public class RegistrationController {
             registrationService.confirmAccount(token);
         } catch (TokenExpiredException | TokenNotFoundException | UserNotFoundException ex) {
             mm.addAttribute("error", ex.getMessage());
-            
+
             if (ex instanceof TokenExpiredException) {
                 mm.addAttribute("resendActivation", true);
             }
-            
+
             return new ModelAndView("login", mm);
         }
 
@@ -124,7 +124,7 @@ public class RegistrationController {
         try {
             registrationService.generateAndSend(user, Utils.getAppUrl(request));
             ra.addFlashAttribute("message", messageSource.getMessage("user.activation_link_succeed", new Object[]{user.getEmail()}, null));
-        } catch (UserActivatedException ex) {
+        } catch (UserActivatedException | UserNotFoundException ex) {
             ra.addFlashAttribute("error", ex.getMessage());
         }
 

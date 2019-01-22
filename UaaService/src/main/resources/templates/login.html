@@ -16,7 +16,7 @@
                 <div th:if="${param.error}">
                     <div class="alert alert-danger">
                         <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" th:remove="tag"></span>
-                        <a th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] instanceof T(org.springframework.security.authentication.DisabledException)}" th:href="@{/resendActivation}" >resend activation link</a>
+                        <a th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] instanceof T(org.springframework.security.authentication.DisabledException)}" th:href="@{/user/activation}" >resend activation link</a>
                     </div>
                 </div>
                 <div th:if="${message}" style="text-align: justify">
@@ -25,7 +25,7 @@
                 <div th:if="${error}"  style="text-align: justify">
                     <div class="alert alert-danger">
                         <span th:text="${error}" th:remove="tag"></span>
-                        <a th:if="${resendActivation}" th:href="@{/resendActivation}" >Resend activation link</a>
+                        <a th:if="${resendActivation}" th:href="@{/user/activation}" >Resend activation link</a>
                     </div>
                 </div>
                 <ul class="nav nav-tabs nav-justified" id="auth-tabs" role="tablist">
@@ -54,6 +54,9 @@
                                     <input type="submit" name="login-submit" id="login-submit" class="form-control btn popup_btn" value="Login" />
                                 </div>
                             </div>
+                            <div class="pb-4 pt-2 text-center">
+                                <a th:href="@{/user/password/reset}" >Forgot password ?</a>
+                            </div>
                         </form>
                     </div>
                     <div th:classappend="${regTab == true ? 'show ' : ''} + ${regTab == true ? 'active' : ''}" class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
@@ -62,7 +65,7 @@
 
                             <div class="form-group required">
                                 <label for="name">Username</label>
-                                <input type="text" id="name" th:field="*{username}" name="username" class="form-control" />
+                                <input type="text" id="username" th:field="*{username}" name="username" class="form-control" />
                                 <span id="username-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('username')}" th:text="${error}" ></span>
                             </div>
                             <div class="form-group required">
@@ -99,6 +102,6 @@
         <script th:src="@{/webjars/jquery-validation/jquery.validate.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
         <script th:src="@{/js/jquery.utils.js}"></script>
-        <script th:src="@{/js/login.form.js}"></script>
+        <script th:src="@{/js/user.form.js}"></script>
     </body>
 </html>

@@ -22,6 +22,7 @@ import lt.freeland.uaa.exceptions.TokenNotFoundException;
 import lt.freeland.uaa.exceptions.UserNotFoundException;
 import lt.freeland.uaa.exceptions.UserActivatedException;
 import org.springframework.context.MessageSource;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -103,6 +104,7 @@ public class UserRegistrationService {
         return true;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void confirmAccount(String token) throws TokenNotFoundException, UserNotFoundException {
         AccountActivation accToken = accountActivationRepository
                 .findByActivationToken(token)
@@ -114,22 +116,22 @@ public class UserRegistrationService {
         user.setEditedDate(LocalDateTime.now());
 
         userRepository.save(user);
+        accountActivationRepository.delete(accToken);
     }
 
-    public void generateAndSend(UserRegistrationForm user, String registrationUrl) throws UserActivatedException {
-        Optional<User> uopt = userRepository.findByEmailIgnoreCase(user.getEmail());
+    public void generateAndSend(UserRegistrationForm user, String registrationUrl) throws UserActivatedException, UserNotFoundException {
+        User uopt = userRepository
+                .findByEmailIgnoreCase(user.getEmail())
+                .orElseThrow(() -> new UserNotFoundException(messageSource.getMessage("user.not_found", new Object[]{user.getEmail()}, null)));
 
-        if (uopt.isPresent()) {
-
-            if (uopt.get().isEnabled()) {
-                throw new UserActivatedException(messageSource.getMessage("user.already_activated", new Object[]{user.getEmail()}, null));
-            }
-
-            User newUser = new User();
-            newUser.setEmail(user.getEmail());
-            newUser.setUserId(uopt.get().getUserId());
-
-            generateAndSendActivation(newUser, registrationUrl);
+        if (uopt.isEnabled()) {
+            throw new UserActivatedException(messageSource.getMessage("user.already_activated", new Object[]{user.getEmail()}, null));
         }
+
+        User newUser = new User();
+        newUser.setEmail(user.getEmail());
+        newUser.setUserId(uopt.getUserId());
+
+        generateAndSendActivation(newUser, registrationUrl);
     }
 }

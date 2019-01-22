@@ -138,6 +138,11 @@ span.is-invalid {
 }
 
 .form-group.required label:after {
-  content:"*";
-  color:red;
+    content:"*";
+    color:red;
+}
+
+.form-content {
+    background-color: #f7f7f7;
+    border-radius: 5px;
 }

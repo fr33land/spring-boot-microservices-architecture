@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head>
-        <title>LKU developer portal - send activation link</title>
+        <title>Portal - send activation link</title>
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables/css/dataTables.bootstrap4.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     </head>
     <body>
         <div layout:fragment="content" th:remove="tag">
             <div class="container-login center-block">
                 <div id="logo">
-                    <img th:src="@{/images/lku_logo.png}" /> 
-                    <div id="site-name">Developer portal</div>
                 </div>
                 <div th:if="${message}">
                     <div th:text="${message}" class="alert alert-info"></div>
@@ -20,15 +17,15 @@
                 <div th:if="${error}">
                     <div class="alert alert-danger">
                         <span th:text="${error}" th:remove="tag"></span>
-                        <a th:if="${resendActivation}" th:href="@{/resendActivation}" >Resend activation link</a>
+                        <a th:if="${resendActivation}" th:href="@{/user/activation}" >Resend activation link</a>
                     </div>
                 </div>
                 <div class="form-content" id="resend-email">
-                    <form id="register-form" th:object="${user}" th:action="@{/resendActivation}" method="post">
+                    <form id="register-form" th:object="${user}" th:action="@{/user/activation}" method="post">
                         <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}"></div>
 
-                        <div class="form-group">
-                            <label for="username">Enter email address*</label>
+                        <div class="form-group required">
+                            <label for="username">Enter email address</label>
                             <input type="text" id="email" th:field="*{email}" name="email" class="form-control" th:classappend="${#fields.hasErrors('email')} ? is-invalid : valid" autofocus="autofocus"/>
                             <span id="email-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('email')}" th:text="${error}" ></span>
                         </div>
@@ -40,12 +37,11 @@
                     </form>
                 </div>
             </div>
-
-            <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-            <script th:src="@{/webjars/jquery-validation/jquery.validate.min.js}"></script>
-            <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-            <script th:src="@{/webjars/datatables/js/dataTables.bootstrap4.min.js}"></script>
-            <script th:src="@{/js/jquery.utils.js}"></script>
-            <script th:src="@{/js/user.form.js}"></script>
+        </div>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/jquery-validation/jquery.validate.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/jquery.utils.js}"></script>
+        <script th:src="@{/js/user.form.js}"></script>
     </body>
 </html>
