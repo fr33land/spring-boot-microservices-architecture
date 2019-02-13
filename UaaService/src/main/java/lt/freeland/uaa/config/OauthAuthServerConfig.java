@@ -65,10 +65,11 @@ public class OauthAuthServerConfig implements AuthorizationServerConfigurer {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
                 .inMemory()
-                .withClient("webapp-server")
-                .secret("webapp-server")
+                .withClient("web-app")
+                .secret("$2a$04$iVwiu2TyGOQ0H0ojvIOnn.Np5BgU77eTke/nPYxDlmc60i6Va28tS")
                 .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
                 .autoApprove(true)
+                .redirectUris("http://localhost:8081/ui/login")
                 .scopes("read");
     }
 

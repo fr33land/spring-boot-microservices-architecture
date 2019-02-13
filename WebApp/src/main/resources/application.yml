@@ -28,12 +28,12 @@ security:
         enabled: false
     oauth2:
         client:
-            clientId: webapp-server
-            clientSecret: webapp-server
+            clientId: web-app
+            clientSecret: web-app
             accessTokenUri: ${security.oauth2.resource.server-address}/uaa/oauth/token
             userAuthorizationUri: ${security.oauth2.resource.server-address}/uaa/oauth/authorize
 #            pre-established-redirect-uri: http://localhost:8081/ui/userProfile
-#            registered-redirect-uri: http://localhost:8081/ui/userProfile
+            registered-redirect-uri: http://localhost:8081/ui/profile
 #            use-current-uri: false
         resource:
             service-id: uaa-service
