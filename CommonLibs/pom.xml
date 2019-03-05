@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>lt.freeland</groupId>
-    <artifactId>common-libs</artifactId>
+    <artifactId>CommonLibs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>common-libs</name>
+    <name>CommonLibs</name>
     <description>Common libs jar</description>
     
     <parent>

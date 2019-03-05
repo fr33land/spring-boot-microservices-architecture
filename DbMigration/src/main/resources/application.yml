@@ -1,0 +1,15 @@
+---
+spring:
+    application:
+        name: db-migration
+        email: freeland.rokas@gmail.com
+    datasource:
+        url: jdbc:postgresql://localhost:5432/freeland
+        username: freeland
+        password: freeland
+        driverClassName: org.postgresql.Driver
+flyway:
+   url: jdbc:postgresql://localhost:5432/freeland
+   schemas: freeland
+   user: freeland
+   password: freeland
