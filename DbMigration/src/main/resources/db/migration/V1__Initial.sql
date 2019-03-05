@@ -416,24 +416,24 @@ COPY public.roles (id, name, description) FROM stdin;
 --
 
 COPY public.users (id, username, email, password, enabled) FROM stdin;
-1	freeland	freeland@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-2	zolfun	freelando@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-3	gongon89	gogo@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-4	kafka	kafka.mafka@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-5	hobit96	hobotas@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-6	bananarama	j.rama52@lilo.lt	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-7	tucan56	dauma96@saga.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-8	barbeque	bb.kolins@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-9	homeland89	j.lomo@masachusets.org	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-10	89Trusa	eugfene.kaspersky@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-11	trololo	Satoshi@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-12	spartan	Sasha.coe@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-13	dudikas	j.zabiela@gmail.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-14	svencis	anna.maria.x@324234wdw.lt	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-15	gonoreja	alien.e@erer.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-16	hablas	misskittin@erer.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-17	fenix	j.digweed@bedrock.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
-18	dundulis89	emerson69@eerere.com	$2a$10$kehwlcGPSUyllhL0DjUwP.C7yga.AlkTKQYBpe9UPrEttRfmryI/C	1
+1	freeland	freeland@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+2	zolfun	freelando@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+3	gongon89	gogo@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+4	kafka	kafka.mafka@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+5	hobit96	hobotas@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+6	bananarama	j.rama52@lilo.lt	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+7	tucan56	dauma96@saga.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+8	barbeque	bb.kolins@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+9	homeland89	j.lomo@masachusets.org	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+10	89Trusa	eugfene.kaspersky@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+11	trololo	Satoshi@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+12	spartan	Sasha.coe@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+13	dudikas	j.zabiela@gmail.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+14	svencis	anna.maria.x@324234wdw.lt	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+15	gonoreja	alien.e@erer.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+16	hablas	misskittin@erer.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+17	fenix	j.digweed@bedrock.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
+18	dundulis89	emerson69@eerere.com	$2a$04$vL2bsMXpnEz3amJyjtkKM.r9Sg6t326iROkwUtdIu1WwzY1.jiTWG	1
 \.
 
 --
