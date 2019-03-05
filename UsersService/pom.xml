@@ -62,6 +62,17 @@
             <version>5.0.0</version>
         </dependency>
         
+        <!-- JAVA 9 removed JAXB support from ajva libs -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+        </dependency>
+        
         <dependency>
             <groupId>lt.freeland</groupId>
             <artifactId>common-libs</artifactId>
