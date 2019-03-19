@@ -1,5 +1,6 @@
 package lt.freeland.uaa.events.listeners;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 import lt.freeland.common.domain.Email;
@@ -34,19 +35,19 @@ public class MailApplicationEventListeners {
     }
 
     @Async
-    @EventListener(condition = "#event.eventType == T(lt.lku.developersite.domain.ApplicationEventType).USER_REGISTRATION")
+    @EventListener(condition = "#event.eventType == T(lt.freeland.common.domain.ApplicationEventType).USER_REGISTRATION")
     void handleUserRegistrationEmail(MailApplicationEvent event) {
         generateAndSendApproveLink(event.getUser(), event.getUrl());
     }
 
     @Async
-    @EventListener(condition = "#event.eventType == T(lt.lku.developersite.domain.ApplicationEventType).USER_ACTIVATION")
+    @EventListener(condition = "#event.eventType == T(lt.freeland.common.domain.ApplicationEventType).USER_ACTIVATION")
     void handleActivationLinkEmail(MailApplicationEvent event) {
         generateAndSendApproveLink(event.getUser(), event.getUrl());
     }
 
     @Async
-    @EventListener(condition = "#event.eventType == T(lt.lku.developersite.domain.ApplicationEventType).USER_PASSWORD_RESET")
+    @EventListener(condition = "#event.eventType == T(lt.freeland.common.domain.ApplicationEventType).USER_PASSWORD_RESET")
     void handlePasswordResetLinkEmail(MailApplicationEvent event) {
         generatePasswordAndSendResetLink(event.getUser(), event.getUrl());
     }
@@ -56,6 +57,7 @@ public class MailApplicationEventListeners {
                 .builder()
                 .activationToken(UUID.randomUUID().toString().replace("-", ""))
                 .id(user.getUserId())
+                .expireDate(LocalDateTime.now().plusHours(1))
                 .build();
 
         String message = appUrl + "/user/activation/confirm/" + accActivation.getActivationToken();
@@ -77,6 +79,7 @@ public class MailApplicationEventListeners {
                 .builder()
                 .resetToken(UUID.randomUUID().toString().replace("-", ""))
                 .id(user.getUserId())
+                .expireDate(LocalDateTime.now().plusHours(1))
                 .build();
         
         String message = appUrl + "/user/password/reset/" + passwordResetToken.getResetToken();

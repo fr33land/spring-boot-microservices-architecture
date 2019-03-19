@@ -9,10 +9,6 @@
     <body>
         <div layout:fragment="content" th:remove="tag">
             <div class="container-login center-block">
-                <div id="logo">
-                    <img th:src="@{/images/lku_logo.png}" /> 
-                    <div id="site-name">Developer portal</div>
-                </div>
                 <div th:if="${message}">
                     <div th:text="${message}" class="alert alert-info"></div>
                 </div>

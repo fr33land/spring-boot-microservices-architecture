@@ -59,9 +59,9 @@ public class RegistrationController {
             return new ModelAndView("login", mm);
         }
 
-        if (registrationService.checkIfUsernameExists(ur.getEmail())) {
+        if (registrationService.checkIfUsernameExists(ur.getUsername())) {
             mm.addAttribute("regTab", true);
-            mm.addAttribute("error", messageSource.getMessage("username.exists", new Object[]{ur.getEmail()}, null));
+            mm.addAttribute("error", messageSource.getMessage("username.exists", new Object[]{ur.getUsername()}, null));
             return new ModelAndView("login", mm);
         }
 

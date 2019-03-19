@@ -132,7 +132,7 @@ CREATE TABLE public.users_roles (
 ALTER TABLE public.users_roles OWNER TO freeland;
 
 --
--- Name: users_roles; Type: TABLE; Schema: public; Owner: freeland
+-- Name: users_password_reset; Type: TABLE; Schema: public; Owner: freeland
 --
 
 CREATE TABLE public.users_password_reset (
@@ -143,6 +143,19 @@ CREATE TABLE public.users_password_reset (
 
 
 ALTER TABLE public.users_password_reset OWNER TO freeland;
+
+--
+-- Name: users_account_activation; Type: TABLE; Schema: public; Owner: freeland
+--
+
+CREATE TABLE public.users_account_activation (
+    user_id integer NOT NULL,
+    activation_token character varying(255) NOT NULL,
+    expire_date timestamp NOT NULL
+);
+
+
+ALTER TABLE public.users_account_activation OWNER TO freeland;
 
 --
 -- Name: countries id; Type: DEFAULT; Schema: public; Owner: freeland

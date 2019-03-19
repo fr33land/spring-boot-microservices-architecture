@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -17,7 +19,9 @@ import lombok.Data;
 @Data
 @Builder
 @Entity
-@Table(name = "account_activation")
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users_account_activation")
 public class AccountActivationToken implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,6 +1,7 @@
 package lt.freeland.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -9,6 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 public class Utils {
 
     public static String getAppUrl(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + (request.getServerPort() != 80 ? ":" + request.getServerPort() : "");
+        String uri =  UriComponentsBuilder
+                .newInstance()
+                .scheme(request.getScheme())
+                .host(request.getServerName())
+                .port(request.getServerPort())
+                .path(request.getContextPath())
+                .build()
+                .normalize()
+                .toString();
+        
+        return uri;
     }
 }

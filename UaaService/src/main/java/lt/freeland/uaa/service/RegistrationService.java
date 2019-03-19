@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import javax.servlet.http.HttpServletRequest;
 import lt.freeland.common.domain.ApplicationEventType;
-import lt.freeland.common.domain.Notification;
 import lt.freeland.common.entities.AccountActivationToken;
 import lt.freeland.common.entities.User;
 import lt.freeland.uaa.repository.AccountActivationRepository;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lt.freeland.uaa.beans.UserRegistration;
 import lt.freeland.common.events.MailApplicationEvent;
-import lt.freeland.common.events.NotificationEvent;
 import lt.freeland.uaa.exceptions.TokenExpiredException;
 import lt.freeland.uaa.exceptions.TokenNotFoundException;
 import lt.freeland.uaa.exceptions.UserNotFoundException;
@@ -61,13 +59,13 @@ public class RegistrationService {
 
         if (newUser.getUserId() != null) {
             eventPublisher.publishEvent(new MailApplicationEvent(this, ApplicationEventType.USER_REGISTRATION, newUser, registrationUrl));
-            eventPublisher.publishEvent(new NotificationEvent(this, Notification.builder()
-                    .ip(request.getHeader("X-Forwarded-For") == null ? request.getRemoteAddr() : request.getHeader("X-Forwarded-For"))
-                    .agent(request.getHeader("User-Agent"))
-                    .time(LocalDateTime.now())
-                    .user(newUser)
-                    .eventType(ApplicationEventType.USER_REGISTRATION).build())
-            );
+//            eventPublisher.publishEvent(new NotificationEvent(this, Notification.builder()
+//                    .ip(request.getHeader("X-Forwarded-For") == null ? request.getRemoteAddr() : request.getHeader("X-Forwarded-For"))
+//                    .agent(request.getHeader("User-Agent"))
+//                    .time(LocalDateTime.now())
+//                    .user(newUser)
+//                    .eventType(ApplicationEventType.USER_REGISTRATION).build())
+//            );
         }
 
         return newUser;
@@ -75,6 +73,7 @@ public class RegistrationService {
     
     public User createUser(UserRegistration user) {
         User newUser = new User();
+        newUser.setUsername(user.getUsername());
         newUser.setEmail(user.getEmail().toLowerCase());
         newUser.setEnabled((short) 0);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
