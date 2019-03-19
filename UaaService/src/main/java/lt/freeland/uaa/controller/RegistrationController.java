@@ -19,6 +19,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,8 +49,13 @@ public class RegistrationController {
     }
 
     @PostMapping("/user/register")
-    public ModelAndView registerUser(@Valid @ModelAttribute("user") UserRegistration ur, HttpServletRequest request, ModelMap mm, RedirectAttributes ra) {
+    public ModelAndView registerUser(@Valid @ModelAttribute("user") UserRegistration ur, BindingResult result, HttpServletRequest request, ModelMap mm, RedirectAttributes ra) {
         String response = request.getParameter("g-recaptcha-response");
+        
+        if (result.hasErrors()) {
+            mm.addAttribute("regTab", true);
+            return new ModelAndView("login", "user", ur);
+        }
 
         try {
             captchaService.processResponse(response);
