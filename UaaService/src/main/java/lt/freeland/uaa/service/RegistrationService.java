@@ -2,26 +2,25 @@ package lt.freeland.uaa.service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.UUID;
-import lt.freeland.common.domain.AccountActivation;
-import lt.freeland.common.domain.Role;
-import lt.freeland.common.domain.User;
+import javax.servlet.http.HttpServletRequest;
+import lt.freeland.common.domain.ApplicationEventType;
+import lt.freeland.common.domain.Notification;
+import lt.freeland.common.entities.AccountActivationToken;
+import lt.freeland.common.entities.User;
 import lt.freeland.uaa.repository.AccountActivationRepository;
 import lt.freeland.uaa.repository.UserRepository;
-import lt.freeland.uaa.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import lt.freeland.common.dto.Email;
-import lt.freeland.uaa.beans.UserRegistrationForm;
+import lt.freeland.uaa.beans.UserRegistration;
+import lt.freeland.common.events.MailApplicationEvent;
+import lt.freeland.common.events.NotificationEvent;
 import lt.freeland.uaa.exceptions.TokenExpiredException;
 import lt.freeland.uaa.exceptions.TokenNotFoundException;
 import lt.freeland.uaa.exceptions.UserNotFoundException;
 import lt.freeland.uaa.exceptions.UserActivatedException;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -29,71 +28,64 @@ import org.springframework.transaction.annotation.Transactional;
  * @author freeland
  */
 @Service
-public class UserRegistrationService {
+public class RegistrationService {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final AccountActivationRepository accountActivationRepository;
-    private final EmailService emailService;
     private final MessageSource messageSource;
-
-    @Value("${spring.application.email}")
-    private String senderEmail;
+    private final ApplicationEventPublisher eventPublisher;
+    private final HttpServletRequest request;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserRegistrationService(UserRepository userRepository, RoleRepository roleRepository, AccountActivationRepository accountActivationRepository, EmailService emailService, MessageSource messageSource) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+    public RegistrationService(AccountActivationRepository accountActivationRepository, MessageSource messageSource, ApplicationEventPublisher eventPublisher, HttpServletRequest request, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.accountActivationRepository = accountActivationRepository;
-        this.emailService = emailService;
         this.messageSource = messageSource;
+        this.eventPublisher = eventPublisher;
+        this.request = request;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public boolean checkIfUsernameExists(String username) {
         return userRepository.findByUsername(username).isPresent();
-    }
+    }    
 
     public boolean checkIfEmailExists(String email) {
         return userRepository.findByEmailIgnoreCase(email).isPresent();
     }
 
-    public User registerUser(User user, String registrationUrl) {
-        Role role = roleRepository.findByName("ROLE_USER");
-        user.setRoles(Arrays.asList(role));
-        User newUser = userRepository.save(user);
+    @Transactional(rollbackFor = Exception.class)
+    public User registerUser(UserRegistration user, String registrationUrl) {
+        User newUser = createUser(user);
 
         if (newUser.getUserId() != null) {
-            generateAndSendActivation(user, registrationUrl);
+            eventPublisher.publishEvent(new MailApplicationEvent(this, ApplicationEventType.USER_REGISTRATION, newUser, registrationUrl));
+            eventPublisher.publishEvent(new NotificationEvent(this, Notification.builder()
+                    .ip(request.getHeader("X-Forwarded-For") == null ? request.getRemoteAddr() : request.getHeader("X-Forwarded-For"))
+                    .agent(request.getHeader("User-Agent"))
+                    .time(LocalDateTime.now())
+                    .user(newUser)
+                    .eventType(ApplicationEventType.USER_REGISTRATION).build())
+            );
         }
 
         return newUser;
     }
-
-    public void generateAndSendActivation(User user, String appUrl) {
-        AccountActivation accActivation = new AccountActivation();
-        String token = UUID.randomUUID().toString();
-        accActivation.setActivationToken(token);
-        accActivation.setId(user.getUserId());
-        accActivation.setExpireDate(LocalDateTime.now().plusHours(1));
-
-        accountActivationRepository.save(accActivation);
-
-        String message = appUrl + "/user/activation/confirm/" + token;
-
-        Email approveEmail = new Email();
-        approveEmail.setFrom(senderEmail);
-        approveEmail.setTo(user.getEmail());
-        approveEmail.setSubject("Portal registration confirmation");
-        approveEmail.setTemplate("/email/templates/confirmAccountEmail");
-        approveEmail.setMessage(message);
-
-        MimeMessagePreparator messagePreparator = emailService.prepareEmailMessage(approveEmail);
-        emailService.sendEmail(messagePreparator);
-
+    
+    public User createUser(UserRegistration user) {
+        User newUser = new User();
+        newUser.setEmail(user.getEmail().toLowerCase());
+        newUser.setEnabled((short) 0);
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newUser.setCreatedDate(LocalDateTime.now());
+        
+        newUser = userRepository.save(newUser);
+        return newUser;
     }
 
     public boolean checkConfirmationTokenIsvalid(String token) throws TokenExpiredException, TokenNotFoundException {
-        AccountActivation accToken = accountActivationRepository
+        AccountActivationToken accToken = accountActivationRepository
                 .findByActivationToken(token)
                 .orElseThrow(() -> new TokenNotFoundException(messageSource.getMessage("user.confirmation_not_found", null, null)));
 
@@ -106,7 +98,7 @@ public class UserRegistrationService {
 
     @Transactional(rollbackFor = Exception.class)
     public void confirmAccount(String token) throws TokenNotFoundException, UserNotFoundException {
-        AccountActivation accToken = accountActivationRepository
+        AccountActivationToken accToken = accountActivationRepository
                 .findByActivationToken(token)
                 .orElseThrow(() -> new TokenNotFoundException(messageSource.getMessage("user.confirmation_not_found", null, null)));
 
@@ -119,7 +111,7 @@ public class UserRegistrationService {
         accountActivationRepository.delete(accToken);
     }
 
-    public void generateAndSend(UserRegistrationForm user, String registrationUrl) throws UserActivatedException, UserNotFoundException {
+    public void generateAndSend(UserRegistration user, String registrationUrl) throws UserActivatedException, UserNotFoundException {
         User uopt = userRepository
                 .findByEmailIgnoreCase(user.getEmail())
                 .orElseThrow(() -> new UserNotFoundException(messageSource.getMessage("user.not_found", new Object[]{user.getEmail()}, null)));
@@ -132,6 +124,6 @@ public class UserRegistrationService {
         newUser.setEmail(user.getEmail());
         newUser.setUserId(uopt.getUserId());
 
-        generateAndSendActivation(newUser, registrationUrl);
+        eventPublisher.publishEvent(new MailApplicationEvent(this, ApplicationEventType.USER_ACTIVATION, newUser, registrationUrl));
     }
 }

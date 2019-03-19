@@ -1,7 +1,7 @@
 package lt.freeland.webApp.service;
 
 import java.util.List;
-import lt.freeland.common.domain.Countries;
+import lt.freeland.common.entities.Countries;
 import lt.freeland.webApp.repository.CountriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;

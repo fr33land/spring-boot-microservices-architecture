@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableCaching
 @EnableEurekaClient
-@EntityScan(value = "lt.freeland.common.domain", basePackageClasses = { Jsr310JpaConverters.class }) 
+@EntityScan(value = "lt.freeland.common.entities", basePackageClasses = { Jsr310JpaConverters.class }) 
 @EnableJpaRepositories(value = "lt.freeland.webApp.repository")
 public class WebAppApplication {
 

@@ -1,6 +1,8 @@
-package lt.freeland.common.dto;
+package lt.freeland.common.domain;
 
+import java.util.Map;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
  * @author r.sabaliauskas
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Email {
@@ -21,7 +24,7 @@ public class Email {
     
     private String address;
     
-    private String message;
+    private Map<String, Object> message;
     
     private String template;
 

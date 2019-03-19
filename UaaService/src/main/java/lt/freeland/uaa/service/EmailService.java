@@ -1,20 +1,21 @@
 package lt.freeland.uaa.service;
 
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import lt.freeland.common.dto.Email;
+import lt.freeland.common.domain.Email;
 
 /**
  *
  * @author r.sabaliauskas
  */
+@Slf4j
 @Service
 public class EmailService {
 
@@ -27,17 +28,12 @@ public class EmailService {
         this.templateEngine = templateEngine;
     }
 
-    @Async
     public void sendEmail(MimeMessagePreparator email) {
         mailSender.send(email);
     }
 
-    @Async
-    public void sendEmail(SimpleMailMessage email) {
-        mailSender.send(email);
-    }
-
     public MimeMessagePreparator prepareEmailMessage(Email email) {
+
         return (mimeMessage) -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom(email.getFrom());
@@ -46,11 +42,17 @@ public class EmailService {
             String content = processEmailMessage(email.getMessage(), email.getTemplate());
             messageHelper.setText(content, true);
         };
+
     }
 
-    private String processEmailMessage(String message, String template) {
+    private String processEmailMessage(Map<String, Object> variables, String template) {
         Context context = new Context();
-        context.setVariable("message", message);
+        context.setVariables(variables);
         return templateEngine.process(template, context);
+    }
+    
+    public void prepareAndSend(Email email) {
+        MimeMessagePreparator messagePreparator = prepareEmailMessage(email);
+        sendEmail(messagePreparator);
     }
 }

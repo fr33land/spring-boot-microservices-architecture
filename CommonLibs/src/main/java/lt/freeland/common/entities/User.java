@@ -1,4 +1,4 @@
-package lt.freeland.common.domain;
+package lt.freeland.common.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;

@@ -1,20 +1,19 @@
 package lt.freeland.uaa.controller;
 
-import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import lt.freeland.common.entities.User;
 import lt.freeland.common.utils.Utils;
-import lt.freeland.common.domain.User;
+import lt.freeland.uaa.beans.UserRegistration;
 import lt.freeland.uaa.exceptions.ReCaptchaInvalidException;
 import lt.freeland.uaa.exceptions.ReCaptchaUnavailableException;
-import lt.freeland.uaa.beans.UserRegistrationForm;
 import lt.freeland.uaa.exceptions.TokenExpiredException;
 import lt.freeland.uaa.exceptions.TokenNotFoundException;
 import lt.freeland.uaa.exceptions.UserActivatedException;
 import lt.freeland.uaa.exceptions.UserNotFoundException;
 import lt.freeland.uaa.service.CaptchaService;
-import lt.freeland.uaa.service.UserRegistrationService;
+import lt.freeland.uaa.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,13 +34,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class RegistrationController {
 
-    private final UserRegistrationService registrationService;
+    private final RegistrationService registrationService;
     private final PasswordEncoder passwordEncoder;
     private final CaptchaService captchaService;
     private final MessageSource messageSource;
 
     @Autowired
-    public RegistrationController(UserRegistrationService registrationService, PasswordEncoder passwordEncoder, CaptchaService captchaService, MessageSource messageSource) {
+    public RegistrationController(RegistrationService registrationService, PasswordEncoder passwordEncoder, CaptchaService captchaService, MessageSource messageSource) {
         this.registrationService = registrationService;
         this.passwordEncoder = passwordEncoder;
         this.captchaService = captchaService;
@@ -49,7 +48,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/user/register")
-    public ModelAndView registerUser(@Valid @ModelAttribute("user") UserRegistrationForm ur, HttpServletRequest request, ModelMap mm, RedirectAttributes ra) {
+    public ModelAndView registerUser(@Valid @ModelAttribute("user") UserRegistration ur, HttpServletRequest request, ModelMap mm, RedirectAttributes ra) {
         String response = request.getParameter("g-recaptcha-response");
 
         try {
@@ -60,9 +59,9 @@ public class RegistrationController {
             return new ModelAndView("login", mm);
         }
 
-        if (registrationService.checkIfUsernameExists(ur.getUsername())) {
+        if (registrationService.checkIfUsernameExists(ur.getEmail())) {
             mm.addAttribute("regTab", true);
-            mm.addAttribute("error", messageSource.getMessage("username.exists", new Object[]{ur.getUsername()}, null));
+            mm.addAttribute("error", messageSource.getMessage("username.exists", new Object[]{ur.getEmail()}, null));
             return new ModelAndView("login", mm);
         }
 
@@ -72,29 +71,22 @@ public class RegistrationController {
             return new ModelAndView("login", mm);
         }
 
-        User user = new User();
-        user.setEmail(ur.getEmail().toLowerCase());
-        user.setUsername(ur.getUsername().toLowerCase());
-        user.setPassword(passwordEncoder.encode(ur.getPassword()));
-        user.setEnabled((short) 0);
-        user.setCreatedDate(LocalDateTime.now());
+        User newUser = registrationService.registerUser(ur, Utils.getAppUrl(request));
 
-        user = registrationService.registerUser(user, Utils.getAppUrl(request));
-
-        if (user.getUserId() != null) {
-            ra.addFlashAttribute("message", messageSource.getMessage("user.registration_succeed", new Object[]{user.getEmail()}, null));
+        if (newUser.getUserId() != null) {
+            ra.addFlashAttribute("message", messageSource.getMessage("user.registration_succeed", new Object[]{newUser.getEmail()}, null));
             return new ModelAndView("redirect:/login");
         } else {
             mm.addAttribute("regTab", true);
             mm.addAttribute("error", messageSource.getMessage("user.registration_failed", null, null));
-            mm.addAttribute("user", user);
+            mm.addAttribute("user", newUser);
             return new ModelAndView("login", mm);
         }
     }
 
     @GetMapping("/user/activation/confirm/{token}")
     public ModelAndView confirmAccount(HttpServletRequest request, @PathVariable(value = "token") String token, ModelMap mm) {
-        mm.addAttribute("user", new UserRegistrationForm());
+        mm.addAttribute("user", new UserRegistration());
 
         try {
             registrationService.checkConfirmationTokenIsvalid(token);
@@ -114,12 +106,12 @@ public class RegistrationController {
 
     @GetMapping("/user/activation")
     public ModelAndView sendActivationLink(HttpServletRequest request, ModelMap mm) {
-        mm.addAttribute("user", new UserRegistrationForm());
+        mm.addAttribute("user", new UserRegistration());
         return new ModelAndView("/user/registration/activation");
     }
 
     @PostMapping("/user/activation")
-    public ModelAndView proceedActivationLink(@ModelAttribute("user") UserRegistrationForm user, HttpServletRequest request, ModelMap mm, RedirectAttributes ra) {
+    public ModelAndView proceedActivationLink(@ModelAttribute("user") UserRegistration user, HttpServletRequest request, ModelMap mm, RedirectAttributes ra) {
 
         try {
             registrationService.generateAndSend(user, Utils.getAppUrl(request));

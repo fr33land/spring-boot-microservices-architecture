@@ -132,6 +132,19 @@ CREATE TABLE public.users_roles (
 ALTER TABLE public.users_roles OWNER TO freeland;
 
 --
+-- Name: users_roles; Type: TABLE; Schema: public; Owner: freeland
+--
+
+CREATE TABLE public.users_password_reset (
+    user_id integer NOT NULL,
+    reset_token character varying(255) NOT NULL,
+    expire_date timestamp NOT NULL
+);
+
+
+ALTER TABLE public.users_password_reset OWNER TO freeland;
+
+--
 -- Name: countries id; Type: DEFAULT; Schema: public; Owner: freeland
 --
 
@@ -492,13 +505,11 @@ COPY public.users_roles (user_id, role_id) FROM stdin;
 
 SELECT pg_catalog.setval('public.countries_id_seq', 1, false);
 
-
 --
 -- Name: roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freeland
 --
 
 SELECT pg_catalog.setval('public.roles_id_seq', 2, true);
-
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freeland
@@ -510,8 +521,7 @@ SELECT pg_catalog.setval('public.users_id_seq', 39, true);
 -- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: freeland
 --
 
-ALTER TABLE ONLY public.countries
-    ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.countries ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
 
 --
 -- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: freeland

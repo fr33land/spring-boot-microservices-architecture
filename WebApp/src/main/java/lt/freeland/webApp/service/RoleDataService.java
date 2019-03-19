@@ -1,6 +1,6 @@
 package lt.freeland.webApp.service;
 
-import lt.freeland.common.dto.Role;
+import lt.freeland.common.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;

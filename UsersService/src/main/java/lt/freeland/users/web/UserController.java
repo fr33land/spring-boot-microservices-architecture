@@ -2,7 +2,7 @@ package lt.freeland.users.web;
 
 import java.util.Optional;
 import javax.validation.Valid;
-import lt.freeland.common.domain.UserProfile;
+import lt.freeland.common.entities.UserProfile;
 import lt.freeland.common.exceptions.EntityNotFoundException;
 import lt.freeland.common.exceptions.EntityListEmptyException;
 import lt.freeland.users.repository.UserDataRepository;

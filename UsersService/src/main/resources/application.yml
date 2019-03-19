@@ -13,6 +13,10 @@ spring:
         driverClassName: org.postgresql.Driver
     jpa:
         show-sql: false
+        properties:
+            hibernate:
+                temp:
+                    use_jdbc_metadata_defaults: false
                                 
 eureka:
     client:

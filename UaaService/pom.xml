@@ -106,8 +106,8 @@
         
         <dependency>
             <groupId>lt.freeland</groupId>
-            <artifactId>common-libs</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>CommonLibs</artifactId>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
         
         <!-- JAVA 9 removed JAXB support from ajva libs -->
@@ -119,6 +119,11 @@
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>lt.freeland</groupId>
+            <artifactId>CommonLibs</artifactId>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

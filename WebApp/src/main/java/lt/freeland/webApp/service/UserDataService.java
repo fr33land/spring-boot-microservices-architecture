@@ -1,6 +1,5 @@
 package lt.freeland.webApp.service;
 
-import lt.freeland.common.dto.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -10,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
+import lt.freeland.common.domain.UserData;
 
 /**
  *

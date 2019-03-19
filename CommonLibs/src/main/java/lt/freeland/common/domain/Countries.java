@@ -1,42 +1,19 @@
 package lt.freeland.common.domain;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author freeland
  */
-@Entity
-@Table(name = "countries")
 public class Countries implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-    
-    @NotEmpty
-    @Size(min = 1, max = 64)
-    @Column(name = "name")
-    private String name;
 
-    @NotEmpty
-    @Size(min = 1, max = 3)
-    @Column(name = "iso_code")
+    private Integer id;
+    private String name;
     private String isoCode;
-    
-    @Size(max = 10)
-    @Column(name = "phone_code")
     private String phoneCode;
 
     public Countries() {
@@ -105,7 +82,7 @@ public class Countries implements Serializable {
 
     @Override
     public String toString() {
-        return "lt.freeland.users.beans.Countries[ id=" + id + " ]";
+        return "lt.freeland.beans.Countries[ id=" + id + " ]";
     }
     
 }
