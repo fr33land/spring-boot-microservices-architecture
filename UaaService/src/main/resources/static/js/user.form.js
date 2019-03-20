@@ -106,7 +106,6 @@ $(document).ready(function () {
             },
             passwordconfirm: {
                 required: true,
-                validpassword: true,
                 equalTo: "#passwd"
             }
         },
