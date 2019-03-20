@@ -28,7 +28,7 @@ public class PasswordResetToken implements Serializable {
 
     @Id
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     @NotNull
     @Column(name = "reset_token")

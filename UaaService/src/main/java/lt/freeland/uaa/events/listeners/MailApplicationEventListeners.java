@@ -56,7 +56,7 @@ public class MailApplicationEventListeners {
         AccountActivationToken accActivation = AccountActivationToken
                 .builder()
                 .activationToken(UUID.randomUUID().toString().replace("-", ""))
-                .id(user.getUserId())
+                .userId(user.getUserId())
                 .expireDate(LocalDateTime.now().plusHours(1))
                 .build();
 
@@ -67,7 +67,7 @@ public class MailApplicationEventListeners {
                 .builder()
                 .from(senderEmail)
                 .to(user.getEmail())
-                .subject("LKU developer portal registration confirmation")
+                .subject("Portal registration confirmation")
                 .template("/email/templates/confirmAccountEmail")
                 .message(Map.of("message", message))
                 .build()
@@ -78,7 +78,7 @@ public class MailApplicationEventListeners {
         PasswordResetToken passwordResetToken = PasswordResetToken
                 .builder()
                 .resetToken(UUID.randomUUID().toString().replace("-", ""))
-                .id(user.getUserId())
+                .userId(user.getUserId())
                 .expireDate(LocalDateTime.now().plusHours(1))
                 .build();
         
@@ -89,7 +89,7 @@ public class MailApplicationEventListeners {
                 .builder()
                 .from(senderEmail)
                 .to(user.getEmail())
-                .subject("LKU developer portal password reset")
+                .subject("Portal password reset")
                 .template("/email/templates/resetPasswordEmail")
                 .message(Map.of("message", message))
                 .build()

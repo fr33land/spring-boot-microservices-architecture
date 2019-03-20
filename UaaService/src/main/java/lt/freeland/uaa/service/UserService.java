@@ -1,5 +1,6 @@
 package lt.freeland.uaa.service;
 
+import java.util.Optional;
 import lt.freeland.common.domain.ApplicationEventType;
 import lt.freeland.uaa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import lt.freeland.common.entities.PasswordResetToken;
 import lt.freeland.common.entities.User;
 import lt.freeland.uaa.repository.PasswordResetRepository;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -40,12 +42,10 @@ public class UserService {
         return passwordResetRepository.findByResetToken(tokenId).orElse(null);
     }
 
+    @Transactional
     public void updateUserPassword(User user, String tokenId) {
-        passwordResetRepository.save(PasswordResetToken
-                .builder()
-                .resetToken(tokenId)
-                .id(user.getUserId())
-                .build()
-        );
+        PasswordResetToken token = getPasswordResetToken(tokenId);
+        userRepository.setUserPassword(user.getPassword(), token.getUserId());
+        passwordResetRepository.delete(token);
     }
 }

@@ -23,15 +23,15 @@
 
                         <div class="form-group required">
                             <label for="password">Password</label>
-                            <input type="password" id="passwd" name="password" class="form-control" th:classappend="${#fields.hasErrors('password')} ? is-invalid : valid" data-toggle="popover" data-content="Password must consist of minimum 6 lowercase and uppercase alphanumeric characters" />
+                            <input type="password" id="passwd" th:field="*{password}" name="password" class="form-control" data-toggle="popover" data-content="Password must consist of minimum 6 lowercase and uppercase alphanumeric characters" th:classappend="${#fields.hasErrors('password')} ? is-invalid : valid" />
                             <span id="password-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('password')}" th:text="${error}" ></span>
                         </div>
                         <div class="form-group required">
                             <label for="confirmpassword">Confirm password</label>
-                            <input type="password" id="passwordconfirm" name="passwordconfirm" class="form-control" th:classappend="${#fields.hasErrors('passwordconfirm')} ? is-invalid : valid" />
+                            <input type="password" id="passwordconfirm" th:field="*{passwordconfirm}" name="passwordconfirm" class="form-control" th:classappend="${#fields.hasErrors('passwordconfirm')} ? is-invalid : valid" />
                             <span id="passwordconfirm-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('passwordconfirm')}" th:text="${error}" ></span>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="col-sm-6 pb-4 pt-2 center-block">
                                 <input type="submit" name="change-submit" id="change-submit" class="form-control btn popup_btn" value="Change" />

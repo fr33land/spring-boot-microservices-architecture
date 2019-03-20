@@ -2,8 +2,14 @@ package lt.freeland.uaa.controller;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import lombok.extern.slf4j.Slf4j;
 import lt.freeland.common.entities.User;
 import lt.freeland.common.entities.PasswordResetToken;
@@ -16,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +57,8 @@ public class UserController {
         return new ModelAndView("/user/password/reset");
     }
 
+    
+
     @PostMapping("/user/password/reset")
     public ModelAndView userPasswordReset(@ModelAttribute("user") UserRegistration user, BindingResult result, ModelMap mm, HttpServletRequest request, RedirectAttributes ra) {
 
@@ -82,19 +91,29 @@ public class UserController {
             ra.addFlashAttribute("error", messageSource.getMessage("user.password_link_expired", null, null));
             return new ModelAndView("redirect:/login");
         } else {
-            session.setAttribute("tokenId", tokenId);
+            mm.addAttribute("tokenId", tokenId);
             return new ModelAndView("/user/password/change", mm);
         }
     }
 
     @PostMapping("/user/password/change")
-    public ModelAndView userPasswordChange(@ModelAttribute("user") UserRegistration user, HttpSession session, RedirectAttributes ra) {
+    public ModelAndView userPasswordChange(@ModelAttribute("user") UserRegistration user, BindingResult result, @ModelAttribute("tokenId") String tokenId, ModelMap mm, HttpSession session, RedirectAttributes ra) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
         User newUser = new User();
-        String tokenId = session.getAttribute("tokenId").toString();
         PasswordResetToken token = userService.getPasswordResetToken(tokenId);
-        
-        session.removeAttribute("tokenId");
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        Set<ConstraintViolation<UserRegistration>> passwordConstraint = validator.validateProperty(user, "password");
+        Set<ConstraintViolation<UserRegistration>> passwordConfirmConstraint = validator.validateProperty(user, "passwordconfirm");
+        
+        passwordConstraint.forEach(c -> result.addError(new ObjectError(c.getPropertyPath().toString(), messageSource.getMessage(c.getMessage().replaceAll("[{}]", ""), null, null))));
+        passwordConfirmConstraint.forEach(c -> result.addError(new ObjectError(c.getPropertyPath().toString(), messageSource.getMessage(c.getMessage().replaceAll("[{}]", ""), null, null))));
+        
+        if (result.hasErrors()) {
+            mm.addAttribute("tokenId", tokenId);
+            mm.addAttribute("user", user);
+            return new ModelAndView("/user/password/change", mm);
+        }
         
         if (token == null) {
             ra.addFlashAttribute("error", messageSource.getMessage("user.password_link_not_found", null, null));

@@ -101,7 +101,7 @@ public class RegistrationService {
                 .findByActivationToken(token)
                 .orElseThrow(() -> new TokenNotFoundException(messageSource.getMessage("user.confirmation_not_found", null, null)));
 
-        User user = userRepository.findById(accToken.getId())
+        User user = userRepository.findById(accToken.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(messageSource.getMessage("user.not_found_id", null, null)));
         user.setEnabled((short) 1);
         user.setEditedDate(LocalDateTime.now());

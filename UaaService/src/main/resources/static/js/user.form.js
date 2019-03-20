@@ -29,8 +29,7 @@ $(document).ready(function () {
             },
             password: {
                 required: true,
-                validpassword: true,
-                minlength: 6
+                validpassword: true
             },
             passwordconfirm: {
                 required: true,
@@ -104,7 +103,6 @@ $(document).ready(function () {
             password: {
                 required: true,
                 validpassword: true,
-                minlength: 6
             },
             passwordconfirm: {
                 required: true,
