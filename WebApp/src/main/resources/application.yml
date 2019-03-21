@@ -1,10 +1,6 @@
 ---
 server:
     port: 8081
-    servlet:
-        context-path: /ui
-    # servlet: for spring boot2
-    # context-path: /ui
 
 spring:
     application:
@@ -37,7 +33,7 @@ security:
             accessTokenUri: ${security.oauth2.resource.server-address}/uaa/oauth/token
             userAuthorizationUri: ${security.oauth2.resource.server-address}/uaa/oauth/authorize
 #            pre-established-redirect-uri: http://localhost:8081/ui/userProfile
-            registered-redirect-uri: http://localhost:8081/ui/profile
+            registered-redirect-uri: http://localhost:8081/dashboard
 #            use-current-uri: false
         resource:
             service-id: uaa-service

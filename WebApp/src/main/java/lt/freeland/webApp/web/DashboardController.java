@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author freeland
  */
 @Controller
-public class UserProfileController {
+public class DashboardController {
     
     @Autowired
     UserDataService userDataService;
 
-    @GetMapping(value = "/profile")
-    public String userProfile() {
+    @GetMapping(value = "/dashboard")
+    public String dashboard() {
         return "profile";
     }    
 }

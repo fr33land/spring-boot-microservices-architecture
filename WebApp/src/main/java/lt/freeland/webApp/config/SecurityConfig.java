@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login")
                 .and()
                 .logout()
-                .logoutSuccessUrl(logoutUrl + "?redirect_uri=ui/login?logout")
+                .logoutSuccessUrl(logoutUrl + "?redirect_uri=login?logout")
                 .addLogoutHandler(ssoLogoutHandler)
                 .permitAll();
 
@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UserInfoTokenServices tokenServices = new UserInfoTokenServices(uaaServerResource().getUserInfoUri(), uaaClientProperties().getClientId());
         tokenServices.setRestTemplate(restTemplate);
         oauthFilter.setTokenServices(tokenServices);
-        userAuthSuccessHandler.setDefaultTargetUrl("/userProfile");
+        userAuthSuccessHandler.setDefaultTargetUrl("/dashboard");
         oauthFilter.setAuthenticationSuccessHandler(userAuthSuccessHandler);
         return oauthFilter;
     }

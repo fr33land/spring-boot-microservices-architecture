@@ -69,7 +69,7 @@ public class OauthAuthServerConfig implements AuthorizationServerConfigurer {
                 .secret("$2a$04$iVwiu2TyGOQ0H0ojvIOnn.Np5BgU77eTke/nPYxDlmc60i6Va28tS")
                 .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
                 .autoApprove(true)
-                .redirectUris("http://localhost:8081/ui/login")
+                .redirectUris("http://localhost:8081/login")
                 .scopes("read");
     }
 
