@@ -110,7 +110,7 @@ CREATE TABLE public.users_profiles (
     first_name character varying,
     last_name character varying,
     birthday date,
-    nationality integer NOT NULL,
+    nationality integer,
     city character varying,
     address character varying,
     phone character varying

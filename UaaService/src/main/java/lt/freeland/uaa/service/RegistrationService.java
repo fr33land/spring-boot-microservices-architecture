@@ -2,10 +2,13 @@ package lt.freeland.uaa.service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import lt.freeland.common.domain.ApplicationEventType;
 import lt.freeland.common.entities.AccountActivationToken;
+import lt.freeland.common.entities.Role;
 import lt.freeland.common.entities.User;
+import lt.freeland.common.entities.UserProfile;
 import lt.freeland.uaa.repository.AccountActivationRepository;
 import lt.freeland.uaa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import lt.freeland.uaa.exceptions.TokenExpiredException;
 import lt.freeland.uaa.exceptions.TokenNotFoundException;
 import lt.freeland.uaa.exceptions.UserNotFoundException;
 import lt.freeland.uaa.exceptions.UserActivatedException;
+import lt.freeland.uaa.repository.RoleRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,24 +35,24 @@ public class RegistrationService {
     private final AccountActivationRepository accountActivationRepository;
     private final MessageSource messageSource;
     private final ApplicationEventPublisher eventPublisher;
-    private final HttpServletRequest request;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegistrationService(AccountActivationRepository accountActivationRepository, MessageSource messageSource, ApplicationEventPublisher eventPublisher, HttpServletRequest request, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public RegistrationService(AccountActivationRepository accountActivationRepository, MessageSource messageSource, ApplicationEventPublisher eventPublisher, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.accountActivationRepository = accountActivationRepository;
         this.messageSource = messageSource;
         this.eventPublisher = eventPublisher;
-        this.request = request;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     public boolean checkIfUsernameExists(String username) {
         return userRepository.findByUsername(username).isPresent();
-    }    
-
+    }
+    
     public boolean checkIfEmailExists(String email) {
         return userRepository.findByEmailIgnoreCase(email).isPresent();
     }
@@ -71,15 +75,22 @@ public class RegistrationService {
         return newUser;
     }
     
-    public User createUser(UserRegistration user) {
+    public User createUser(UserRegistration user) {        
         User newUser = new User();
+        UserProfile profile = new UserProfile();
+        Role userRole = roleRepository.findByName("ROLE_USER");
+        
         newUser.setUsername(user.getUsername());
         newUser.setEmail(user.getEmail().toLowerCase());
         newUser.setEnabled((short) 0);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        newUser.setCreatedDate(LocalDateTime.now());
+        newUser.setCreatedDate(LocalDateTime.now());        
+        newUser.setRoles(Arrays.asList(userRole));       
+        newUser.setUserProfile(profile);
+        profile.setUser(newUser);
         
-        newUser = userRepository.save(newUser);
+        newUser = userRepository.save(newUser);               
+        
         return newUser;
     }
 

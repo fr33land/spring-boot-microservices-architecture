@@ -17,6 +17,6 @@ public class DashboardController {
 
     @GetMapping(value = "/dashboard")
     public String dashboard() {
-        return "profile";
+        return "dashboard/dashboard";
     }    
 }
