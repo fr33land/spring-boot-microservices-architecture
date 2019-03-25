@@ -182,3 +182,37 @@ button{
     font-weight: 600 !important;
     font-size: 10pt;
 }
+
+.table .thead-dark th {
+    background-color: rgb(94,94,93) !important;
+    border-color: rgb(94,94,93) !important;
+}
+
+.page-item.active .page-link {
+    background-color: rgba(154,188,40,1);
+    border-color: rgba(154,188,40,1);
+}
+
+.pencil {
+    position: relative;
+    color: #2a6496;
+}
+
+.trash {
+    color: rgb(209, 91, 71);
+}
+
+.form-control {
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #999999;
+    border-radius: 1;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+}

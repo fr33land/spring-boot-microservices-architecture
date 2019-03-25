@@ -1,7 +1,7 @@
 package lt.freeland.webApp.web.admin;
 
 import javax.validation.Valid;
-import lt.freeland.common.domain.UserData;
+import lt.freeland.common.entities.UserProfile;
 import lt.freeland.webApp.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author freeland
  */
 @Controller
-@RequestMapping("/admin/permissions")
+@RequestMapping("/dashboard/admin/permissions")
 public class PermissionsController {
 
     @Autowired
@@ -25,8 +25,8 @@ public class PermissionsController {
 
     @ResponseBody
     @PostMapping(value = "/find")
-    public DataTablesOutput<UserData> usersAll(@Valid @RequestBody DataTablesInput filter) {
-        DataTablesOutput<UserData> users = userDataService.searchUsers(filter);
+    public DataTablesOutput<UserProfile> usersAll(@Valid @RequestBody DataTablesInput filter) {
+        DataTablesOutput<UserProfile> users = userDataService.searchUsers(filter);
         return users;
     }
 }

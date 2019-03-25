@@ -51,7 +51,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/find/users", method = RequestMethod.POST)
-    public ResponseEntity<DataTablesOutput<UserProfile>> getUsers(@Valid @RequestBody DataTablesInput input) {
+    public ResponseEntity<DataTablesOutput<UserProfile>> getUsers(@RequestBody DataTablesInput input) {
         return Optional
                 .ofNullable(userDataRepository.findAll(input))
                 .map(data -> ResponseEntity.ok(data))

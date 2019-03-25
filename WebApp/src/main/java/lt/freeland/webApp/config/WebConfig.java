@@ -36,13 +36,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("forward:/index");
         registry.addViewController("/index");
         registry.addViewController("/dashboard").setViewName("dashboard");
-        registry.addViewController("/admin/users").setViewName("admin/users");
+        registry.addViewController("/dashboard/admin/users").setViewName("/dashboard/admin/users");
     }
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
 }

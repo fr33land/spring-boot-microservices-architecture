@@ -72,7 +72,7 @@ CREATE TABLE public.users (
     username character varying(45) NOT NULL,
     email character varying(255) NOT NULL UNIQUE,
     password character varying(255) NOT NULL,
-    enabled smallint DEFAULT 1 NOT NULL,
+    status smallint DEFAULT 1 NOT NULL,
     created_date timestamp NOT NULL DEFAULT NOW(),
     edited_date timestamp
 );

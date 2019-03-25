@@ -46,7 +46,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !this.user.isBlocked();
     }
 
     @Override
@@ -56,10 +56,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.user.getEnabled() == 1;
+        return this.user.isEnabled();
     }
-
-//    public UserProfile getUserProfile(){
-//        return this.user.getUserProfile();
-//    }
 }

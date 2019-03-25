@@ -3,13 +3,13 @@
       xmlns:th="http://www.thymeleaf.org"   
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head>
-        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Base</title>
+        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Portal - dashboard</title>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="_csrf" th:content="${_csrf.token}"/>
         <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/webjars/datatables/css/dataTables.bootstrap4.min.css}"></link>
         <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     </head>
@@ -28,7 +28,7 @@
                         </a>
                         <ul id="adminSubmenu" class="collapse list-unstyled">
                             <li class="nav-item">
-                                <a th:href="@{/admin/users}" class="nav-link">Users security</a>
+                                <a th:href="@{/dashboard/admin/users}" class="nav-link">Users security</a>
                             </li> 
                         </ul>
                     </li>                    
@@ -50,7 +50,7 @@
 
                         <div class="dropdown">
                             <button class="btn dropdown-toggle btn popup_btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span th:text="${session.loggedUser.fullName}"></span>
+                                <span th:text="${#authentication.getPrincipal()}"></span>
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">
@@ -74,7 +74,6 @@
             </div>
         </div>
 
-        <script th:src="@{built/bundle.js}"></script>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/momentjs/min/moment.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

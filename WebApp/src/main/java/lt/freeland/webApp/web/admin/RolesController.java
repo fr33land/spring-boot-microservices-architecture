@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author freeland
  */
 @Controller
-@RequestMapping("/admin/roles")
+@RequestMapping("/dashboard/admin/roles")
 public class RolesController {
 
     private final RoleDataService roleDataService;

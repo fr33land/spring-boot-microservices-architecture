@@ -9,7 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
-import lt.freeland.common.domain.UserData;
+import lt.freeland.common.entities.UserProfile;
 
 /**
  *
@@ -25,25 +25,25 @@ public class UserDataService {
         this.template = template;
     }
 
-    public UserData findUserById(Long uid) {
-        UserData user = this.template.getForObject("http://users-service/users/find/{uid}", UserData.class, uid);
+    public UserProfile findUserById(Long uid) {
+        UserProfile user = this.template.getForObject("http://users-service/users/find/{uid}", UserProfile.class, uid);
         return user;
     }
 
-    public UserData findUserByUserName(String username) {
-        UserData user = this.template.getForObject("http://users-service/users/find/username/{username}", UserData.class, username);
+    public UserProfile findUserByUserName(String username) {
+        UserProfile user = this.template.getForObject("http://users-service/users/find/username/{username}", UserProfile.class, username);
         return user;
     }
 
-    public UserData[] findAll() {
-        UserData[] users = this.template.getForObject("http://users-service/users/find/all", UserData[].class);
+    public UserProfile[] findAll() {
+        UserProfile[] users = this.template.getForObject("http://users-service/users/find/all", UserProfile[].class);
         return users;
     }
 
-    public DataTablesOutput<UserData> searchUsers(DataTablesInput filter) {
+    public DataTablesOutput<UserProfile> searchUsers(DataTablesInput filter) {
         HttpEntity<DataTablesInput> request = new HttpEntity(filter);
-        ResponseEntity<DataTablesOutput<UserData>> response = this.template.exchange("http://users-service/users/find/users", HttpMethod.POST, request, new ParameterizedTypeReference<DataTablesOutput<UserData>>() {});
-        DataTablesOutput<UserData> users = response.getBody();
+        ResponseEntity<DataTablesOutput<UserProfile>> response = this.template.exchange("http://users-service/users/find/users", HttpMethod.POST, request, new ParameterizedTypeReference<DataTablesOutput<UserProfile>>() {});
+        DataTablesOutput<UserProfile> users = response.getBody();
         return users;
     }
 }

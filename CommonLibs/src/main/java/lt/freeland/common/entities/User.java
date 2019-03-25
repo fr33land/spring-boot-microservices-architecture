@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import lt.freeland.common.domain.UserStatus;
 import lombok.Data;
 
 /**
@@ -57,8 +58,8 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "enabled")
-    private short enabled;
+    @Column(name = "status")
+    private UserStatus status;
     
     @Column(name = "created_date")
     private LocalDateTime createdDate;
@@ -75,6 +76,10 @@ public class User implements Serializable {
     private UserProfile userProfile;
     
     public boolean isEnabled() {
-        return enabled == 1;
-    }    
+        return status == UserStatus.ENABLED;
+    }   
+    
+    public boolean isBlocked() {
+        return status == UserStatus.BLOCKED;
+    } 
 }

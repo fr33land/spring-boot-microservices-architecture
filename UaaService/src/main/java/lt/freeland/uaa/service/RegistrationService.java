@@ -3,8 +3,8 @@ package lt.freeland.uaa.service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import javax.servlet.http.HttpServletRequest;
 import lt.freeland.common.domain.ApplicationEventType;
+import lt.freeland.common.domain.UserStatus;
 import lt.freeland.common.entities.AccountActivationToken;
 import lt.freeland.common.entities.Role;
 import lt.freeland.common.entities.User;
@@ -82,7 +82,7 @@ public class RegistrationService {
         
         newUser.setUsername(user.getUsername());
         newUser.setEmail(user.getEmail().toLowerCase());
-        newUser.setEnabled((short) 0);
+        newUser.setStatus(UserStatus.DISABLED);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setCreatedDate(LocalDateTime.now());        
         newUser.setRoles(Arrays.asList(userRole));       
@@ -114,7 +114,7 @@ public class RegistrationService {
 
         User user = userRepository.findById(accToken.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(messageSource.getMessage("user.not_found_id", null, null)));
-        user.setEnabled((short) 1);
+        user.setStatus(UserStatus.ENABLED);
         user.setEditedDate(LocalDateTime.now());
 
         userRepository.save(user);
