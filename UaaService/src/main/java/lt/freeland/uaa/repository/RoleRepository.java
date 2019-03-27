@@ -1,6 +1,6 @@
 package lt.freeland.uaa.repository;
 
-import lt.freeland.common.entities.Role;
+import lt.freeland.common.domain.Role;
 import org.springframework.data.repository.CrudRepository;
 
 /**

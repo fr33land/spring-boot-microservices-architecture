@@ -1,4 +1,4 @@
-package lt.freeland.common.entities;
+package lt.freeland.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import lt.freeland.common.domain.UserStatus;
+import lt.freeland.common.dto.UserStatus;
 import lombok.Data;
 
 /**

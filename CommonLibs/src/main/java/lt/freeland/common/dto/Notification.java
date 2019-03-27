@@ -1,9 +1,9 @@
-package lt.freeland.common.domain;
+package lt.freeland.common.dto;
 
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
-import lt.freeland.common.entities.User;
+import lt.freeland.common.domain.User;
 
 
 /**

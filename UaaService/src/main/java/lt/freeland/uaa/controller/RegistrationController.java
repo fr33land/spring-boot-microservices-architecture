@@ -3,7 +3,7 @@ package lt.freeland.uaa.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import lt.freeland.common.entities.User;
+import lt.freeland.common.domain.User;
 import lt.freeland.common.utils.Utils;
 import lt.freeland.uaa.beans.UserRegistration;
 import lt.freeland.uaa.exceptions.ReCaptchaInvalidException;

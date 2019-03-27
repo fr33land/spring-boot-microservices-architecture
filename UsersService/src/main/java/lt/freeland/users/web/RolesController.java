@@ -2,7 +2,7 @@ package lt.freeland.users.web;
 
 import java.util.Optional;
 import javax.validation.Valid;
-import lt.freeland.common.entities.Role;
+import lt.freeland.common.domain.Role;
 import lt.freeland.users.repository.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;

@@ -1,13 +1,13 @@
 package lt.freeland.uaa.service;
 
 import java.util.Optional;
-import lt.freeland.common.domain.ApplicationEventType;
+import lt.freeland.common.dto.ApplicationEventType;
 import lt.freeland.uaa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lt.freeland.common.events.MailApplicationEvent;
-import lt.freeland.common.entities.PasswordResetToken;
-import lt.freeland.common.entities.User;
+import lt.freeland.common.domain.PasswordResetToken;
+import lt.freeland.common.domain.User;
 import lt.freeland.uaa.repository.PasswordResetRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.annotation.Transactional;

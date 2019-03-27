@@ -2,7 +2,7 @@ package lt.freeland.uaa.service;
 
 import java.util.HashSet;
 import java.util.Set;
-import lt.freeland.common.entities.User;
+import lt.freeland.common.domain.User;
 import lt.freeland.uaa.repository.UserRepository;
 import lt.freeland.uaa.beans.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableResourceServer
 @EnableAsync
 @EnableJpaRepositories("lt.freeland.uaa.repository")
-@EntityScan("lt.freeland.common.entities")
+@EntityScan("lt.freeland.common.domain")
 public class UaaApplication {
 
     public static void main(String[] args) {

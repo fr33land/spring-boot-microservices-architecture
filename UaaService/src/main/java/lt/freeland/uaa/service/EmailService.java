@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import lt.freeland.common.domain.Email;
+import lt.freeland.common.dto.Email;
 
 /**
  *

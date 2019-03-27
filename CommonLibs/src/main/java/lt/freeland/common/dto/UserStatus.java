@@ -1,4 +1,4 @@
-package lt.freeland.common.domain;
+package lt.freeland.common.dto;
 
 /**
  *

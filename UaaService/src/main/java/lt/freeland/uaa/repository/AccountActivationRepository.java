@@ -1,7 +1,7 @@
 package lt.freeland.uaa.repository;
 
 import java.util.Optional;
-import lt.freeland.common.entities.AccountActivationToken;
+import lt.freeland.common.domain.AccountActivationToken;
 import org.springframework.data.repository.CrudRepository;
 
 /**

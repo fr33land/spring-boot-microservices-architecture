@@ -1,4 +1,4 @@
-package lt.freeland.common.entities;
+package lt.freeland.common.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

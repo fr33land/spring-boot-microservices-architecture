@@ -1,7 +1,8 @@
-package lt.freeland.common.entities;
+package lt.freeland.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,8 +40,7 @@ public class UserProfile implements Serializable {
     private String lastName;
     
     @Column(name = "birthday")
-    @Temporal(TemporalType.DATE)
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(name = "city")
     private String city;

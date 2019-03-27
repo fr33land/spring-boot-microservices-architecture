@@ -1,8 +1,8 @@
 package lt.freeland.common.events;
 
 import lombok.Value;
-import lt.freeland.common.domain.ApplicationEventType;
-import lt.freeland.common.entities.User;
+import lt.freeland.common.dto.ApplicationEventType;
+import lt.freeland.common.domain.User;
 import org.springframework.context.ApplicationEvent;
 
 @Value

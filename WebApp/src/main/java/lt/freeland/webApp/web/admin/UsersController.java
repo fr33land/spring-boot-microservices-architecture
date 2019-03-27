@@ -2,9 +2,10 @@ package lt.freeland.webApp.web.admin;
 
 import java.util.List;
 import lt.freeland.webApp.service.UtilsService;
-import javax.validation.Valid;
-import lt.freeland.common.entities.Countries;
-import lt.freeland.common.entities.UserProfile;
+import lt.freeland.common.domain.Countries;
+import lt.freeland.common.domain.UserProfile;
+import lt.freeland.common.dto.CountriesDto;
+import lt.freeland.common.dto.UserProfileDto;
 import lt.freeland.webApp.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -42,20 +43,20 @@ public class UsersController {
 
     @ResponseBody
     @PostMapping(value = "/list")
-    public DataTablesOutput<UserProfile> listUsers(@RequestBody DataTablesInput filter) {
-        DataTablesOutput<UserProfile> users = userDataService.searchUsers(filter);
+    public DataTablesOutput<UserProfileDto> listUsers(@RequestBody DataTablesInput filter) {
+        DataTablesOutput<UserProfileDto> users = userDataService.searchUsers(filter);
         return users;
     }
     
     @ResponseBody
     @GetMapping(value = "/find/{id}")
-    public ResponseEntity<UserProfile> findUserById(@PathVariable("id") Long id){                
+    public ResponseEntity<UserProfileDto> findUserById(@PathVariable("id") Long id){                
         return ResponseEntity.ok(userDataService.findUserById(id));
     }
     
     @ResponseBody
     @GetMapping(value = "/countries")
-    public ResponseEntity<List<Countries>> findAllCountries(){                
+    public ResponseEntity<List<CountriesDto>> findAllCountries(){                
         return ResponseEntity.ok(utilsService.getAllCountries());
     }
 }

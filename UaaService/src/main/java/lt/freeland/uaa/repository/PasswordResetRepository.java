@@ -2,7 +2,7 @@ package lt.freeland.uaa.repository;
 
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
-import lt.freeland.common.entities.PasswordResetToken;
+import lt.freeland.common.domain.PasswordResetToken;
 
 /**
  *
