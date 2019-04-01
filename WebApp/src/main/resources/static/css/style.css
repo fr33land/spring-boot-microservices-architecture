@@ -216,3 +216,32 @@ button{
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     width: 100%;
 }
+
+.edit-form {
+    width: 500px;
+}
+
+.popup_btn:hover, .popup_btn:active {
+    background-color: rgba(154,188,40,1);
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 600;
+    font-size: 10pt;
+    text-transform: uppercase;
+    border: 0px;
+}
+
+.popup_btn, .popup_btn:focus {
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 600;
+    font-size: 10pt;
+    text-transform: uppercase;
+    background-color: rgba(154,194,40,1);
+    border: 0px;
+}
+
+.form-group, .form-check {
+    padding: 20px 30px 0px 30px;
+    margin: 0px;
+}

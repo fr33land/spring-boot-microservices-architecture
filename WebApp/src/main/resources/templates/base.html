@@ -65,10 +65,9 @@
                 </form>
 
                 <div id="page-content-wrapper">
-                    <h2>Title</h2>
+                    <h3 th:include=":: #pageTitle"></h3>
                     <div class="content">
-                        <div layout:fragment="content">
-                        </div>
+                        <div layout:fragment="content"></div>
                     </div>
                 </div>
             </div>

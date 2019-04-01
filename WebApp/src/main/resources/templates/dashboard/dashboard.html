@@ -8,10 +8,10 @@
     </head>
     <body>
         <div class="content">
+            <h3 id="pageTitle">Welcome</h3>
             <div layout:fragment="content">
                 Welcome, <span th:text="${#authentication.name}">Name</span>
-                <br/>
-                Your authorities are <span th:text="${#authentication.authorities}">authorities</span>        
+                <br/>     
             </div>
         </div>
     </body>

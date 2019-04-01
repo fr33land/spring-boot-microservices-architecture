@@ -13,11 +13,13 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -38,25 +40,37 @@ public class UsersController {
 
     @GetMapping(value = "/")
     public String usersList() {
-        return "/dashboard/admin/users";
+        return "/dashboard/admin/users/list";
+    }
+
+    @GetMapping(value = "/edit/{userId}")
+    public ModelAndView userEdit(@PathVariable("userId") Long userId) {
+        UserProfileDto userProfile = userDataService.findUserById(userId);
+        return new ModelAndView("/dashboard/admin/users/edit", "userProfile", userProfile);
+    }
+    
+    @GetMapping(value = "/save")
+    public ModelAndView userSave(@ModelAttribute("userProfile") UserProfileDto userProfile) {
+        userDataService.saveUser(userProfile);
+        return new ModelAndView("/dashboard/admin/users/list");
     }
 
     @ResponseBody
     @PostMapping(value = "/list")
-    public DataTablesOutput<UserProfileDto> listUsers(@RequestBody DataTablesInput filter) {
+    public DataTablesOutput<UserProfileDto> getUsersList(@RequestBody DataTablesInput filter) {
         DataTablesOutput<UserProfileDto> users = userDataService.searchUsers(filter);
         return users;
     }
-    
+
     @ResponseBody
     @GetMapping(value = "/find/{id}")
-    public ResponseEntity<UserProfileDto> findUserById(@PathVariable("id") Long id){                
+    public ResponseEntity<UserProfileDto> findUserById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userDataService.findUserById(id));
     }
-    
+
     @ResponseBody
     @GetMapping(value = "/countries")
-    public ResponseEntity<List<CountriesDto>> findAllCountries(){                
+    public ResponseEntity<List<CountriesDto>> findAllCountries() {
         return ResponseEntity.ok(utilsService.getAllCountries());
     }
 }

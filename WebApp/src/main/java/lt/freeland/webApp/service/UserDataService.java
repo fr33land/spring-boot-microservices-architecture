@@ -46,4 +46,9 @@ public class UserDataService {
         DataTablesOutput<UserProfileDto> users = response.getBody();
         return users;
     }
+    
+    public void saveUser(UserProfileDto userProfile) {
+        HttpEntity<UserProfileDto> request = new HttpEntity(userProfile);
+        ResponseEntity response = this.template.exchange("http://users-service/users/find/users", HttpMethod.PUT, request, new ParameterizedTypeReference<UserProfileDto>(){});
+    }
 }
