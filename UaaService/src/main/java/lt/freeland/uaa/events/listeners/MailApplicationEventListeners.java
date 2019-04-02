@@ -35,19 +35,19 @@ public class MailApplicationEventListeners {
     }
 
     @Async
-    @EventListener(condition = "#event.eventType == T(lt.freeland.common.domain.ApplicationEventType).USER_REGISTRATION")
+    @EventListener(condition = "#event.eventType == T(lt.freeland.common.dto.ApplicationEventType).USER_REGISTRATION")
     void handleUserRegistrationEmail(MailApplicationEvent event) {
         generateAndSendApproveLink(event.getUser(), event.getUrl());
     }
 
     @Async
-    @EventListener(condition = "#event.eventType == T(lt.freeland.common.domain.ApplicationEventType).USER_ACTIVATION")
+    @EventListener(condition = "#event.eventType == T(lt.freeland.common.dto.ApplicationEventType).USER_ACTIVATION")
     void handleActivationLinkEmail(MailApplicationEvent event) {
         generateAndSendApproveLink(event.getUser(), event.getUrl());
     }
 
     @Async
-    @EventListener(condition = "#event.eventType == T(lt.freeland.common.domain.ApplicationEventType).USER_PASSWORD_RESET")
+    @EventListener(condition = "#event.eventType == T(lt.freeland.common.dto.ApplicationEventType).USER_PASSWORD_RESET")
     void handlePasswordResetLinkEmail(MailApplicationEvent event) {
         generatePasswordAndSendResetLink(event.getUser(), event.getUrl());
     }

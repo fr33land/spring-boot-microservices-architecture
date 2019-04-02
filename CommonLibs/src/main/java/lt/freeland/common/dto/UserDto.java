@@ -1,7 +1,6 @@
 package lt.freeland.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import javax.validation.constraints.Email;

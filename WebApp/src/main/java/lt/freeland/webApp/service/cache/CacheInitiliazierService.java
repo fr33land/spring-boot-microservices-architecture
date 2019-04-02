@@ -32,11 +32,11 @@ public class CacheInitiliazierService {
     }
 
     private void initCountriesCache() {
-        log.info("Initializing countries cache");
-//        utilsService.getAllCountries().forEach(
-//                c -> cacheManager.getCache("countries").put(c.getId(), c)
-//        );
+        log.info("================= Initializing countries cache =================");
+        utilsService.getAllCountries().forEach(
+                c -> cacheManager.getCache("countries").put(c.getId(), c)
+        );
         List<CountriesDto> c = utilsService.getAllCountries();
-        log.info("Countries cache initialized");
+        log.info("================= Countries cache initialized =================");
     }
 }

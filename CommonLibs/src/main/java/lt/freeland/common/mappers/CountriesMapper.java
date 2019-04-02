@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lt.freeland.common.domain.Countries;
 import lt.freeland.common.dto.CountriesDto;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -26,6 +25,7 @@ public class CountriesMapper {
                 .of(country)
                 .map(c -> CountriesDto
                                     .builder()
+                                    .id(c.getId())
                                     .isoCode(c.getIsoCode())
                                     .name(c.getName())
                                     .phoneCode(c.getPhoneCode())

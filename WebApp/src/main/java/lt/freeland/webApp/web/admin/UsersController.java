@@ -12,6 +12,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,9 +45,11 @@ public class UsersController {
     }
 
     @GetMapping(value = "/edit/{userId}")
-    public ModelAndView userEdit(@PathVariable("userId") Long userId) {
+    public ModelAndView userEdit(@PathVariable("userId") Long userId, ModelMap mm) {
         UserProfileDto userProfile = userDataService.findUserById(userId);
-        return new ModelAndView("/dashboard/admin/users/edit", "userProfile", userProfile);
+        mm.addAttribute("userProfile", userProfile);
+        mm.addAttribute("countriesList", utilsService.getAllCountries());
+        return new ModelAndView("/dashboard/admin/users/edit", mm);
     }
     
     @GetMapping(value = "/save")
