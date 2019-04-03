@@ -124,6 +124,18 @@
         </dependency>
         
         <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>bootstrap-datepicker</artifactId>
+            <version>1.8.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.npm</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions> 
+        </dependency>
+        
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>

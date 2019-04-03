@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.modelmapper.ModelMapper;
 
 /**
  *
@@ -22,7 +23,7 @@ public class ServiceConfig {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(mapper);
         return converter;
     }
-    
+
     @Bean
     public ObjectMapper objectMapper() {
         return Jackson2ObjectMapperBuilder.json()
@@ -31,6 +32,11 @@ public class ServiceConfig {
                 .featuresToDisable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                 .modules(new JavaTimeModule())
                 .build();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 }

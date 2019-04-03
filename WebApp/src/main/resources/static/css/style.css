@@ -70,10 +70,12 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     display: block;
     position: absolute;
     right: 20px;
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
 }
+
 a[aria-expanded="true"]::before {
     content: '\f106';
+    font-family: "Font Awesome 5 Free";
 }
 
 ul ul a {
@@ -244,4 +246,9 @@ button{
 .form-group, .form-check {
     padding: 20px 30px 0px 30px;
     margin: 0px;
+}
+
+.input-group-text {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }

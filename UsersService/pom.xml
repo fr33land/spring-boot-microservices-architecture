@@ -62,6 +62,13 @@
             <version>5.0.0</version>
         </dependency>
         
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.2</version>
+            <type>jar</type>
+        </dependency>
+        
         <!-- JAVA 9 removed JAXB support from ajva libs -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -99,7 +106,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-<!--            <plugin>
+            <!--            <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.1.1</version>

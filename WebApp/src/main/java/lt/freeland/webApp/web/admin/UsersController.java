@@ -52,7 +52,7 @@ public class UsersController {
         return new ModelAndView("/dashboard/admin/users/edit", mm);
     }
     
-    @GetMapping(value = "/save")
+    @PostMapping(value = "/save")
     public ModelAndView userSave(@ModelAttribute("userProfile") UserProfileDto userProfile) {
         userDataService.saveUser(userProfile);
         return new ModelAndView("/dashboard/admin/users/list");

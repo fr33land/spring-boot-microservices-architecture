@@ -1,4 +1,4 @@
-package lt.freeland.users.web;
+package lt.freeland.users.controllers;
 
 import javax.validation.Valid;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;

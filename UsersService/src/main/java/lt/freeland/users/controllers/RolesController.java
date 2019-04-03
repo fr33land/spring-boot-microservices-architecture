@@ -1,4 +1,4 @@
-package lt.freeland.users.web;
+package lt.freeland.users.controllers;
 
 import java.util.Optional;
 import javax.validation.Valid;
