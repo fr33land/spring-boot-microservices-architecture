@@ -4,14 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="base">
     <head>
-        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Dashboard</title>
+        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Error</title>
     </head>
     <body>
         <div class="content">
-            <h3 id="pageTitle">Welcome</h3>
+            <h3 id="pageTitle">Error</h3>
             <div layout:fragment="content">
-                Welcome, <span th:text="${#authentication.name}">Name</span>
-                <br/>     
+                <div class="alert alert-danger" style="width:800px" th:text="${error}"></div>   
             </div>
         </div>
     </body>

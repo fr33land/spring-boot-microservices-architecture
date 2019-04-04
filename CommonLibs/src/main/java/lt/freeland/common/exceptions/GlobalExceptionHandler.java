@@ -96,14 +96,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-    @ExceptionHandler({EntityNotFoundException.class})
-    protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, HandlerMethod handlerMethod) {
-        String error = ex.getMessage();
-
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
-        return buildResponseEntity(apiError);
-    }
-
     @ExceptionHandler({HttpServerErrorException.class, HttpClientErrorException.class})
     public ResponseEntity<Object> handleHttpStatusCodeException(HttpStatusCodeException e, HttpServletResponse response) throws IOException {
         ApiError apiError = objectMapper.readValue(e.getResponseBodyAsString(), ApiError.class);

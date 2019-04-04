@@ -1,10 +1,9 @@
 package lt.freeland.users.controllers;
 
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 import lt.freeland.common.domain.UserProfile;
 import lt.freeland.common.dto.UserProfileDto;
-import lt.freeland.common.exceptions.EntityNotFoundException;
-import lt.freeland.common.exceptions.EntityListEmptyException;
 import lt.freeland.users.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  *
@@ -39,18 +39,18 @@ public class UserController {
     }
 
     @GetMapping("/find/{uid}")
-    public ResponseEntity<UserProfile> findUserById(@PathVariable("uid") Long uid) {
+    public ResponseEntity findUserById(@PathVariable("uid") Long uid) {
         return userDataRepository.findById(uid)
-                .map(user -> ResponseEntity.ok(user))
-                .orElseThrow(() -> new EntityNotFoundException(UserProfile.class, "uid", uid));
+                .map(u -> ResponseEntity.ok(u))
+                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.getReasonPhrase(), new EntityNotFoundException("User id:" + uid + " not found")));  
     }
 
     @GetMapping("/find/username/{username}")
-    public ResponseEntity<UserProfile> findUserByUserName(@PathVariable("username") String username) {
+    public ResponseEntity findUserByUserName(@PathVariable("username") String username) {
         return Optional
                 .ofNullable(userDataRepository.findByUser_username(username))
                 .map(user -> ResponseEntity.ok(user))
-                .orElseThrow(() -> new EntityNotFoundException(UserProfile.class, "username", username));
+                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "User username:" + username + " not found"));      
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -59,7 +59,7 @@ public class UserController {
         return Optional
                 .ofNullable(userDataRepository.findAll(input))
                 .map(data -> ResponseEntity.ok(data))
-                .orElseThrow(() -> new EntityListEmptyException(UserProfile.class));
+                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "User list is empty"));    
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -71,6 +71,6 @@ public class UserController {
                                 modelMapper.map(userProfileDto, UserProfile.class)
                         )
                 ))
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.BAD_REQUEST, "User id:" + userProfileDto.getUserId() + " bad request"));  
     }
 }
