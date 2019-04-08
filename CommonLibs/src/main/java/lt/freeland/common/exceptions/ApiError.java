@@ -1,32 +1,30 @@
 package lt.freeland.common.exceptions;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 /**
  *
  * @author freeland
  */
+@Getter
 public class ApiError {
 
     private HttpStatus status;
     
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime timestamp;
+    private Date timestamp;
     
     private String message;
     
     private List<String> errors;
+    
+    private String path;
 
     private ApiError() {
-        timestamp = LocalDateTime.now();
+        timestamp = new Date();
     }
 
     public ApiError(HttpStatus status) {
@@ -35,39 +33,32 @@ public class ApiError {
     }
 
     public ApiError(HttpStatus status, Throwable ex) {
-        this();
-        this.status = status;
+        this(status);
         this.message = ex.getLocalizedMessage();
     }
-
-    public ApiError(HttpStatus status, String message, String error) {
-        this();
+    
+    public ApiError(HttpStatus status, String message) {
+        this(status);
         this.status = status;
         this.message = message;
+    }
+    
+    public ApiError(HttpStatus status, String message, String error) {
+        this(status, message);
         this.errors = Arrays.asList(error);
     }
 
     public ApiError(HttpStatus status, String message, List<String> errors) {
-        this();
-        this.status = status;
-        this.message = message;
+        this(status, message);
         this.errors = errors;
     }
-
-    public HttpStatus getStatus() {
-        return status;
+    
+    public ApiError(HttpStatus status, String message, List<String> errors, String path) {
+        this(status, message, errors);
+        this.path = path;
     }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    
+    public ApiError(HttpStatus status, String message, String error, String path) {
+        this(status, message, Arrays.asList(error), path);
     }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public List<String> getErrors() {
-        return errors;
-    }
-
 }

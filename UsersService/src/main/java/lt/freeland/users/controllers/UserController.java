@@ -42,7 +42,7 @@ public class UserController {
     public ResponseEntity findUserById(@PathVariable("uid") Long uid) {
         return userDataRepository.findById(uid)
                 .map(u -> ResponseEntity.ok(u))
-                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.getReasonPhrase(), new EntityNotFoundException("User id:" + uid + " not found")));  
+                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "User with id [" + uid + "] not found"));  
     }
 
     @GetMapping("/find/username/{username}")
@@ -50,7 +50,7 @@ public class UserController {
         return Optional
                 .ofNullable(userDataRepository.findByUser_username(username))
                 .map(user -> ResponseEntity.ok(user))
-                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "User username:" + username + " not found"));      
+                .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "User username [" + username + "] not found"));      
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

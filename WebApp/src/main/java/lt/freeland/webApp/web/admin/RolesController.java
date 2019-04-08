@@ -1,9 +1,7 @@
 package lt.freeland.webApp.web.admin;
 
 import javax.validation.Valid;
-import lt.freeland.common.domain.Role;
 import lt.freeland.common.dto.RoleDto;
-import lt.freeland.common.dto.UserProfileDto;
 import lt.freeland.webApp.service.RoleDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
