@@ -8,7 +8,7 @@ spring:
     main:
         allow-bean-definition-overriding: true
     datasource:
-        jdbcUrl: jdbc:postgresql://localhost:5432/freeland
+        jdbcUrl: jdbc:postgresql://192.168.8.104:5432/freeland
         username: freeland
         password: freeland
         driverClassName: org.postgresql.Driver
@@ -16,6 +16,7 @@ spring:
         show-sql: true
         properties:
             hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
                 temp:
                     use_jdbc_metadata_defaults: false
     thymeleaf:
