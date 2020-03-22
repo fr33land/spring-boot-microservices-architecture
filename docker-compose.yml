@@ -1,15 +1,7 @@
 version: '3'
-services: 
-    postgres-db:
-        image: postgres:latest
-        expose:
-            - 5432
-        ports:
-            - 5432:5432
-        networks: 
-            - microservices-network
+services:
     eureka-server:
-        build: ./EurekaServer
+        build: ./ms-eureka-server
         expose: 
             - 8761
         ports:
@@ -17,7 +9,7 @@ services:
         networks: 
             - microservices-network
     uaa-service:
-        build: ./UaaService
+        build: ./ms-oauth-server
         environment:
             EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
             SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/freeland
@@ -31,7 +23,7 @@ services:
         networks: 
             - microservices-network
     users-service:
-        build: ./UsersService
+        build: ./ms-users-service
         environment:
             EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
             SPRING_DATASOURCE_JDBCURL: jdbc:postgresql://postgres-db:5432/freeland
@@ -46,7 +38,7 @@ services:
         networks: 
             - microservices-network
     webapp-service:
-        build: ./WebApp
+        build: ./ms-webapp-service
         environment:
             EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
             SECURITY_OAUTH2_CLIENT_ACCESSTOKENURI: http://uaa-service:8089/uaa/oauth/token

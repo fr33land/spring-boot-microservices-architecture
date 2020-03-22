@@ -1,0 +1,13 @@
+---
+spring:
+    mail:
+        host: 
+        port: 25
+        username: 
+        password: 
+        default-encoding: UTF-8
+google:
+    recaptcha:
+        key:
+            site:
+            secret:

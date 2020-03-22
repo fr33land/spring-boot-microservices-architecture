@@ -1,5 +1,0 @@
----
-security:
-    oauth2:
-        resource:
-            server-address: http://localhost:8089

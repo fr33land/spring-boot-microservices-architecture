@@ -1,0 +1,254 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #495057;
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar {
+    border: none;
+    border-radius: 0;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background-color: #f7f7f7;
+    color: #212529;
+    transition: all 0.3s;
+}
+
+#sidebar.active, #content.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    text-align: center;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul p {
+    color: #212529;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover, #sidebar ul li.active > a:hover  {
+    color: rgba(255,255,255,1);
+    background-color: rgba(154,194,40,1);
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #495057;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+    content: '\f107';
+    display: block;
+    position: absolute;
+    right: 20px;
+    font-family: 'Font Awesome 5 Free';
+}
+
+a[aria-expanded="true"]::before {
+    content: '\f106';
+    font-family: "Font Awesome 5 Free";
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+}
+
+a.article, a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+#content {
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#content.active {
+    width: 100%;
+}
+
+#page-content-wrapper{
+    padding: 0 25px;
+}
+
+.navbar-right {
+    float: right !important;
+}
+
+.nav-tabs .nav-link {
+    cursor: pointer;
+}
+
+.table > tbody> tr {
+    cursor: pointer;
+}
+
+.editForm {
+    width: 450px;
+}
+
+.react-datepicker-wrapper, .react-datepicker__input-container {
+    display: block !important;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - 250px);
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+.bg-primary {
+    background-color: rgb(94,94,93) !important;
+}
+
+.popup_btn, .popup_btn:focus {
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 400;
+    font-size: 10pt;
+    text-transform: uppercase;
+    background-color: rgba(154,194,40,1);
+    border: 0px;
+}
+
+.dropdown-menu {
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 400;
+    font-size: 10pt;
+    background-color: rgba(154,194,40,1);
+    border: 0px;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #495057;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+.dropdown-item {
+    color: rgba(255,255,255,1);
+    text-decoration: none;
+}
+
+a {
+    color: #495057;
+}
+
+button{
+    font-weight: 600 !important;
+    font-size: 10pt;
+}
+
+.table .thead-dark th {
+    background-color: rgb(94,94,93) !important;
+    border-color: rgb(94,94,93) !important;
+}
+
+.page-item.active .page-link {
+    background-color: rgba(154,188,40,1);
+    border-color: rgba(154,188,40,1);
+}
+
+.pencil {
+    position: relative;
+    color: #2a6496;
+}
+
+.trash {
+    color: rgb(209, 91, 71);
+}
+
+.form-control {
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #999999;
+    border-radius: 1;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+}
+
+.edit-form {
+    width: 500px;
+}
+
+.popup_btn:hover, .popup_btn:active {
+    background-color: rgba(154,188,40,1);
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 600;
+    font-size: 10pt;
+    text-transform: uppercase;
+    border: 0px;
+}
+
+.popup_btn, .popup_btn:focus {
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 600;
+    font-size: 10pt;
+    text-transform: uppercase;
+    background-color: rgba(154,194,40,1);
+    border: 0px;
+}
+
+.form-group, .form-check {
+    padding: 20px 30px 0px 30px;
+    margin: 0px;
+}
+
+.input-group-text {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

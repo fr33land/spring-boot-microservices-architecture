@@ -15,16 +15,16 @@
     </parent>
 
     <modules>
-        <module>CommonLibs</module>
-        <module>DbMigration</module>
-        <module>ConfigServer</module>
-        <module>EurekaServer</module>
-        <module>UaaService</module>
-        <module>UsersService</module>
-        <module>WebApp</module>
+        <module>ms-common-libs</module>
+        <module>ms-db-migration</module>
+        <module>ms-config-server</module>
+        <module>ms-eureka-server</module>
+        <module>ms-oauth-server</module>
+        <module>ms-users-service</module>
+        <module>ms-webapp-service</module>
     </modules>
 
-    <name>MicroservicesProject</name>
+    <name>ms-project-modules</name>
     <description>Microservices project</description>
 
     <properties>
@@ -33,7 +33,7 @@
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <docker.image.prefix>fr33land/spring-boot-microservices-architecture</docker.image.prefix>
+        <docker.image.prefix>fr33land/</docker.image.prefix>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
     </properties>
     
