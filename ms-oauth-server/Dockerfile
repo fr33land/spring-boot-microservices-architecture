@@ -3,6 +3,5 @@ ENV TZ=Europe/Vilnius
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 VOLUME /tmp
 EXPOSE 8089
-ARG JAR_FILE=target/UaaService.jar
-COPY ${JAR_FILE} UaaService.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/UaaService.jar"]
+COPY target/*.jar ms-oauth-server.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/ms-oauth-server.jar"]

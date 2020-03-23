@@ -3,6 +3,5 @@ ENV TZ=Europe/Vilnius
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 VOLUME /tmp
 EXPOSE 8761
-ARG JAR_FILE=target/EurekaServer.jar
-COPY ${JAR_FILE} EurekaServer.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/EurekaServer.jar"]
+COPY target/*.jar ms-eureka-server.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/ms-eureka-server.jar"]
