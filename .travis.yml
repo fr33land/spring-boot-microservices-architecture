@@ -20,6 +20,6 @@ after_success:
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 - export REPOSITORY_NAME="fr33land/spring-boot-microservices-architecture"
-- docker build -t ${REPOSITORY_NAME}:${SERVICE_MODULE}_${COMMIT} ./$SERVICE_MODULE
-- docker tag ${REPOSITORY_NAME}:${SERVICE_MODULE}_${COMMIT} ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TAG}
+- docker build -t ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TRAVIS_COMMIT} ./$SERVICE_MODULE
+- docker tag ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TRAVIS_COMMIT} ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TAG}
 - docker push ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TAG}
