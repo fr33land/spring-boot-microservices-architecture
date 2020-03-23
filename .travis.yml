@@ -1,9 +1,9 @@
 language: java
-sudo: required
-
+dist: debian
+os: linux
 
 env:
-  matrix:
+  jobs:
     - SERVICE_MODULE=ms-config-server
     - SERVICE_MODULE=ms-eureka-server
     - SERVICE_MODULE=ms-oauth-server
@@ -19,7 +19,7 @@ script:
 after_success:
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-- export IMAGE_NAME=fr33land/$SERVICE_MODULE
-- docker build -t $IMAGE_NAME:$COMMIT ./$SERVICE_MODULE
-- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
-- docker push $IMAGE_NAME
+- export REPOSITORY_NAME="fr33land/spring-boot-microservices-architecture"
+- docker build -t ${REPOSITORY_NAME}:${SERVICE_MODULE}_${COMMIT} ./$SERVICE_MODULE
+- docker tag ${REPOSITORY_NAME}:${SERVICE_MODULE}_${COMMIT} ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TAG}
+- docker push ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TAG}
