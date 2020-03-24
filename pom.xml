@@ -37,6 +37,33 @@
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
     </properties>
     
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <spring.config.server>http://localhost:8888</spring.config.server>
+            </properties>
+        </profile>
+        <profile>
+            <id>stg</id>
+            <properties>
+                <spring.profiles.active>stg</spring.profiles.active>
+                <spring.config.server>http://ms-config-server:8888</spring.config.server>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <spring.config.server>http://ms-config-server:8888</spring.config.server>
+            </properties>
+        </profile>
+    </profiles>
+
     <repositories>
         <repository>
             <id>mvnrepository</id>

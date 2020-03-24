@@ -6,14 +6,11 @@ server:
 spring:
     application:
         name: config-server
+    profiles:
+        active: @spring.profiles.active@
     cloud:
         config:
             server:
                 git:
                     uri: https://github.com/fr33land/ms-config-repo
                     cloneOnStart: true
-        
-eureka:
-    client:
-        serviceUrl:
-            defaultZone: http://127.0.0.1:8761/eureka/

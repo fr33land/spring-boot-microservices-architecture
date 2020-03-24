@@ -2,8 +2,8 @@
 spring:
     application:
         name: eureka-server
+    profiles:
+        active: @spring.profiles.active@
     cloud:
         config:
-            uri: http://localhost:8888
-    profiles:
-        active: dev
+            uri: @spring.config.server@

@@ -14,7 +14,7 @@ services:
 - docker
 
 script: 
-- mvn clean install -Dmaven.test.skip=true
+- mvn clean install -Dmaven.test.skip=true -Dactive.profile=stg
 
 after_success:
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
