@@ -12,12 +12,12 @@ pipeline {
             }
         }
 
-        stage('Docker publishing') {
+        stage('Docker publish') {
             steps {
                 script {
-                    for(int i=0; i < modules.size(); i++) {
-                        stage(modules[i]){
-                            echo "Element: $i"
+                    modules.each { module ->
+                        stage(module){
+                            echo "Element: $module"
                         }
                     }
                 }
