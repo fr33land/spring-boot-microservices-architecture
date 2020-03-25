@@ -18,8 +18,9 @@ pipeline {
                 script {
                     modules.each { module ->
                         stage(module){
-                            echo "Building docker for service $module with image"
-                            docker.build("$repository:$module_${env.BUILD_NUMBER}", "-f ./$module/Dockerfile .")
+                            def imageName = "$repository:$module-${env.BUILD_NUMBER}" 
+                            echo "Building docker for service $module with image $imageName"
+                            docker.build("$imageName", "-f ./$module/Dockerfile .")
                         }
                     }
                 }
