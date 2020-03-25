@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         modules = getModules()
+        repository = "fr33land/spring-boot-microservices-architecture"
     }
     
     stages {
@@ -17,7 +18,9 @@ pipeline {
                 script {
                     modules.each { module ->
                         stage(module){
-                            echo "Element: $module"
+                            def imageName = "$repository:$module_${env.BUILD_NUMBER}" 
+                            echo "Building docker for service $module with image $imageName"
+                            docker.build("$imageName", "-f ./$module/Dockerfile .")
                         }
                     }
                 }
