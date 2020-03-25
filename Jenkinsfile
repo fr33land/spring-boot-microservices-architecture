@@ -15,8 +15,8 @@ pipeline {
         stage('Docker publishing') {
             steps {
                 script {
-                    for(int i=0; i < list.size(); i++) {
-                        stage(list[i]){
+                    for(int i=0; i < modules.size(); i++) {
+                        stage(modules[i]){
                             echo "Element: $i"
                         }
                     }
