@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        modules = ['ms-config-server', 'ms-eureka-server', 'ms-oauth-server', 'ms-users-service', 'ms-webapp-service']
+        modules = getModules()
     }
     
     stages {
@@ -22,4 +22,8 @@ pipeline {
             }
         }
     }
+}
+
+def getModules() {
+    return ['ms-config-server', 'ms-eureka-server', 'ms-oauth-server', 'ms-users-service', 'ms-webapp-service']
 }
