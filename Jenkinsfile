@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     environment {
         modules = getModules()
@@ -7,20 +7,26 @@ pipeline {
     }
     
     stages {
-        stage('Build') { 
+        stage('Maven build') { 
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                }
+            }
             steps {
                 sh 'mvn clean package -Dmaven.test.skip=true -Dactive.profile=stg' 
             }
         }
 
         stage('Docker publish') {
+            agent any
             steps {
                 script {
                     modules.each { module ->
                         stage(module){
                             def imageName = "$repository:$module-${env.GIT_COMMIT}" 
                             echo "Building docker for service $module with image $imageName"
-                            docker.build("$imageName", "-f $module/Dockerfile .")
+                            sh "docker build -t $imageName $module/Dockerfile ."
                         }
                     }
                 }
