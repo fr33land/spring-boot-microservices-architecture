@@ -19,9 +19,11 @@ pipeline {
                 script {
                     modules.each { module ->
                         stage(module){
-                            def imageName = "$repository:$module-${env.GIT_COMMIT}" 
-                            echo "Building docker for service $module with image $imageName"
-                            sh "docker build -t $imageName ./$module"
+                            dir(module) {
+                                def imageName = "$repository:$module-${env.GIT_COMMIT}" 
+                                echo "Building docker for service $module with image $imageName"
+                                docker.build("$imageName")
+                            }
                         }
                     }
                 }
