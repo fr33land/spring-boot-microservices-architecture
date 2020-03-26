@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
 
     environment {
         modules = getModules()
@@ -8,11 +8,6 @@ pipeline {
     
     stages {
         stage('Maven build') { 
-            agent {
-                docker {
-                    image 'maven:3.6.1-jdk11'
-                }
-            }
             steps {
                 sh 'mvn clean package -Dmaven.test.skip=true -Dactive.profile=stg' 
             }
