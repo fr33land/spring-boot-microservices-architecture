@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'ms'
-    }
+    agent any
 
     environment {
         modules = getModules()
