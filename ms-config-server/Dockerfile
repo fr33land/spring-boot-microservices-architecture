@@ -3,5 +3,5 @@ ENV TZ=Europe/Vilnius
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 VOLUME /tmp
 EXPOSE 8888
-COPY target/ms-config-server.jar ms-config-server.jar
+COPY target/*.jar ms-config-server.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/ms-config-server.jar"]
