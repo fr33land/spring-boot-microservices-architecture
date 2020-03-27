@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'ms'
+    }
 
     environment {
         modules = getModules()
@@ -14,12 +16,6 @@ pipeline {
         }
 
         stage('Docker publish') {
-            agent {
-                docker {
-                    image 'ubuntu:16.04'
-                    reuseNode true
-                }
-            }
             steps {
                 script {
                     modules.each { module ->
