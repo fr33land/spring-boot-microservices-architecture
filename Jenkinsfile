@@ -1,3 +1,5 @@
+def dockerBuilds = [:]
+
 pipeline {
     agent {
         label 'master'
@@ -19,16 +21,15 @@ pipeline {
             steps {
                 script {
                     modules.each { module ->
-                        stage(module){
-                            sh "pwd"
+                        dockerBuilds[module] = {
                             dir(module) {
-                                sh "pwd"
                                 def imageName = "$repository:$module-${env.GIT_COMMIT}" 
                                 echo "Building docker for service $module with image $imageName"
                                 docker.build("$imageName")
                             }
                         }
                     }
+                    parallel dockerBuilds
                 }
             }
         }
