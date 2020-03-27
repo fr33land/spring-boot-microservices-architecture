@@ -27,7 +27,7 @@ pipeline {
                                 echo "Building docker image for service $module with image $imageName"
                                 def msImg = docker.build("$imageName")
                                 docker.withRegistry('', registryCredential ) {
-                                    msImg.push("$registry:$module-latest")
+                                    msImg.push("$module-latest")
                                 }
                                 sh "docker rmi $imageName"
                             }
