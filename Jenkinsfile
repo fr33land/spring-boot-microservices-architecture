@@ -1,5 +1,3 @@
-def dockerBuilds = [:]
-
 pipeline {
     agent {
         label 'master'
@@ -7,7 +5,8 @@ pipeline {
 
     environment {
         modules = getModules()
-        repository = "fr33land/spring-boot-microservices-architecture"
+        registry = "fr33land/spring-boot-microservices-architecture"
+        registryCredential = 'dockerHub'
     }
     
     stages {
@@ -20,12 +19,17 @@ pipeline {
         stage('Docker publish') {
             steps {
                 script {
+                    def dockerBuilds = [:]
                     modules.each { module ->
                         dockerBuilds[module] = {
                             dir(module) {
-                                def imageName = "$repository:$module-${env.GIT_COMMIT}" 
-                                echo "Building docker for service $module with image $imageName"
-                                docker.build("$imageName")
+                                def imageName = "$registry:$module-${env.GIT_COMMIT}" 
+                                echo "Building docker image for service $module with image $imageName"
+                                def msImg = docker.build("$imageName")
+                                docker.withRegistry('', registryCredential ) {
+                                    msImg.push("$registry:$module-latest)
+                                }
+                                sh "docker rmi $imageName"
                             }
                         }
                     }
