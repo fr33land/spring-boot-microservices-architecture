@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'ms'
+    }
 
     environment {
         modules = getModules()
@@ -14,13 +16,17 @@ pipeline {
         }
 
         stage('Docker publish') {
-            agent any
+            agent {
+                docker {
+                    image 'ubuntu:16.04'
+                    reuseNode true
+                }
+            }
             steps {
                 script {
                     modules.each { module ->
                         stage(module){
                             sh "pwd"
-
                             dir(module) {
                                 sh "pwd"
                                 def imageName = "$repository:$module-${env.GIT_COMMIT}" 
