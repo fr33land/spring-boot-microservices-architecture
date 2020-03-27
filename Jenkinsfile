@@ -20,6 +20,7 @@ pipeline {
                     modules.each { module ->
                         stage(module){
                             sh "pwd"
+
                             dir(module) {
                                 sh "pwd"
                                 def imageName = "$repository:$module-${env.GIT_COMMIT}" 
