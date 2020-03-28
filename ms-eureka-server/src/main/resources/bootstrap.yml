@@ -8,6 +8,16 @@ spring:
         name: eureka-server
     profiles:
         active: @spring.profiles.active@
+            
+---
+spring:
+    profiles: staging & production
     cloud:
         config:
-            uri: @spring.config.server@
+            uri: http://ms-config-server:8888   
+---
+spring:
+    profiles: development
+    cloud:
+        config:
+            uri: http://localhost:8888   

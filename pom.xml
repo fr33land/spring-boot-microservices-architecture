@@ -39,27 +39,24 @@
     
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>development</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <spring.profiles.active>dev</spring.profiles.active>
-                <spring.config.server>http://localhost:8888</spring.config.server>
+                <spring.profiles.active>development</spring.profiles.active>
             </properties>
         </profile>
         <profile>
-            <id>stg</id>
+            <id>staging</id>
             <properties>
-                <spring.profiles.active>stg</spring.profiles.active>
-                <spring.config.server>http://ms-config-server:8888</spring.config.server>
+                <spring.profiles.active>staging</spring.profiles.active>
             </properties>
         </profile>
         <profile>
-            <id>prod</id>
+            <id>production</id>
             <properties>
-                <spring.profiles.active>prod</spring.profiles.active>
-                <spring.config.server>http://ms-config-server:8888</spring.config.server>
+                <spring.profiles.active>production</spring.profiles.active>
             </properties>
         </profile>
     </profiles>

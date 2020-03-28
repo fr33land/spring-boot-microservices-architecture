@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Maven build') { 
             steps {
-                sh 'mvn clean package -Dmaven.test.skip=true -Dactive.profile=stg' 
+                sh 'mvn clean package -Dmaven.test.skip=true' 
             }
         }
 
