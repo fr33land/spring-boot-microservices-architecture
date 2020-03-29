@@ -5,7 +5,7 @@ server:
     
 spring:
     application:
-        name: config-server
+        name: ms-config-server
     profiles:
         active: @spring.profiles.active@
     cloud:

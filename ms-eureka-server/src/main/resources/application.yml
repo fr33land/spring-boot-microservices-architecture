@@ -5,7 +5,7 @@ server:
     
 spring:
     application:
-        name: eureka-server
+        name: ms-eureka-server
     cloud:
         config:
             uri: http://localhost:8888   
