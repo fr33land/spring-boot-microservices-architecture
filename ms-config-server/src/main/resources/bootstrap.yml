@@ -6,8 +6,6 @@ server:
 spring:
     application:
         name: config-server
-    profiles:
-        active: @spring.profiles.active@
     cloud:
         config:
             server:

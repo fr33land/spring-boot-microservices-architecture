@@ -6,8 +6,6 @@ server:
 spring:
     application:
         name: eureka-server
-    profiles:
-        active: @spring.profiles.active@
             
 ---
 spring:
