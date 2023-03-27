@@ -1,0 +1,14 @@
+---
+debug: true
+server:
+    port: 8089
+    
+spring:
+    application:
+        name: ms-oauth-server
+    cloud:
+        config:
+            uri: http://localhost:8888 
+    profiles:
+        active: @spring.profiles.active@
+

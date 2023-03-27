@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <title>Portal - send activation link</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    </head>
+    <body>
+        <div layout:fragment="content" th:remove="tag">
+            <div class="container-login center-block">
+                <div id="logo">
+                </div>
+                <div th:if="${message}">
+                    <div th:text="${message}" class="alert alert-info"></div>
+                </div>
+                <div th:if="${error}">
+                    <div class="alert alert-danger">
+                        <span th:text="${error}" th:remove="tag"></span>
+                        <a th:if="${resendActivation}" th:href="@{/user/activation}" >Resend activation link</a>
+                    </div>
+                </div>
+                <div class="form-content" id="resend-email">
+                    <form id="register-form" th:object="${user}" th:action="@{/user/activation}" method="post">
+                        <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}"></div>
+
+                        <div class="form-group required">
+                            <label for="username">Enter email address</label>
+                            <input type="text" id="email" th:field="*{email}" name="email" class="form-control" th:classappend="${#fields.hasErrors('email')} ? is-invalid : valid" autofocus="autofocus"/>
+                            <span id="email-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('email')}" th:text="${error}" ></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6 pb-4 pt-2 center-block">
+                                <input type="submit" name="resend-submit" id="resend-submit" class="form-control btn popup_btn" value="Send activation" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/jquery-validation/jquery.validate.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/jquery.utils.js}"></script>
+        <script th:src="@{/js/user.form.js}"></script>
+    </body>
+</html>

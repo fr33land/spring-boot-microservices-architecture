@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>lt.freeland</groupId>
+    <artifactId>microservices-modules</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.4.RELEASE</version>
+    </parent>
+
+    <modules>
+        <module>ms-common-libs</module>
+        <module>ms-db-migration</module>
+        <module>ms-config-server</module>
+        <module>ms-eureka-server</module>
+        <module>ms-oauth-server</module>
+        <module>ms-users-service</module>
+        <module>ms-webapp-service</module>
+    </modules>
+
+    <name>ms-project-modules</name>
+    <description>Microservices project</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <docker.image.prefix>fr33land/</docker.image.prefix>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+    </properties>
+    
+    <profiles>
+        <profile>
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>development</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <properties>
+                <spring.profiles.active>staging</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <spring.profiles.active>production</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <repository>
+            <id>mvnrepository</id>
+            <name>MVN repositori</name>
+            <url>https://mvnrepository.com</url>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/release</url>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
+
+
+</project>

@@ -1,0 +1,148 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #495057;
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+}
+
+.container-login {
+    min-height: 0;
+    width: 400px;
+    color: #495057;
+    margin-top: 40px;
+    padding: 0;
+}
+
+.tab-content {
+    background-color: #f7f7f7;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.container-login > section {
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 10px;
+}
+
+.nav-tabs.nav-justified {
+    border-bottom: 0 none;
+    width: 100%;
+}
+
+.nav-tabs.nav-justified > li {
+    display: table-cell;
+    width: 1%;
+    float: none;
+}
+
+.container-login .nav-tabs.nav-justified > li > a,
+.container-login .nav-tabs.nav-justified > li > a:hover,
+.container-login .nav-tabs.nav-justified > li > a:focus {
+    background: #ffffff;
+    border: medium none;
+    margin-bottom: 0;
+    margin-right: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.container-login .nav-tabs.nav-justified > li > a.active,
+.container-login .nav-tabs.nav-justified > li > a:hover,
+.container-login .nav-tabs.nav-justified > li > a:focus {
+    background-color: #f7f7f7;  
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.tabs-login {
+    background: #ffffff;
+    border: medium none;
+    padding: 10px 30px;
+}
+
+.container-login h2 {
+    color: #ea533f;
+}
+
+.form-control {
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #999999;
+    border-radius: 1;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+}
+
+.popup_btn, .popup_btn:focus  {
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 600;
+    font-size: 10pt;
+    text-transform: uppercase;
+    background-color: rgba(154,194,40,1);
+    border: 0px;
+}
+
+.popup_btn:hover, .popup_btn:active {
+    background-color: rgba(154,188,40,1);
+    border-radius: 4px;
+    color: rgba(255,255,255,1);
+    font-weight: 600;
+    font-size: 10pt;
+    text-transform: uppercase;
+    border: 0px;
+}
+
+.form-group{
+    padding: 20px 30px 0px 30px;
+    margin: 0px;
+}
+
+#auth-tabs > .nav-item{
+    font-size: 18px;
+}
+
+a, a:hover {
+    color: rgba(154,194,40,1);
+}
+
+span.is-invalid {
+    font-size: 9pt;
+    color: #dc3545;
+}
+
+#register-form > .alert {
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border: 0px;
+}
+
+.form-group.required label:after {
+    content:"*";
+    color:red;
+}
+
+.form-content {
+    background-color: #f7f7f7;
+    border-radius: 5px;
+}

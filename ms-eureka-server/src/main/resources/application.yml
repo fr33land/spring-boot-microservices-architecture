@@ -1,0 +1,27 @@
+---
+debug: true
+server:
+    port: 8761
+    
+spring:
+    application:
+        name: ms-eureka-server
+    cloud:
+        config:
+            uri: http://localhost:8888   
+    profiles:
+        active: @spring.profiles.active@
+        
+eureka:
+    instance:
+        hostname: localhost
+        preferIpAddress: true
+        registryFetchIntervalSeconds: 3
+        leaseRenewalIntervalInSeconds: 5
+        leaseExpirationDurationInSeconds: 10
+    server:
+        eviction-interval-timer-in-ms: 5000
+    client:
+        registerWithEureka: false
+        fetchRegistry: false
+        initialInstanceInfoReplicationIntervalSeconds: 5

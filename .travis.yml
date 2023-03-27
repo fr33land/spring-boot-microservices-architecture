@@ -1,0 +1,25 @@
+language: java
+dist: debian
+os: linux
+
+env:
+  jobs:
+    - SERVICE_MODULE=ms-config-server
+    - SERVICE_MODULE=ms-eureka-server
+    - SERVICE_MODULE=ms-oauth-server
+    - SERVICE_MODULE=ms-users-service
+    - SERVICE_MODULE=ms-webapp-service
+    
+services:
+- docker
+
+script: 
+- mvn clean install -Dmaven.test.skip=true -Dactive.profile=stg
+
+after_success:
+- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+- export REPOSITORY_NAME="fr33land/spring-boot-microservices-architecture"
+- docker build -t ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TRAVIS_COMMIT} ./$SERVICE_MODULE
+- docker tag ${REPOSITORY_NAME}:${SERVICE_MODULE}_${TRAVIS_COMMIT} ${REPOSITORY_NAME}:${SERVICE_MODULE}-${TAG}
+- docker push ${REPOSITORY_NAME}:${SERVICE_MODULE}-${TAG}

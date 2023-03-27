@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <title>Login/Register</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </head>
+    <body>
+        <div layout:fragment="content" th:remove="tag">
+            <div class="container-login center-block">
+                <div id="logo">
+
+                </div>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" th:remove="tag"></span>
+                        <a th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] instanceof T(org.springframework.security.authentication.DisabledException)}" th:href="@{/user/activation}" >resend activation link</a>
+                    </div>
+                </div>
+                <div th:if="${message}" style="text-align: justify">
+                    <div th:text="${message}" class="alert alert-info"></div>
+                </div>
+                <div th:if="${error}"  style="text-align: justify">
+                    <div class="alert alert-danger">
+                        <span th:text="${error}" th:remove="tag"></span>
+                        <a th:if="${resendActivation}" th:href="@{/user/activation}" >Resend activation link</a>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs nav-justified" id="auth-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a th:classappend="${regTab == true ? '' : 'active'}" class="nav-link" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:classappend="${regTab == true ? 'active' : ''}" class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="auth-tabs">
+                    <div th:classappend="${regTab == true ? '' : 'show '} + ${regTab == true ? '' : 'active'}" class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
+                        <form id="login-form" th:object="${user}" th:action="@{/login}" method="post">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" class="form-control" autofocus="autofocus" />
+                                <span id="username-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('username')}" th:text="${error}" ></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" />
+                                <span id="password-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('password')}" th:text="${error}" ></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-6 pb-4 pt-2 center-block">
+                                    <input type="submit" name="login-submit" id="login-submit" class="form-control btn popup_btn" value="Login" />
+                                </div>
+                            </div>
+                            <div class="pb-4 pt-2 text-center">
+                                <a th:href="@{/user/password/reset}" >Forgot password ?</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div th:classappend="${regTab == true ? 'show ' : ''} + ${regTab == true ? 'active' : ''}" class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                        <form id="register-form" th:object="${user}" th:action="@{/user/register}" method="post">
+                            <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}"></div>
+
+                            <div class="form-group required">
+                                <label for="name">Username</label>
+                                <input type="text" id="username" th:field="*{username}" name="username" class="form-control" />
+                                <span id="username-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('username')}" th:text="${error}" ></span>
+                            </div>
+                            <div class="form-group required">
+                                <label for="username">Email</label>
+                                <input type="text" id="email" th:field="*{email}" name="email" class="form-control" th:classappend="${#fields.hasErrors('email')} ? is-invalid : valid" autofocus="autofocus"/>
+                                <span id="email-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('email')}" th:text="${error}" ></span>
+                            </div>
+                            <div class="form-group required">
+                                <label for="password">Password</label>
+                                <input type="password" id="passwd" name="password" class="form-control" data-toggle="popover" data-content="Password must consist of minimum 6 lowercase and uppercase alphanumeric characters" th:classappend="${#fields.hasErrors('password')} ? is-invalid : valid" />
+                                <span id="password-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('password')}" th:text="${error}" ></span>
+                            </div>
+                            <div class="form-group required">
+                                <label for="confirmpassword">Confirm password</label>
+                                <input type="password" id="passwordconfirm" name="passwordconfirm" class="form-control" th:classappend="${#fields.hasErrors('passwordconfirm')} ? is-invalid : valid" />
+                                <span id="passwordconfirm-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('passwordconfirm')}" th:text="${error}" ></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="g-recaptcha col-sm-5" th:attr="data-sitekey=${@captchaProperties.getSite()}"></div>
+                                <span id="captchaError" class="alert alert-danger col-sm-4" style="display:none"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-6 pb-4 pt-2 center-block">
+                                    <input type="submit" name="register-submit" id="register-submit" class="form-control btn popup_btn" value="Register" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/jquery-validation/jquery.validate.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/jquery.utils.js}"></script>
+        <script th:src="@{/js/user.form.js}"></script>
+    </body>
+</html>

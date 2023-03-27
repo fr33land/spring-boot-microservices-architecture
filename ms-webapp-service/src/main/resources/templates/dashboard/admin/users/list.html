@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="base">
+    <head>
+        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Users administration</title>
+    </head>
+    <body>
+        <div class="content">
+            <h3 id="pageTitle">Users list</h3>
+            <div layout:fragment="content">
+                <div id="users-content">
+                    <table id="table-users" class="table table-hover no-footer">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Id</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>  
+        <th:block layout:fragment="script">
+            <script type="text/javascript" th:src="@{/js/users.js}"></script>
+        </th:block>
+    </body>
+</html>

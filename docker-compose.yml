@@ -1,0 +1,61 @@
+version: '3'
+services:
+    eureka-server:
+        build: ./ms-eureka-server
+        expose: 
+            - 8761
+        ports:
+            - 8761:8761
+        networks: 
+            - microservices-network
+    uaa-service:
+        build: ./ms-oauth-server
+        environment:
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+            SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/freeland
+        expose: 
+            - 8089
+        ports:
+            - 8089:8089
+        depends_on:
+            - postgres-db
+            - eureka-server
+        networks: 
+            - microservices-network
+    users-service:
+        build: ./ms-users-service
+        environment:
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+            SPRING_DATASOURCE_JDBCURL: jdbc:postgresql://postgres-db:5432/freeland
+        expose: 
+            - 8082
+        ports:
+            - 8082:8082
+        depends_on:
+            - postgres-db
+            - eureka-server
+            - uaa-service
+        networks: 
+            - microservices-network
+    webapp-service:
+        build: ./ms-webapp-service
+        environment:
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+            SECURITY_OAUTH2_CLIENT_ACCESSTOKENURI: http://uaa-service:8089/uaa/oauth/token
+            #SECURITY_OAUTH2_CLIENT_USERAUTHORIZATIONURI: http://uaa-service:8089/uaa/oauth/authorize
+            SECURITY_OAUTH2_RESOURCE_USERINFOURI: http://uaa-service:8089/uaa/user
+            #SECURITY_OAUTH2_RESOURCE_SSOLOGOUTURI: http://uaa-service:8089/uaa/ssoLogout
+            #SECURITY_OAUTH2_RESOURCE_TOKENINVALIDATEURI: http://uaa-service:8089/uaa/invalidateToken
+        expose: 
+            - 8081
+        ports:
+            - 8081:8081
+        depends_on:
+            - eureka-server
+            - uaa-service
+            - users-service
+        networks: 
+            - microservices-network
+networks:
+    microservices-network:
+        driver: bridge

@@ -1,0 +1,13 @@
+---
+spring:
+    application:
+        name: webapp-service
+    main:
+        allow-bean-definition-overriding: true
+    cloud:
+        config:
+            uri: http://localhost:8888
+    thymeleaf:
+        cache: false   
+    profiles:
+        active: @spring.profiles.active@

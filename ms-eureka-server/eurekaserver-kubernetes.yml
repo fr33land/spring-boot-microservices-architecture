@@ -1,0 +1,45 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: eurekaserver-service
+spec:
+  selector:
+    app: eurekaserver
+  ports:
+  - protocol: TCP
+    port: 8761
+    nodePort: 30010
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eurekaserver-deployment
+  namespace: default
+  labels:
+    app: eurekaserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eurekaserver
+  template:
+    metadata:
+      labels:
+        app: eurekaserver
+    spec:
+      containers:
+        - name: eurekaserver
+          image: fr33land/spring-boot-microservices-architecture:eurekaserver
+          ports:
+           - containerPort: 8761
+          volumeMounts:
+          - name: tz-config
+            mountPath: /etc/localtime
+      volumes:
+       - name: tz-config
+         hostPath:
+           path: /usr/share/zoneinfo/Europe/Vilnius
+      imagePullSecrets:
+       - name: docregkey
+      

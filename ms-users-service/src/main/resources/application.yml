@@ -1,0 +1,33 @@
+debug: true
+---
+server:
+    address: 0.0.0.0
+    port: 8082
+            
+spring:
+    application:
+        name: users-service
+    datasource:
+        jdbcUrl: jdbc:postgresql://localhost:5432/freeland
+        username: freeland
+        password: freeland
+        driverClassName: org.postgresql.Driver
+    jpa:
+        show-sql: false
+        properties:
+            hibernate:
+                temp:
+                    use_jdbc_metadata_defaults: false
+                                
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka/
+            
+keystore:
+    publicKey: jwtkey.pub
+            
+logging:
+    level:
+        org.springframework.web: DEBUG
+        org.springframework.security: DEBUG

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <title>LKU developer portal - send activation link</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    </head>
+    <body>
+        <div layout:fragment="content" th:remove="tag">
+            <div class="container-login center-block">
+                <div th:if="${message}">
+                    <div th:text="${message}" class="alert alert-info"></div>
+                </div>
+                <div th:if="${error}">
+                    <div class="alert alert-danger">
+                        <span th:text="${error}" th:remove="tag"></span>
+                    </div>
+                </div>
+                <div class="form-content" id="resend-email">
+                    <form id="password-change-form" th:object="${user}" th:action="@{/user/password/change}" method="post">
+                        <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}"></div>
+
+                        <div class="form-group required">
+                            <label for="password">Password</label>
+                            <input type="password" id="passwd" th:field="*{password}" name="password" class="form-control" data-toggle="popover" data-content="Password must consist of minimum 6 lowercase and uppercase alphanumeric characters" th:classappend="${#fields.hasErrors('password')} ? is-invalid : valid" />
+                            <span id="password-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('password')}" th:text="${error}" ></span>
+                        </div>
+                        <div class="form-group required">
+                            <label for="confirmpassword">Confirm password</label>
+                            <input type="password" id="passwordconfirm" th:field="*{passwordconfirm}" name="passwordconfirm" class="form-control" th:classappend="${#fields.hasErrors('passwordconfirm')} ? is-invalid : valid" />
+                            <span id="passwordconfirm-error" style="display: block" class="is-invalid" th:each="error: ${#fields.errors('passwordconfirm')}" th:text="${error}" ></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6 pb-4 pt-2 center-block">
+                                <input type="submit" name="change-submit" id="change-submit" class="form-control btn popup_btn" value="Change" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/jquery-validation/jquery.validate.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/jquery.utils.js}"></script>
+        <script th:src="@{/js/user.form.js}"></script>
+    </body>
+</html>
